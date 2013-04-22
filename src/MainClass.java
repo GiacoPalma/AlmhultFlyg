@@ -9,7 +9,7 @@ public class MainClass {
 		String string = "Test";
 		System.out.println(string);
 		String stringa ="testbranch";
-		String string = "tre";
+		
 		int num = 4;
 	}
 
