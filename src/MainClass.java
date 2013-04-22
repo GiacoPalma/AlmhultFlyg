@@ -11,7 +11,7 @@ public class MainClass {
 <<<<<<< HEAD
 =======
 		String stringa ="testbranch";
-		String string = "tre";
+		
 		int num = 4;
 >>>>>>> 3fc442c30580285d5068861b6f158fe017750802
 	}
