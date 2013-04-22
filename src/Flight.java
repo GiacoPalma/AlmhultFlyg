@@ -1,4 +1,3 @@
-
 public class Flight {
 	public int id;
 	public int depature_airport_id;
@@ -6,7 +5,5 @@ public class Flight {
 	public int destination_airport_id;
 	public int destination_date;
 	public int duration;
-	public int arrival;
 	public int price;
-
 }
