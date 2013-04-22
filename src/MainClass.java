@@ -8,7 +8,7 @@ public class MainClass {
 		// TODO Auto-generated method stub
 		String string = "Test";
 		System.out.println(string);
-		String string ="testbranch";
+		String stringa ="testbranch";
 	}
 
 }
