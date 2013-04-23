@@ -12,9 +12,16 @@ public class Database {
 	
 	
 
-	public static String url = "jdbc:mysql://http://airport-161957.mysql.binero.se/";
+	public static String url = "jdbc:mysql://193.17.218.178:3306/161957-airport";
 	public static String user = "161957_ur42152";
 	public static String password = "Vaxjoairport1000";
+	
+	
+	Connection connection = null;
+	public static String driverName = "com.mysql.jdbc.Driver"; //for MySql
+	String serverName = "ginger.umd.edu"; // Use this server.
+	String portNumber = "1521";
+	String sid = "dbclass1";
 	
 	
 	static Airport getAirport(int id) {
@@ -23,6 +30,11 @@ public class Database {
 		ResultSet rs = null;
 
 		try {
+			try{
+			Class.forName(driverName);
+			}catch(ClassNotFoundException e){
+				System.out.println("ClassNotFoundException : "+e.getMessage());
+			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
 			rs = st.executeQuery("SELECT * FROM article WHERE id=" + id);
@@ -41,8 +53,8 @@ public class Database {
 		return null;
 	}
 
-	static List<Airport> getAllAirports() {
-		
+	public static List<Airport> getAllAirports() {
+	
 		List<Airport> ret = new ArrayList<Airport>();
 		Connection con = null;
 		Statement st = null;
@@ -50,6 +62,11 @@ public class Database {
 		
 
 		try {
+			try{
+				Class.forName(driverName);
+				}catch(ClassNotFoundException e){
+					System.out.println("ClassNotFoundException : "+e.getMessage());
+				}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
 			rs = st.executeQuery("SELECT * FROM Airports");

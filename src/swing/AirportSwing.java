@@ -9,10 +9,16 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import app.Airport;
+import app.Database;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AirportSwing extends JFrame {
@@ -20,6 +26,7 @@ public class AirportSwing extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	public Database DB = new Database();
 
 	/**
 	 * Launch the application.
@@ -50,7 +57,13 @@ public class AirportSwing extends JFrame {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(81, 31, 116, 27);
+		
 		contentPane.add(comboBox);
+		List<Airport> airportlist = new ArrayList<Airport>();
+		airportlist = DB.getAllAirports();
+		for (int i = 0; i<airportlist.size();i++){
+			comboBox.addItem(airportlist.get(i));
+		}
 		
 		JLabel lblFlygplatser = new JLabel("Flygplatser:");
 		lblFlygplatser.setBounds(6, 35, 75, 16);
