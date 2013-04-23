@@ -1,3 +1,4 @@
+package app;
 public class Flight {
 	public int id;
 	public int depature_airport_id;
