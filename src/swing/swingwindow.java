@@ -9,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 import app.Airport;
 import app.Database;
 import app.Flight;
-public class SwingWindow extends JFrame {
+public class swingwindow extends JFrame {
 
 	private JPanel contentPane;
 
@@ -20,7 +20,7 @@ public class SwingWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SwingWindow frame = new SwingWindow();
+					swingwindow frame = new swingwindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,7 +32,7 @@ public class SwingWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SwingWindow() {
+	public swingwindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
