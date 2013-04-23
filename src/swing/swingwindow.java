@@ -6,11 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import app.AddAirport;
 import app.Airport;
 import app.Database;
 import app.Flight;
-import app.AirportSwing;
 public class SwingWindow extends JFrame {
 
 	private JPanel contentPane;
