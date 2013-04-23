@@ -12,9 +12,9 @@ public class Database {
 	
 	
 
-	public static String url = "jdbc:mysql://193.17.218.178:3306/161957-airport";
-	public static String user = "161957_ur42152";
-	public static String password = "Vaxjoairport1000";
+	private static String url = "jdbc:mysql://localhost:3306/Almhult?useUnicode=true&characterEncoding=UTF-8";
+	private static String user = "root";
+	private static String password = "";
 	
 	
 	Connection connection = null;
