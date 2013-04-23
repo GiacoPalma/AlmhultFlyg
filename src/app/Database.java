@@ -10,12 +10,9 @@ import java.util.List;
 
 public class Database {
 	
-	
-
-	private static String url = "jdbc:mysql://localhost:3306/Almhult?useUnicode=true&characterEncoding=UTF-8";
-	private static String user = "root";
-	private static String password = "";
-	
+	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
+	public static String user = "root";
+	public static String password = "";
 	
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; //for MySql
@@ -36,6 +33,7 @@ public class Database {
 				System.out.println("ClassNotFoundException : "+e.getMessage());
 			}
 			con = DriverManager.getConnection(url, user, password);
+			
 			st = con.createStatement();
 			rs = st.executeQuery("SELECT * FROM article WHERE id=" + id);
 
@@ -81,7 +79,7 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		System.
 		return ret;
 	}
 	

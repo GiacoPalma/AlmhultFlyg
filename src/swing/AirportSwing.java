@@ -62,7 +62,7 @@ public class AirportSwing extends JFrame {
 		List<Airport> airportlist = new ArrayList<Airport>();
 		airportlist = DB.getAllAirports();
 		for (int i = 0; i<airportlist.size();i++){
-			comboBox.addItem(airportlist.get(i));
+			comboBox.addItem(airportlist.get(i).name);
 		}
 		
 		JLabel lblFlygplatser = new JLabel("Flygplatser:");
@@ -109,15 +109,5 @@ public class AirportSwing extends JFrame {
 		JLabel lblStad = new JLabel("Stad:");
 		lblStad.setBounds(254, 76, 61, 16);
 		contentPane.add(lblStad);
-		
-		JButton btnHanteraFlighter = new JButton("Redigera flighter");
-		btnHanteraFlighter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				FlightSwing flightSwing = new FlightSwing();
-				flightSwing.setVisible(true);
-			}
-		});
-		btnHanteraFlighter.setBounds(80, 212, 167, 29);
-		contentPane.add(btnHanteraFlighter);
 	}
 }
