@@ -11,11 +11,8 @@ tmp/
 *.bak
 *.swp
 *~.nib
-
 local.properties
-.gitignore
 .classpath
-
 .settings/
 .loadpath
 
