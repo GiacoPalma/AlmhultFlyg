@@ -5,6 +5,10 @@ public class Flight {
 	public int depature_date;
 	public int destination_airport_id;
 	public int destination_date;
-	public int duration;
 	public int price;
+	
+	public int getDuration() {
+		int duration = depature_date - destination_date;
+		return duration;
+	}
 }
