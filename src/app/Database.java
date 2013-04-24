@@ -94,7 +94,7 @@ public class Database {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			int delete = st.executeUpdate("DELETE * FROM Airports WHERE id=" + id);
+			int delete = st.executeUpdate("DELETE FROM Airports WHERE id=" + id);
 
 			if (delete == 1) {
 				String ret = "Airport has been removed";
@@ -113,7 +113,7 @@ public class Database {
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("UPDATE Airports(city, name) VALUES (?, ?) WHERE id = "+id);
+			st = con.prepareStatement("UPDATE Airports SET city = ?, name = ? WHERE id = "+id);
 			st.setString(1, city1);
 			st.setString(2, name1);
 			st.executeUpdate();
