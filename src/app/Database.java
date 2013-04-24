@@ -192,4 +192,24 @@ public class Database {
 		
 		return null;
 	}
+	
+	public static String RemoveFlight(int id){
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			st.executeUpdate("DELETE * FROM flights WHERE id=" + id);
+
+			
+				String ret = "Flight has been removed";
+				return ret;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }
