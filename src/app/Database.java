@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.PreparedStatement;
+
 
 public class Database {
 	
@@ -104,19 +106,21 @@ public class Database {
 		return null;
 	}
 	
-	static String AddAirport(String city1, String name1){
+	public static String AddAirport(String city1, String name1){
 		Connection con = null;
-		Statement st = null;
+		java.sql.PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.createStatement();
-			int add = st.executeUpdate("INSERT INTO Airports " + "VALUES ('', "+city1+", "+name1+")");
+			st = con.prepareStatement("INSERT INTO Airports(city, name) VALUES (?, ?)");
+			st.setString(1, city1);
+			st.setString(2, name1);
+			st.executeUpdate();
 
-			if (add == 1) {
+			
 				String ret = "Airport has been added";
 				return ret;
-			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
