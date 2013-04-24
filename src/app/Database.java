@@ -75,6 +75,7 @@ public class Database {
 				Airport airport = new Airport();
 				airport.city = rs.getString("city");
 				airport.name = rs.getString("name");
+				airport.id = rs.getInt("id");
 
 				ret.add(airport);
 			}
@@ -137,6 +138,52 @@ public class Database {
 			st.setString(2, name1);
 			st.executeUpdate();
 				String ret = "Airport has been added";
+				return ret;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static String UpdateFlight(int id, int price, int dep_id, int dep_date, int dest_id, int dest_date){
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("UPDATE flights (dep_id, dep_date, dest_id, dest_date, price) VALUES (?, ?, ?, ?, ?) WHERE id = "+id);
+			st.setNString(1, Integer.toString(dep_id));
+			st.setNString(2, Integer.toString(dep_date));
+			st.setNString(3, Integer.toString(dest_id));
+			st.setNString(4, Integer.toString(dest_date));
+			st.setNString(5, Integer.toString(price));
+			st.executeUpdate();
+				String ret = "Flight has been updated";
+				return ret;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static String AddFlight(int id, int price, int dep_id, int dep_date, int dest_id, int dest_date){
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("INSERT INTO flights (dep_id, dep_date, dest_id, dest_date, price) VALUES (?, ?, ?, ?, ?)");
+			st.setNString(1, Integer.toString(dep_id));
+			st.setNString(2, Integer.toString(dep_date));
+			st.setNString(3, Integer.toString(dest_id));
+			st.setNString(4, Integer.toString(dest_date));
+			st.setNString(5, Integer.toString(price));
+			st.executeUpdate();
+				String ret = "Flight has been added";
 				return ret;
 			
 		} catch (SQLException e) {
