@@ -23,7 +23,7 @@ public class Database {
 	String sid = "dbclass1";
 	
 	
-	static Airport getAirport(int id) {
+	public static Airport getAirport(int id) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -86,7 +86,7 @@ public class Database {
 	}
 	
 	
-	static String RemoveAirport(int id){
+	public static String RemoveAirport(int id){
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -106,6 +106,26 @@ public class Database {
 		return null;
 	}
 	
+	public static String UpdateAirport(int id, String city1, String name1){
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("UPDATE Airports(city, name) VALUES (?, ?) WHERE id = "+id);
+			st.setString(1, city1);
+			st.setString(2, name1);
+			st.executeUpdate();
+				String ret = "Airport has been updated";
+				return ret;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	public static String AddAirport(String city1, String name1){
 		Connection con = null;
 		java.sql.PreparedStatement st = null;
@@ -116,8 +136,6 @@ public class Database {
 			st.setString(1, city1);
 			st.setString(2, name1);
 			st.executeUpdate();
-
-			
 				String ret = "Airport has been added";
 				return ret;
 			
