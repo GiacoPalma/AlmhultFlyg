@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.PreparedStatement;
+
 
 public class Database {
 	
@@ -21,7 +23,7 @@ public class Database {
 	String sid = "dbclass1";
 	
 	
-	static Airport getAirport(int id) {
+	public static Airport getAirport(int id) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -73,6 +75,7 @@ public class Database {
 				Airport airport = new Airport();
 				airport.city = rs.getString("city");
 				airport.name = rs.getString("name");
+				airport.id = rs.getInt("id");
 
 				ret.add(airport);
 			}
@@ -84,7 +87,7 @@ public class Database {
 	}
 	
 	
-	static String RemoveAirport(int id){
+	public static String RemoveAirport(int id){
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -104,19 +107,105 @@ public class Database {
 		return null;
 	}
 	
-	static String AddAirport(String city1, String name1){
+	public static String UpdateAirport(int id, String city1, String name1){
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("UPDATE Airports(city, name) VALUES (?, ?) WHERE id = "+id);
+			st.setString(1, city1);
+			st.setString(2, name1);
+			st.executeUpdate();
+				String ret = "Airport has been updated";
+				return ret;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static String AddAirport(String city1, String name1){
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("INSERT INTO Airports(city, name) VALUES (?, ?)");
+			st.setString(1, city1);
+			st.setString(2, name1);
+			st.executeUpdate();
+				String ret = "Airport has been added";
+				return ret;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static String UpdateFlight(int id, int price, int dep_id, int dep_date, int dest_id, int dest_date){
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("UPDATE flights (dep_id, dep_date, dest_id, dest_date, price) VALUES (?, ?, ?, ?, ?) WHERE id = "+id);
+			st.setNString(1, Integer.toString(dep_id));
+			st.setNString(2, Integer.toString(dep_date));
+			st.setNString(3, Integer.toString(dest_id));
+			st.setNString(4, Integer.toString(dest_date));
+			st.setNString(5, Integer.toString(price));
+			st.executeUpdate();
+				String ret = "Flight has been updated";
+				return ret;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static String AddFlight(int id, int price, int dep_id, int dep_date, int dest_id, int dest_date){
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("INSERT INTO flights (dep_id, dep_date, dest_id, dest_date, price) VALUES (?, ?, ?, ?, ?)");
+			st.setNString(1, Integer.toString(dep_id));
+			st.setNString(2, Integer.toString(dep_date));
+			st.setNString(3, Integer.toString(dest_id));
+			st.setNString(4, Integer.toString(dest_date));
+			st.setNString(5, Integer.toString(price));
+			st.executeUpdate();
+				String ret = "Flight has been added";
+				return ret;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static String RemoveFlight(int id){
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			int add = st.executeUpdate("INSERT INTO Airports " + "VALUES ('', "+city1+", "+name1+")");
+			st.executeUpdate("DELETE * FROM flights WHERE id=" + id);
 
-			if (add == 1) {
-				String ret = "Airport has been added";
+			
+				String ret = "Flight has been removed";
 				return ret;
-			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

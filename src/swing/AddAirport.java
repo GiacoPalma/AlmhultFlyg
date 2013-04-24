@@ -5,9 +5,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+
+import app.Database;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -38,7 +42,7 @@ public class AddAirport extends JFrame {
 	 * Create the frame.
 	 */
 	public AddAirport() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,6 +53,7 @@ public class AddAirport extends JFrame {
 		textField.setBounds(116, 52, 134, 28);
 		contentPane.add(textField);
 		textField.setColumns(10);
+		
 		
 		textField_1 = new JTextField();
 		textField_1.setBounds(116, 89, 134, 28);
@@ -66,6 +71,19 @@ public class AddAirport extends JFrame {
 		JButton btnLggTill = new JButton("L\u00E4gg till");
 		btnLggTill.setBounds(110, 136, 117, 29);
 		contentPane.add(btnLggTill);
+		
+		btnLggTill.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String name = textField.getText();
+				String city = textField_1.getText();
+				Database DB = new Database();
+				String added = DB.AddAirport(city, name);
+				JOptionPane.showMessageDialog(null, added);
+				textField.setText("");
+				textField_1.setText("");
+			}
+		});
 		
 		JButton btnTillbaka = new JButton("Tillbaka");
 		btnTillbaka.addMouseListener(new MouseAdapter() {
