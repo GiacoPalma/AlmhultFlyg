@@ -33,10 +33,6 @@ public class AirportSwing extends JFrame {
 	private JButton btnTaBort;
 	private JButton btnRedigera;
 	private static List<Airport> airportlist = new ArrayList<Airport>();
-	private static java.util.List <Integer> Airport_id = new ArrayList<Integer>();
-	private static java.util.List <String> Airport_name = new ArrayList<String>();
-	private static java.util.List <String> Airport_city = new ArrayList<String>();
-	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -67,13 +63,11 @@ public class AirportSwing extends JFrame {
 		
 		comboBox = new JComboBox();
 	    comboBox.setBounds(81, 31, 116, 27);
-		
 		contentPane.add(comboBox);
-		
 		airportlist = DB.getAllAirports();
 		for (int i = 0; i<airportlist.size();i++){
 			comboBox.addItem(airportlist.get(i).name);
-			Airport_name.add(airportlist.get(i).name);
+			//Airport_name.add(airportlist.get(i).name);
 		}
 		
 		JLabel lblFlygplatser = new JLabel("Flygplatser:");
@@ -85,6 +79,7 @@ public class AirportSwing extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				AddAirport air = new AddAirport();
+				AirportSwing.this.dispose();
 				air.setVisible(true);
 			}
 		});
@@ -92,13 +87,6 @@ public class AirportSwing extends JFrame {
 		contentPane.add(btnLggTill);
 		
 		btnRedigera = new JButton("Uppdatera");
-		btnRedigera.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int i = comboBox.getSelectedIndex();
-				String updated = DB.UpdateAirport(airportlist.get(i).id, textField_1.getText(), textField.getText());
-				JOptionPane.showMessageDialog(null, updated);
-			}
-		});
 		btnRedigera.setBounds(310, 120, 117, 29);
 		contentPane.add(btnRedigera);
 		
@@ -108,16 +96,9 @@ public class AirportSwing extends JFrame {
 				int i = comboBox.getSelectedIndex();
 				String removed = DB.RemoveAirport(airportlist.get(i).id);
 				JOptionPane.showMessageDialog(null, removed);
-				textField.setText("");
-		    	textField_1.setText("");
-		    	airportlist = DB.getAllAirports();
-				for (int o = 0; o<airportlist.size();o++){
-					comboBox.addItem(airportlist.get(o).name);
-				}
-		    	comboBox.invalidate();
-		    	comboBox.validate();
+
 			}
-		});
+		});		
 		btnTaBort.setBounds(310, 150, 117, 29);
 		contentPane.add(btnTaBort);
 		
@@ -138,6 +119,16 @@ public class AirportSwing extends JFrame {
 		    	textField_1.setText(airportlist.get(i).city);
 		    }
 		});
+		btnRedigera.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int i = comboBox.getSelectedIndex();
+				String updated = DB.UpdateAirport(airportlist.get(i).id, textField_1.getText(), textField.getText());
+				JOptionPane.showMessageDialog(null, updated);
+				AirportSwing.this.dispose();
+				contentPane.revalidate();
+				AirportSwing.this.setVisible(true);
+			}
+		});
 		
 		JLabel lblNamn = new JLabel("Namn:");
 		lblNamn.setBounds(254, 35, 61, 16);
@@ -146,11 +137,6 @@ public class AirportSwing extends JFrame {
 		JLabel lblStad = new JLabel("Stad:");
 		lblStad.setBounds(254, 76, 61, 16);
 		contentPane.add(lblStad);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(310, 0, 114, 19);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
 	}
 	public JComboBox getComboBox() {
 		return comboBox;
@@ -169,5 +155,8 @@ public class AirportSwing extends JFrame {
 	}
 	public JButton getBtnRedigera() {
 		return btnRedigera;
+	}
+	public JPanel getContentPane() {
+		return contentPane;
 	}
 }

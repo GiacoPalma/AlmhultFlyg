@@ -90,6 +90,7 @@ public class AddAirport extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				AirportSwing main = new AirportSwing();
+				AddAirport.this.dispose();
 				main.setVisible(true);
 			}
 		});
