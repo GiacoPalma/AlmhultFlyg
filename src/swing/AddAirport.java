@@ -79,7 +79,7 @@ public class AddAirport extends JFrame {
 				String city = textField_1.getText();
 				Database DB = new Database();
 				String added = DB.AddAirport(city, name);
-				JOptionPane.showMessageDialog(null, added);
+				JOptionPane.showMessageDialog(null, added + " name");
 				textField.setText("");
 				textField_1.setText("");
 			}
