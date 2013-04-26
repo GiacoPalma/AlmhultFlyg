@@ -62,14 +62,13 @@ public class AirportSwing extends JFrame {
 		contentPane.setLayout(null);
 		
 		comboBox = new JComboBox();
-	    comboBox.setBounds(81, 31, 116, 27);
-		contentPane.add(comboBox);
 		airportlist = DB.getAllAirports();
-		comboBox.addItem("-- Välj --");
 		for (int i = 0; i<airportlist.size();i++){
-			comboBox.addItem(airportlist.get(i).name);
-			//Airport_name.add(airportlist.get(i).name);
+			comboBox.addItem(airportlist.get(i).name);		
 		}
+		comboBox.setSelectedIndex(-1);
+		comboBox.setBounds(81, 31, 116, 27);
+		contentPane.add(comboBox);
 		
 		JLabel lblFlygplatser = new JLabel("Flygplatser:");
 		lblFlygplatser.setBounds(6, 35, 75, 16);
@@ -90,7 +89,7 @@ public class AirportSwing extends JFrame {
 		btnRedigera = new JButton("Uppdatera");
 		btnRedigera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int i = (comboBox.getSelectedIndex() - 1);
+				int i = comboBox.getSelectedIndex();
 				String city = textField_1.getText();
 				String name = textField.getText();
 				String updated = DB.UpdateAirport(airportlist.get(i).id, textField_1.getText(), textField.getText());
@@ -98,6 +97,10 @@ public class AirportSwing extends JFrame {
 				AirportSwing reload = new AirportSwing();
 				AirportSwing.this.dispose();
 				reload.setVisible(true);
+				reload.textField.setText(name);
+				reload.textField_1.setText(city);
+				reload.comboBox.setSelectedIndex(i);
+				
 			}
 		});
 		btnRedigera.setBounds(310, 120, 117, 29);
@@ -106,7 +109,7 @@ public class AirportSwing extends JFrame {
 		btnTaBort = new JButton("Ta bort");
 		btnTaBort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int i = (comboBox.getSelectedIndex() - 1);
+				int i = comboBox.getSelectedIndex();
 				String removed = DB.RemoveAirport(airportlist.get(i).id);
 				JOptionPane.showMessageDialog(null, removed);
 				AirportSwing reload = new AirportSwing();
@@ -129,14 +132,11 @@ public class AirportSwing extends JFrame {
 		
 		comboBox.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		    	int i = (comboBox.getSelectedIndex() - 1);
-		    	if(comboBox.getSelectedIndex() > 0) {
-		    		textField.setText(airportlist.get(i).name);
-		    		textField_1.setText(airportlist.get(i).city);
-		    	}
+		    	int i = comboBox.getSelectedIndex();
+		    	textField.setText(airportlist.get(i).name);
+		    	textField_1.setText(airportlist.get(i).city);
 		    }
 		});
-		
 		
 		JLabel lblNamn = new JLabel("Namn:");
 		lblNamn.setBounds(254, 35, 61, 16);
