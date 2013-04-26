@@ -39,6 +39,7 @@ public class FlightSwing extends JFrame {
 	 * Create the frame.
 	 */
 	public FlightSwing() {
+		setTitle("Boka flyg");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 550, 500);
 		contentPane = new JPanel();
