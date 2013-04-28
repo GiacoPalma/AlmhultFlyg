@@ -21,13 +21,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< Updated upstream
 import javax.swing.JList;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+=======
 import java.awt.Font;
+>>>>>>> Stashed changes
+
 
 public class AirportSwing extends JFrame {
 
@@ -42,6 +46,7 @@ public class AirportSwing extends JFrame {
 	private static List<Airport> airportlist = new ArrayList<Airport>();
 	private JList list;
 	private DefaultListModel listModel = new DefaultListModel(); 
+	private sound sound;
 	
 
 	/**
@@ -75,26 +80,26 @@ public class AirportSwing extends JFrame {
 		
 		airportlist = DB.getAllAirports();
 		
-		comboBox = new JComboBox();
+		/*comboBox = new JComboBox();
 		airportlist = DB.getAllAirports();
 		for (int i = 0; i<airportlist.size();i++){
 			comboBox.addItem(airportlist.get(i).name);		
 		}
 		comboBox.setSelectedIndex(-1);
-
+<<<<<<< Updated upstream
 		comboBox.setBounds(81, 31, 155, 27);
-		contentPane.add(comboBox);
+		contentPane.add(comboBox); */
 		
 		JLabel lblFlygplatser = new JLabel("Flygplatser:");
 		lblFlygplatser.setBounds(33, 12, 99, 16);
 		contentPane.add(lblFlygplatser);
 		
 		btnLggTill = new JButton("Lägg till ny flygplats");
-
+=======
 		comboBox.setBounds(124, 101, 116, 27);
 		contentPane.add(comboBox);
 		
-		lblFlygplatser = new JLabel("Flygplatser:");
+		JLabel lblFlygplatser = new JLabel("Flygplatser:");
 		lblFlygplatser.setBounds(49, 105, 75, 16);
 		contentPane.add(lblFlygplatser);
 		
@@ -103,6 +108,7 @@ public class AirportSwing extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
+>>>>>>> Stashed changes
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -111,8 +117,11 @@ public class AirportSwing extends JFrame {
 				air.setVisible(true);
 			}
 		});
+<<<<<<< Updated upstream
 		btnLggTill.setBounds(229, 214, 198, 29);
+=======
 		btnLggTill.setBounds(364, 101, 154, 29);
+>>>>>>> Stashed changes
 		contentPane.add(btnLggTill);
 		
 		btnRedigera = new JButton("Uppdatera");
@@ -122,6 +131,7 @@ public class AirportSwing extends JFrame {
 				String city = textField_1.getText();
 				String name = textField.getText();
 				String updated = DB.UpdateAirport(airportlist.get(i).id, textField_1.getText(), textField.getText());
+				sound.playSound("smw_yoshi.wav");
 				JOptionPane.showMessageDialog(null, updated);
 				AirportSwing reload = new AirportSwing();
 				AirportSwing.this.dispose();
@@ -174,6 +184,7 @@ public class AirportSwing extends JFrame {
 		lblStad.setBounds(49, 173, 61, 16);
 		contentPane.add(lblStad);
 		
+<<<<<<< Updated upstream
 		list = new JList(listModel);
 		for (int i = 0; i<airportlist.size();i++){
 			listModel.addElement(airportlist.get(i).name);		
@@ -188,6 +199,7 @@ public class AirportSwing extends JFrame {
 		list.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		list.setBounds(33, 36, 184, 206);
 		contentPane.add(list);
+=======
 		JLabel lbllmhultFlygplatsadmin = new JLabel("\u00C4lmhult flygplats (Admin)");
 		lbllmhultFlygplatsadmin.setFont(new Font("Helvetica", Font.BOLD, 24));
 		lbllmhultFlygplatsadmin.setBounds(49, 40, 306, 37);
@@ -204,6 +216,7 @@ public class AirportSwing extends JFrame {
 		});
 		btnLggTillFlygning.setBounds(364, 134, 154, 29);
 		contentPane.add(btnLggTillFlygning);
+>>>>>>> Stashed changes
 	}
 	public JComboBox getComboBox() {
 		return comboBox;

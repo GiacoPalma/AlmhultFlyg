@@ -13,6 +13,7 @@ import java.awt.List;
 import javax.swing.JButton;
 
 import com.toedter.calendar.JCalendar;
+import java.awt.GridLayout;
 
 public class BookSwing extends JFrame {
 
@@ -74,6 +75,9 @@ public class BookSwing extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		  JCalendar newCalender = new JCalendar();
+		  GridLayout gridLayout = (GridLayout) newCalender.getDayChooser().getDayPanel().getLayout();
+		  gridLayout.setColumns(7);
+		  gridLayout.setRows(7);
 		  newCalender.setBounds(10, 133, 185, 129);
 		  contentPane.add(newCalender);
 		  
