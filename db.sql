@@ -1,65 +1,71 @@
-# ************************************************************
-# Sequel Pro SQL dump
-# Version 4004
-#
-# http://www.sequelpro.com/
-# http://code.google.com/p/sequel-pro/
-#
-# Värd: 127.0.0.1 (MySQL 5.5.25)
-# Databas: 161957-airport
-# Genereringstid: 2013-04-28 17:18:29 +0000
-# ************************************************************
+-- phpMyAdmin SQL Dump
+-- version 3.5.1
+-- http://www.phpmyadmin.net
+--
+-- Värd: localhost
+-- Skapad: 29 apr 2013 kl 11:42
+-- Serverversion: 5.5.24-log
+-- PHP-version: 5.3.13
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+--
+-- Databas: `161957-airport`
+--
+DROP DATABASE `161957-airport`;
+CREATE DATABASE `161957-airport` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `161957-airport`;
 
-# Tabelldump airports
-# ------------------------------------------------------------
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `airports`;
+--
+-- Tabellstruktur `airports`
+--
+-- Skapande: 29 apr 2013 kl 09:20
+--
 
-CREATE TABLE `airports` (
+CREATE TABLE IF NOT EXISTS `airports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `city` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
-LOCK TABLES `airports` WRITE;
-/*!40000 ALTER TABLE `airports` DISABLE KEYS */;
+--
+-- Dumpning av Data i tabell `airports`
+--
 
-INSERT INTO `airports` (`id`, `city`, `name`)
-VALUES
-	(1,'London','London_Airport'),
-	(2,'Paris','Paris_Airport'),
-	(3,'Barcelona','Barcelona_Airport'),
-	(4,'Älmhult','Älmhult_Airport'),
-	(5,'Rio de Janiero','Rio_Airport'),
-	(6,'New York','NewYork_Airport'),
-	(9,'Kairo','Egypt_Airport'),
-	(10,'Stockholm','Arlanda_Airport'),
-	(11,'Köpenhamn','Kastrup_Airport'),
-	(12,'Hawaii','Hawaii_Airport'),
-	(13,'Reykjavik','Reykjavik_Airport'),
-	(14,'test','test');
+INSERT INTO `airports` (`id`, `city`, `name`) VALUES
+(1, 'London', 'Heathrow Airport'),
+(2, 'Paris', 'Charles de Gaulle Airport'),
+(3, 'Barcelona', 'El Prat Airport'),
+(4, 'Älmhult', 'IKEA Airport'),
+(5, 'Rio de Janiero', 'Galeão Airport'),
+(6, 'Kairo', 'Cairo Airport'),
+(7, 'Stockholm', 'Arlanda Airport'),
+(8, 'Köpenhamn', 'Kastrup Airport'),
+(9, 'Hawaii', 'Honolulu Airport'),
+(10, 'Reykjavik', 'Keflavik Airport'),
+(11, 'Frankfurt', 'Frankfurt Airport'),
+(12, 'New York', 'JFK Airport'),
+(13, 'Växjö', 'Smaland Airport');
 
-/*!40000 ALTER TABLE `airports` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
+--
+-- Tabellstruktur `flights`
+--
+-- Skapande: 29 apr 2013 kl 09:20
+--
 
-# Tabelldump flights
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `flights`;
-
-CREATE TABLE `flights` (
+CREATE TABLE IF NOT EXISTS `flights` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dep_id` int(11) NOT NULL,
   `dep_date` datetime NOT NULL,
@@ -67,33 +73,52 @@ CREATE TABLE `flights` (
   `dest_date` datetime NOT NULL,
   `price` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
-LOCK TABLES `flights` WRITE;
-/*!40000 ALTER TABLE `flights` DISABLE KEYS */;
+--
+-- Dumpning av Data i tabell `flights`
+--
 
-INSERT INTO `flights` (`id`, `dep_id`, `dep_date`, `dest_id`, `dest_date`, `price`)
-VALUES
-	(1,4,'2013-06-14 00:00:00',1,'2013-06-14 00:00:00',500),
-	(2,4,'2013-06-08 00:00:00',2,'2013-06-08 00:00:00',800),
-	(3,4,'2013-04-09 00:00:00',9,'2013-04-09 00:00:00',1200),
-	(4,4,'2013-04-22 00:00:00',10,'2013-04-22 00:00:00',300),
-	(5,6,'2013-04-25 00:00:00',10,'2013-04-25 00:00:00',500),
-	(6,7,'2013-04-22 00:00:00',2,'2013-04-23 00:00:00',1500),
-	(7,4,'2013-04-13 00:00:00',9,'2013-04-14 00:00:00',5000),
-	(8,4,'2013-06-22 00:00:00',13,'2013-06-22 00:00:00',1000),
-	(9,13,'2013-06-22 00:00:00',12,'2013-06-22 00:00:00',1500),
-	(32,4,'2013-04-18 12:00:00',10,'2013-04-28 12:00:00',555),
-	(33,4,'2013-04-11 12:00:00',6,'2013-04-28 12:00:00',2000);
+INSERT INTO `flights` (`id`, `dep_id`, `dep_date`, `dest_id`, `dest_date`, `price`) VALUES
+(1, 4, '2013-06-14 08:20:00', 1, '2013-06-14 10:00:00', 500),
+(2, 4, '2013-06-08 12:20:00', 2, '2013-06-08 14:20:00', 800),
+(3, 4, '2013-04-09 03:00:00', 9, '2013-04-09 08:38:00', 1200),
+(4, 4, '2013-04-22 14:00:00', 10, '2013-04-22 14:50:00', 300),
+(5, 6, '2013-04-25 17:00:00', 10, '2013-04-25 18:40:00', 500),
+(6, 7, '2013-04-22 23:10:00', 2, '2013-04-23 01:20:00', 1500),
+(7, 4, '2013-04-13 19:00:00', 9, '2013-04-14 03:00:00', 5000),
+(8, 4, '2013-06-22 07:00:00', 13, '2013-06-22 10:00:00', 1000),
+(9, 13, '2013-06-22 11:00:00', 12, '2013-06-22 15:00:00', 1500),
+(10, 4, '2013-04-18 12:00:00', 3, '2013-04-18 15:00:00', 1000);
 
-/*!40000 ALTER TABLE `flights` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
+--
+-- Tabellstruktur `users`
+--
+-- Skapande: 29 apr 2013 kl 09:20
+--
 
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(250) NOT NULL,
+  `phonenumber` varchar(50) NOT NULL,
+  `first_name` varchar(250) NOT NULL,
+  `last_name` varchar(250) NOT NULL,
+  `admin_status` int(11) NOT NULL,
+  `password` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+--
+-- Dumpning av Data i tabell `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `phonenumber`, `first_name`, `last_name`, `admin_status`, `password`) VALUES
+(1, 'te', 'sda', 'Giaco', 'Palma', 1, 'ssss'),
+(2, 'gipa', '00202', 'test1', 'test2', 0, '1234'),
+(3, 'hej', '112', 'Lukas', 'Andersson', 0, 'hej');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

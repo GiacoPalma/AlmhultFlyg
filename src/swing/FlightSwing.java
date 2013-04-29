@@ -78,7 +78,7 @@ public class FlightSwing extends JFrame {
 		contentPane.setLayout(null);
 
 		final JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(315, 108, 123, 27);
+		comboBox_1.setBounds(315, 108, 138, 27);
 		contentPane.add(comboBox_1);
 
 		JLabel lblTill = new JLabel("Till:");
@@ -94,7 +94,7 @@ public class FlightSwing extends JFrame {
 		contentPane.add(lblFrn);
 
 		final JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(95, 108, 123, 27);
+		comboBox.setBounds(95, 108, 138, 27);
 		contentPane.add(comboBox);
 
 		JButton btnLggTill = new JButton("L\u00E4gg till");
@@ -125,21 +125,21 @@ public class FlightSwing extends JFrame {
 		contentPane.add(lblDatum_1);
 
 		textField = new JTextField();
-		textField.setBounds(95, 213, 110, 28);
+		textField.setBounds(95, 213, 138, 28);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		final JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner,
 				"HH:mm");
-		timeSpinner.setBounds(95, 179, 125, 28);
+		timeSpinner.setBounds(95, 179, 138, 28);
 		timeSpinner.setEditor(timeEditor);
 		contentPane.add(timeSpinner);
 
 		final JSpinner timeSpinner_1 = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor_1 = new JSpinner.DateEditor(
 				timeSpinner_1, "HH:mm");
-		timeSpinner_1.setBounds(315, 178, 125, 28);
+		timeSpinner_1.setBounds(315, 178, 138, 28);
 		timeSpinner_1.setEditor(timeEditor_1);
 		contentPane.add(timeSpinner_1);
 
@@ -203,7 +203,7 @@ public class FlightSwing extends JFrame {
 		contentPane.add(btnTillbaka);
 
 		JLabel lblKr = new JLabel("kr");
-		lblKr.setBounds(208, 219, 61, 16);
+		lblKr.setBounds(239, 219, 61, 16);
 		contentPane.add(lblKr);
 
 		JLabel lblTid = new JLabel("Tid:");
