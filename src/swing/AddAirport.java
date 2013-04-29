@@ -42,6 +42,7 @@ public class AddAirport extends JFrame {
 	 * Create the frame.
 	 */
 	public AddAirport() {
+		setTitle("Lägg till flygplats");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -79,7 +80,7 @@ public class AddAirport extends JFrame {
 				String city = textField_1.getText();
 				Database DB = new Database();
 				String added = DB.AddAirport(city, name);
-				JOptionPane.showMessageDialog(null, added);
+				JOptionPane.showMessageDialog(null, added + " name");
 				textField.setText("");
 				textField_1.setText("");
 			}
@@ -90,6 +91,7 @@ public class AddAirport extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				AirportSwing main = new AirportSwing();
+				AddAirport.this.dispose();
 				main.setVisible(true);
 			}
 		});
