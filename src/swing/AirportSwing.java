@@ -77,12 +77,10 @@ public class AirportSwing extends JFrame {
 		
 		comboBox = new JComboBox();
 		airportlist = DB.getAllAirports();
-<<<<<<< HEAD
 
-		comboBox.addItem("-- Välj --");
+		
 
-=======
->>>>>>> e99acb14321872d7ecb0319e4bfc460bea5bc752
+
 		for (int i = 0; i<airportlist.size();i++){
 			comboBox.addItem(airportlist.get(i).name);		
 		}

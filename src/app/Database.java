@@ -14,7 +14,7 @@ public class Database {
 
 	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
 	public static String user = "root";
-	public static String password = "root";
+	public static String password = "";
 
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
@@ -242,5 +242,77 @@ public class Database {
 		}
 
 		return (Boolean) null;
+	}
+	
+	public static String registerUser(String email, String firstName, String lastName, int phonenumber, int adminStatus, String password){
+		Connection con = null;
+		PreparedStatement st = null;
+		String ret = "";
+
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			String SQL_INSERT = "INSERT INTO users (email, phonenumber, first_name, last_name, admin_status, password) VALUES (?, ?, ?, ?, ?, ?)";
+			st = (PreparedStatement) con.prepareStatement(SQL_INSERT);
+			st.setString(1, email);
+			st.setInt(2, phonenumber);
+			st.setString(3, firstName);
+			st.setString(4, lastName);
+			st.setInt(5, adminStatus);
+			st.setString(6, password);
+			int affectedRows = st.executeUpdate();
+			if (affectedRows == 0) {
+				throw new SQLException(
+						"Registreringen misslyckades, vänligen försök igen senare.");
+			} else {
+				ret = "Registreringen lyckades!";
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		
+		return ret;
+		
+	
+	}
+	
+	public static User loginUser(String email, String passWord){
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM users WHERE email="+email+"AND password="+passWord);
+
+			if (rs.next()) {
+				User user = new User();
+				user.email = rs.getString("email");
+				user.phonenumber = rs.getInt("phonenumber");
+				user.first_name = rs.getString("first_name");
+				user.last_name = rs.getString("last_name");
+				user.admin_status = rs.getInt("admin_status");
+				
+				return user;
+				
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	
 	}
 }
