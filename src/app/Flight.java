@@ -14,6 +14,24 @@ public class Flight {
 	public String destination_date;
 	public Integer price;
 	public List<String> errorMessages = new ArrayList<String>();
+	public Airport airport;
+	public Airport dest_airport;
+
+	public Airport getDest_airport() {
+		return dest_airport;
+	}
+
+	public void setDest_airport(Airport dest_airport) {
+		this.dest_airport = dest_airport;
+	}
+
+	public Airport getAirport() {
+		return airport;
+	}
+
+	public void setAirport(Airport airport) {
+		this.airport = airport;
+	}
 
 	public boolean validate() {
 		boolean departureCheck = this.checkDeparture();

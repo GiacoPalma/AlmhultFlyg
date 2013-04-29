@@ -14,7 +14,7 @@ public class Database {
 
 	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
 	public static String user = "root";
-	public static String password = "";
+	public static String password = "root";
 
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
@@ -78,6 +78,50 @@ public class Database {
 				airport.id = rs.getInt("id");
 
 				ret.add(airport);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+	}
+	
+	public static List<Flight> getAllFlights() {
+
+		List<Flight> ret = new ArrayList<Flight>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT A.name AS departure, B.name AS destination, flights.* FROM flights LEFT JOIN airports AS A ON A.id = flights.dep_id LEFT JOIN airports AS B ON B.id = flights.dest_id");
+
+			while (rs.next()) {
+				Flight flight = new Flight();
+				flight.setId(rs.getInt("id"));
+				flight.setDepature_airport_id(rs.getInt("dep_id"));
+				flight.setDestination_airport_id(rs.getInt("dest_id"));
+				flight.setDepature_date(rs.getString("dep_date"));
+				flight.setDestination_date(rs.getString("dest_date"));
+				flight.setPrice(rs.getInt("price"));
+				Airport airport = new Airport();
+				flight.setAirport(airport);
+				flight.airport.setName(rs.getString("departure"));
+				Airport airportDest = new Airport();
+				flight.setDest_airport(airportDest);
+				flight.dest_airport.setName(rs.getString("destination"));
+
+				
+
+				ret.add(flight);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -204,7 +248,7 @@ public class Database {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			st.executeUpdate("DELETE * FROM flights WHERE id=" + id);
+			st.executeUpdate("DELETE FROM flights WHERE id=" + id);
 
 			String ret = "Flight has been removed";
 			return ret;
