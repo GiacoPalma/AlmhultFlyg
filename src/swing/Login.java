@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JPasswordField;
+import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -73,15 +74,19 @@ public class Login {
 			public void actionPerformed(ActionEvent arg0) {
 				String passWord = new String(passwordField.getPassword()); 
 				User user = DB.loginUser(textFielduser.getText(), passWord);
-				if(user.admin_status == 1){
-				AirportSwing reload = new AirportSwing();
-				Login.this.frame.dispose();
-				reload.setVisible(true);
-				}
-				if(user.admin_status == 0){
-				BookSwing reload = new BookSwing();
-				Login.this.frame.dispose();
-				reload.setVisible(true);
+				if(user != null) {
+					if(user.admin_status == 1){
+						AirportSwing reload = new AirportSwing();
+						Login.this.frame.dispose();
+						reload.setVisible(true);
+					}
+					if(user.admin_status == 0){
+						BookSwing reload = new BookSwing();
+						Login.this.frame.dispose();
+						reload.setVisible(true);
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Fel lösenord eller användarnamn");
 				}
 			}
 		});

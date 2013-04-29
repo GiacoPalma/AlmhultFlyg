@@ -120,7 +120,9 @@ public class AddUser {
 				int admin_status = 0;
 				String ret = DB.registerUser(textFieldemail.getText(), textFieldfirstname.getText(), textFieldlastname.getText(), textFieldphone.getText(), admin_status, textFieldpassword.getText());
 				JOptionPane.showMessageDialog(null, ret);
-				
+				Login reload = new Login();
+				AddUser.this.frame.dispose();
+				reload.frame.setVisible(true);
 			}
 		});
 		frame.getContentPane().add(btnSkapaKonto);

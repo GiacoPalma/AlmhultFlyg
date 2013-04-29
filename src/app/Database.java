@@ -262,7 +262,7 @@ public class Database {
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
 				throw new SQLException(
-						"Registreringen misslyckades, vänligen försök igen senare.");
+						"Registreringen misslyckades, vï¿½nligen fï¿½rsï¿½k igen senare.");
 			} else {
 				ret = "Registreringen lyckades!";
 				
