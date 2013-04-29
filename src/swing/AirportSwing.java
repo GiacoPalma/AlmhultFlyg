@@ -33,7 +33,7 @@ import java.awt.Scrollbar;
 
 public class AirportSwing extends JFrame {
 
-	private JPanel contentPane;
+	public JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
 	public Database DB = new Database();
@@ -78,24 +78,6 @@ public class AirportSwing extends JFrame {
 		contentPane.setLayout(null);
 		
 		airportlist = DB.getAllAirports();
-		
-<<<<<<< HEAD
-		comboBox = new JComboBox();
-		airportlist = DB.getAllAirports();
-
-		
-
-
-		for (int i = 0; i<airportlist.size();i++){
-			comboBox.addItem(airportlist.get(i).name);		
-		}
-		comboBox.setSelectedIndex(-1);
-
-		comboBox.setBounds(81, 31, 155, 27);
-		contentPane.add(comboBox);
-=======
-		
->>>>>>> b3002fa24b0d6e5ae387a9dbd4301a37b8a81f28
 		
 		JLabel lblFlygplatser = new JLabel("Flygplatser:");
 		lblFlygplatser.setBounds(43, 49, 99, 16);
@@ -231,11 +213,5 @@ public class AirportSwing extends JFrame {
 	}
 	public JButton getBtnLggTillFlygplats() {
 		return btnLggTillFlygplats;
-	}
-	public Scrollbar getScrollbar() {
-		return scrollbar;
-	}
-	public JScrollBar getScrollBar() {
-		return scrollBar;
 	}
 }
