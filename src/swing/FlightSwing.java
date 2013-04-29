@@ -76,23 +76,23 @@ public class FlightSwing extends JFrame {
 		contentPane.setLayout(null);
 
 		final JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(315, 108, 138, 27);
+		comboBox_1.setBounds(327, 107, 197, 27);
 		contentPane.add(comboBox_1);
 
 		JLabel lblTill = new JLabel("Till:");
-		lblTill.setBounds(265, 112, 24, 16);
+		lblTill.setBounds(293, 112, 24, 16);
 		contentPane.add(lblTill);
 
 		JLabel lblPris = new JLabel("Pris:");
-		lblPris.setBounds(44, 219, 27, 16);
+		lblPris.setBounds(23, 219, 27, 16);
 		contentPane.add(lblPris);
 
 		JLabel lblFrn = new JLabel("Fr\u00E5n: ");
-		lblFrn.setBounds(44, 112, 35, 16);
+		lblFrn.setBounds(23, 112, 35, 16);
 		contentPane.add(lblFrn);
 
 		final JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(95, 108, 138, 27);
+		comboBox.setBounds(68, 108, 197, 27);
 		contentPane.add(comboBox);
 
 		JButton btnLggTill = new JButton("L\u00E4gg till");
@@ -106,38 +106,38 @@ public class FlightSwing extends JFrame {
 
 		final JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("yyyy-MM-dd");
-		dateChooser.setBounds(95, 145, 138, 28);
+		dateChooser.setBounds(68, 146, 197, 28);
 		contentPane.add(dateChooser);
 
 		JLabel lblDatum = new JLabel("Datum:");
-		lblDatum.setBounds(44, 149, 61, 16);
+		lblDatum.setBounds(23, 146, 61, 16);
 		contentPane.add(lblDatum);
 
 		final JDateChooser dateChooser_1 = new JDateChooser();
 		dateChooser_1.setDateFormatString("yyyy-MM-dd");
-		dateChooser_1.setBounds(315, 142, 138, 28);
+		dateChooser_1.setBounds(327, 145, 197, 28);
 		contentPane.add(dateChooser_1);
 
 		JLabel lblDatum_1 = new JLabel("Datum:");
-		lblDatum_1.setBounds(265, 148, 61, 16);
+		lblDatum_1.setBounds(275, 145, 61, 16);
 		contentPane.add(lblDatum_1);
 
 		textField = new JTextField();
-		textField.setBounds(95, 213, 138, 28);
+		textField.setBounds(68, 213, 197, 28);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		final JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner,
 				"HH:mm");
-		timeSpinner.setBounds(95, 179, 138, 28);
+		timeSpinner.setBounds(68, 179, 197, 28);
 		timeSpinner.setEditor(timeEditor);
 		contentPane.add(timeSpinner);
 
 		final JSpinner timeSpinner_1 = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor_1 = new JSpinner.DateEditor(
 				timeSpinner_1, "HH:mm");
-		timeSpinner_1.setBounds(315, 178, 138, 28);
+		timeSpinner_1.setBounds(327, 179, 197, 28);
 		timeSpinner_1.setEditor(timeEditor_1);
 		contentPane.add(timeSpinner_1);
 
@@ -154,14 +154,14 @@ public class FlightSwing extends JFrame {
 		final List<Airport> airports = database.getAllAirports();
 
 		for (int i = 0; i < airports.size(); i++) {
-			comboBox.addItem(airports.get(i).getName() + " - "
-					+ airports.get(i).getCity());
+			comboBox.addItem(airports.get(i).getCity() + " - "
+					+ airports.get(i).getName());
 		}
 		comboBox.setSelectedIndex(-1);
 
 		for (int i = 0; i < airports.size(); i++) {
-			comboBox_1.addItem(airports.get(i).getName() + " - "
-					+ airports.get(i).getCity());
+			comboBox_1.addItem(airports.get(i).getCity() + " - "
+					+ airports.get(i).getName());
 		}
 		comboBox_1.setSelectedIndex(-1);
 
@@ -201,15 +201,15 @@ public class FlightSwing extends JFrame {
 		contentPane.add(btnTillbaka);
 
 		JLabel lblKr = new JLabel("kr");
-		lblKr.setBounds(239, 219, 61, 16);
+		lblKr.setBounds(275, 219, 61, 16);
 		contentPane.add(lblKr);
 
 		JLabel lblTid = new JLabel("Tid:");
-		lblTid.setBounds(44, 185, 61, 16);
+		lblTid.setBounds(23, 185, 61, 16);
 		contentPane.add(lblTid);
 
 		JLabel lblTid_1 = new JLabel("Tid:");
-		lblTid_1.setBounds(266, 183, 61, 16);
+		lblTid_1.setBounds(291, 185, 61, 16);
 		contentPane.add(lblTid_1);
 
 		btnLggTill.addMouseListener(new MouseAdapter() {

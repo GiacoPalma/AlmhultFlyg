@@ -157,7 +157,7 @@ public class AirportSwing extends JFrame {
 		list.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
 		
-		JLabel lbllmhultFlygplatsadmin = new JLabel("\u00C4lmhult flygplats (Admin)");
+		JLabel lbllmhultFlygplatsadmin = new JLabel("\u00C4lmhult flyg (Admin)");
 		lbllmhultFlygplatsadmin.setFont(new Font("Helvetica", Font.BOLD, 24));
 		lbllmhultFlygplatsadmin.setBounds(60, 0, 399, 37);
 		contentPane.add(lbllmhultFlygplatsadmin);
