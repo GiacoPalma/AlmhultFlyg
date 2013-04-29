@@ -69,7 +69,7 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM airports");
+			rs = st.executeQuery("SELECT * FROM airports ORDER BY city");
 
 			while (rs.next()) {
 				Airport airport = new Airport();
