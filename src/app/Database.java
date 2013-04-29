@@ -37,7 +37,7 @@ public class Database {
 			con = DriverManager.getConnection(url, user, password);
 
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM airports WHERE id=" + id);
+			rs = st.executeQuery("SELECT * FROM Airports WHERE id=" + id);
 
 			if (rs.next()) {
 				Airport airport = new Airport();
