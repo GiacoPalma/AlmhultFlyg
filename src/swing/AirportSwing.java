@@ -162,7 +162,7 @@ public class AirportSwing extends JFrame {
 		lbllmhultFlygplatsadmin.setBounds(60, 0, 399, 37);
 		contentPane.add(lbllmhultFlygplatsadmin);
 		
-		JButton btnLggTillFlygning = new JButton("L\u00E4gg till flygning");
+		JButton btnLggTillFlygning = new JButton("Tillbaka");
 		btnLggTillFlygning.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -170,15 +170,15 @@ public class AirportSwing extends JFrame {
 		btnLggTillFlygning.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				FlightSwing flightSwing = new FlightSwing();
-				flightSwing.setVisible(true);
+				AdminMenu AdminMenu = new AdminMenu();
+				AdminMenu.setVisible(true);
 				setVisible(false);
 			}
 		});
-		btnLggTillFlygning.setBounds(300, 244, 165, 29);
+		btnLggTillFlygning.setBounds(300, 254, 165, 29);
 		contentPane.add(btnLggTillFlygning);
 		
-		btnLggTillFlygplats = new JButton("Lägg till flygplats");
+		btnLggTillFlygplats = new JButton("L\u00E4gg till flygplats");
 		btnLggTillFlygplats.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -187,7 +187,7 @@ public class AirportSwing extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnLggTillFlygplats.setBounds(300, 207, 165, 29);
+		btnLggTillFlygplats.setBounds(300, 214, 165, 29);
 		contentPane.add(btnLggTillFlygplats);
 	}
 	public JButton getBtnLggTill() {

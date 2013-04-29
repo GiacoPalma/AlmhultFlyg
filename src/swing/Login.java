@@ -76,7 +76,7 @@ public class Login {
 				User user = DB.loginUser(textFielduser.getText(), passWord);
 				if(user != null) {
 					if(user.admin_status == 1){
-						AirportSwing reload = new AirportSwing();
+						AdminMenu reload = new AdminMenu();
 						Login.this.frame.dispose();
 						reload.setVisible(true);
 					}

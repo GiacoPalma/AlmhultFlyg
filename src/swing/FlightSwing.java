@@ -66,10 +66,8 @@ public class FlightSwing extends JFrame {
 	 * Create the frame.
 	 */
 	public FlightSwing() {
-		setTitle("Boka flyg");
+		setTitle("Lägg till flyg");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 550, 500);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("Button.background"));
@@ -194,8 +192,8 @@ public class FlightSwing extends JFrame {
 		btnTillbaka.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				AirportSwing airportSwing = new AirportSwing();
-				airportSwing.setVisible(true);
+				AdminMenu AdminMenu = new AdminMenu();
+				AdminMenu.setVisible(true);
 				setVisible(false);
 			}
 		});
