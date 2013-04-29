@@ -20,6 +20,8 @@ import com.toedter.calendar.JCalendar;
 import java.awt.GridLayout;
 import app.Airport;
 import app.Database;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JRadioButton;
 
 public class BookSwing extends JFrame {
 
@@ -97,13 +99,6 @@ public class BookSwing extends JFrame {
 		JButton btnNewButton = new JButton("N\u00E4sta steg");
 		btnNewButton.setBounds(309, 228, 115, 23);
 		contentPane.add(btnNewButton);
-		
-		  JCalendar newCalender = new JCalendar();
-		  GridLayout gridLayout = (GridLayout) newCalender.getDayChooser().getDayPanel().getLayout();
-		  gridLayout.setColumns(7);
-		  gridLayout.setRows(7);
-		  newCalender.setBounds(10, 97, 185, 129);
-		  contentPane.add(newCalender);
 		  
 		  JLabel lblNewLabel_3 = new JLabel("Pris:");
 		  lblNewLabel_3.setBounds(255, 203, 46, 14);
@@ -112,5 +107,32 @@ public class BookSwing extends JFrame {
 		  JButton btnSk = new JButton("S\u00F6k");
 		  btnSk.setBounds(10, 228, 89, 23);
 		  contentPane.add(btnSk);
+		  
+		  
+		  JDateChooser dateChooser = new JDateChooser();
+			dateChooser.setDateFormatString("yyyy-MM-dd");
+			dateChooser.setBounds(10, 146, 185, 20);
+			contentPane.add(dateChooser);
+		  
+		  JDateChooser dateChooser_1 = new JDateChooser();
+		  	dateChooser_1.setDateFormatString("yyyy-MM-dd");
+		  	dateChooser_1.setBounds(10, 197, 185, 20);
+		  	contentPane.add(dateChooser_1);
+		  
+		  JRadioButton rdbtnEnkel = new JRadioButton("Enkel");
+		  rdbtnEnkel.setBounds(10, 93, 77, 23);
+		  contentPane.add(rdbtnEnkel);
+		  
+		  JRadioButton rdbtnTurRetur = new JRadioButton("Tur & Retur");
+		  rdbtnTurRetur.setBounds(89, 93, 109, 23);
+		  contentPane.add(rdbtnTurRetur);
+		  
+		  JLabel lblterresa = new JLabel("\u00C5terresa");
+		  lblterresa.setBounds(10, 177, 89, 14);
+		  contentPane.add(lblterresa);
+		  
+		  JLabel lblUtresa = new JLabel("Utresa");
+		  lblUtresa.setBounds(10, 123, 46, 14);
+		  contentPane.add(lblUtresa);
 	}
 }
