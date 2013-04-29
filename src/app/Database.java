@@ -244,7 +244,7 @@ public class Database {
 		return (Boolean) null;
 	}
 	
-	public static String registerUser(String email, String firstName, String lastName, int phonenumber, int adminStatus, String password){
+	public static String registerUser(String email, String firstName, String lastName, String phonenumber, int adminStatus, String passWord){
 		Connection con = null;
 		PreparedStatement st = null;
 		String ret = "";
@@ -254,11 +254,11 @@ public class Database {
 			String SQL_INSERT = "INSERT INTO users (email, phonenumber, first_name, last_name, admin_status, password) VALUES (?, ?, ?, ?, ?, ?)";
 			st = (PreparedStatement) con.prepareStatement(SQL_INSERT);
 			st.setString(1, email);
-			st.setInt(2, phonenumber);
+			st.setString(2, phonenumber);
 			st.setString(3, firstName);
 			st.setString(4, lastName);
 			st.setInt(5, adminStatus);
-			st.setString(6, password);
+			st.setString(6, passWord);
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
 				throw new SQLException(
@@ -293,12 +293,13 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM users WHERE email="+email+"AND password="+passWord);
+			rs = st.executeQuery("SELECT * FROM users WHERE email='" + email + "' AND password='" + passWord.toString()+"'");
 
 			if (rs.next()) {
 				User user = new User();
+				user.id = rs.getInt("id");
 				user.email = rs.getString("email");
-				user.phonenumber = rs.getInt("phonenumber");
+				user.phonenumber = rs.getString("phonenumber");
 				user.first_name = rs.getString("first_name");
 				user.last_name = rs.getString("last_name");
 				user.admin_status = rs.getInt("admin_status");

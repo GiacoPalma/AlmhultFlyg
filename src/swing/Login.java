@@ -1,4 +1,6 @@
 package swing;
+import app.Database;
+import app.User;
 
 import java.awt.EventQueue;
 
@@ -19,6 +21,7 @@ public class Login {
 	private JButton btnSkapaNyttKonto;
 	private JButton btnLoggaIn;
 	private JPasswordField passwordField;
+	public Database DB = new Database();
 
 	/**
 	 * Launch the application.
@@ -68,9 +71,18 @@ public class Login {
 		btnLoggaIn = new JButton("Logga in");
 		btnLoggaIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String passWord = new String(passwordField.getPassword()); 
+				User user = DB.loginUser(textFielduser.getText(), passWord);
+				if(user.admin_status == 1){
 				AirportSwing reload = new AirportSwing();
 				Login.this.frame.dispose();
 				reload.setVisible(true);
+				}
+				if(user.admin_status == 0){
+				BookSwing reload = new BookSwing();
+				Login.this.frame.dispose();
+				reload.setVisible(true);
+				}
 			}
 		});
 		btnLoggaIn.setBounds(157, 170, 156, 25);

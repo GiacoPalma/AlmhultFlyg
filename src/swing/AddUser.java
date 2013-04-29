@@ -1,9 +1,13 @@
 package swing;
 
+import app.Database;
+import app.User;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -25,6 +29,7 @@ public class AddUser {
 	private JTextField textFieldlastname;
 	private JButton btnSkapaKonto;
 	private JButton btnTillbaka;
+	public Database DB = new Database();
 
 	/**
 	 * Launch the application.
@@ -110,6 +115,14 @@ public class AddUser {
 		
 		btnSkapaKonto = new JButton("Skapa konto");
 		btnSkapaKonto.setBounds(196, 224, 135, 25);
+		btnSkapaKonto.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0){
+				int admin_status = 0;
+				String ret = DB.registerUser(textFieldemail.getText(), textFieldfirstname.getText(), textFieldlastname.getText(), textFieldphone.getText(), admin_status, textFieldpassword.getText());
+				JOptionPane.showMessageDialog(null, ret);
+				
+			}
+		});
 		frame.getContentPane().add(btnSkapaKonto);
 		
 		btnTillbaka = new JButton("Tillbaka");
