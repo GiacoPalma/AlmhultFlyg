@@ -33,7 +33,7 @@ import java.awt.Scrollbar;
 
 public class AirportSwing extends JFrame {
 
-	private JPanel contentPane;
+	public JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
 	public Database DB = new Database();
@@ -213,11 +213,5 @@ public class AirportSwing extends JFrame {
 	}
 	public JButton getBtnLggTillFlygplats() {
 		return btnLggTillFlygplats;
-	}
-	public Scrollbar getScrollbar() {
-		return scrollbar;
-	}
-	public JScrollBar getScrollBar() {
-		return scrollBar;
 	}
 }
