@@ -28,6 +28,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import java.awt.Font;
+import java.awt.ScrollPane;
+import java.awt.Scrollbar;
 
 public class AirportSwing extends JFrame {
 
@@ -40,6 +42,7 @@ public class AirportSwing extends JFrame {
 	private JButton btnRedigera;
 	private static List<Airport> airportlist = new ArrayList<Airport>();
 	private JList list;
+
 	private DefaultListModel listModel = new DefaultListModel(); 
 	private JButton btnLggTillFlygplats;
 	
@@ -65,6 +68,7 @@ public class AirportSwing extends JFrame {
 	 * Create the frame.
 	 */
 	public AirportSwing() {
+		
 		setTitle("Redigera flygplats");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
@@ -135,11 +139,16 @@ public class AirportSwing extends JFrame {
 		JLabel lblStad = new JLabel("Stad:");
 		lblStad.setBounds(275, 106, 61, 16);
 		contentPane.add(lblStad);
-		
-		list = new JList(listModel);
 		for (int i = 0; i<airportlist.size();i++){
 			listModel.addElement(airportlist.get(i).name);		
 		}
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(43, 77, 184, 206);
+		contentPane.add(scrollPane);
+		
+		list = new JList(listModel);
+		scrollPane.setViewportView(list);
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent evt) {
 				int i = list.getSelectedIndex();
@@ -148,8 +157,8 @@ public class AirportSwing extends JFrame {
 			}
 		});
 		list.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		list.setBounds(43, 76, 184, 206);
-		contentPane.add(list);
+		
+		
 		JLabel lbllmhultFlygplatsadmin = new JLabel("\u00C4lmhult flygplats (Admin)");
 		lbllmhultFlygplatsadmin.setFont(new Font("Helvetica", Font.BOLD, 24));
 		lbllmhultFlygplatsadmin.setBounds(60, 0, 399, 37);
@@ -206,5 +215,11 @@ public class AirportSwing extends JFrame {
 	}
 	public JButton getBtnLggTillFlygplats() {
 		return btnLggTillFlygplats;
+	}
+	public Scrollbar getScrollbar() {
+		return scrollbar;
+	}
+	public JScrollBar getScrollBar() {
+		return scrollBar;
 	}
 }
