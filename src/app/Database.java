@@ -11,22 +11,11 @@ import java.util.List;
 import com.mysql.jdbc.PreparedStatement;
 
 public class Database {
-	
+
 	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
 	public static String user = "root";
 	public static String password = "";
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
-	public static String current_user = "";
-=======
->>>>>>> f9eac770b3b74cafbdb0c0548a70613b214badfa
-=======
-		
-=======
->>>>>>> 04386234443dc5b63b8f5b502bfb138e1c7ccfe2
 
->>>>>>> f9eac770b3b74cafbdb0c0548a70613b214badfa
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
 	String serverName = "ginger.umd.edu"; // Use this server.
@@ -36,7 +25,7 @@ public class Database {
 	public static Airport getAirport(int id) {
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;		
+		ResultSet rs = null;
 
 		try {
 			try {
@@ -358,8 +347,6 @@ public class Database {
 				user.first_name = rs.getString("first_name");
 				user.last_name = rs.getString("last_name");
 				user.admin_status = rs.getInt("admin_status");
-				
-				current_user = rs.getString("email");
 				
 				return user;
 				
