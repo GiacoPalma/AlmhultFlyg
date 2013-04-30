@@ -14,7 +14,9 @@ public class Database {
 
 	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
 	public static String user = "root";
-	public static String password = "root";
+	public static String password = "";
+	
+	public static String current_user = "";
 
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
@@ -347,6 +349,8 @@ public class Database {
 				user.first_name = rs.getString("first_name");
 				user.last_name = rs.getString("last_name");
 				user.admin_status = rs.getInt("admin_status");
+				
+				current_user = rs.getString("email");
 				
 				return user;
 				

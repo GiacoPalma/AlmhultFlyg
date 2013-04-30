@@ -24,6 +24,8 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JRadioButton;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BookSwing extends JFrame {
 
@@ -136,6 +138,17 @@ public class BookSwing extends JFrame {
 		  JLabel lblUtresa = new JLabel("Utresa");
 		  lblUtresa.setBounds(10, 123, 46, 14);
 		  contentPane.add(lblUtresa);
+		  
+		  JButton btnTillbaka = new JButton("Tillbaka");
+		  btnTillbaka.addActionListener(new ActionListener() {
+		  	public void actionPerformed(ActionEvent e) {
+		  		UserMenu UserMenu = new UserMenu();
+		  		UserMenu.setVisible(true);
+				setVisible(false);
+		  	}
+		  });
+		  btnTillbaka.setBounds(109, 228, 89, 23);
+		  contentPane.add(btnTillbaka);
 		  contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, combobox, lblNewLabel_1, comboBox_1, rdbtnEnkel, rdbtnTurRetur, lblUtresa, dateChooser, lblterresa, dateChooser_1, dateChooser.getCalendarButton(), dateChooser_1.getCalendarButton(), btnSk, lblNewLabel_2, lblNewLabel_3, list, btnNewButton}));
 	}
 }
