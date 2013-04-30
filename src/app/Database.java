@@ -11,11 +11,11 @@ import java.util.List;
 import com.mysql.jdbc.PreparedStatement;
 
 public class Database {
-
+	
 	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
 	public static String user = "root";
-	public static String password = "root";
-
+	public static String password = "";
+		
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
 	String serverName = "ginger.umd.edu"; // Use this server.
@@ -25,7 +25,7 @@ public class Database {
 	public static Airport getAirport(int id) {
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;
+		ResultSet rs = null;		
 
 		try {
 			try {
