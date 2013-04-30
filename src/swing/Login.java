@@ -87,13 +87,8 @@ public class Login {
 						Login.this.frame.dispose();
 						reload.setVisible(true);
 					}
-<<<<<<< HEAD
-					if(user.admin_status == 0){
-						UserMenu reload = new UserMenu();
-=======
 					if(login.admin_status == 0){
-						BookSwing reload = new BookSwing();
->>>>>>> 04386234443dc5b63b8f5b502bfb138e1c7ccfe2
+						UserMenu reload = new UserMenu();
 						Login.this.frame.dispose();
 						reload.setVisible(true);
 					}
