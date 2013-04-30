@@ -26,7 +26,7 @@ import app.Airport;
 import app.Database;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JRadioButton;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
+//import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 <<<<<<< HEAD
 import java.awt.event.ActionListener;
@@ -44,6 +44,7 @@ public class BookSwing extends JFrame {
 	private static ArrayList<Airport> airportlist = new ArrayList<Airport>();
 	private JList list;
 	private DefaultListModel listModel = new DefaultListModel(); 
+	private JButton btnTillbaka;
 
 	/**
 	 * Launch the application.
@@ -119,7 +120,7 @@ public class BookSwing extends JFrame {
 		  contentPane.add(lblNewLabel_3);
 		  
 		  JButton btnSk = new JButton("S\u00F6k");
-		  btnSk.setBounds(10, 228, 89, 23);
+		  btnSk.setBounds(117, 228, 89, 23);
 		  contentPane.add(btnSk);
 		  
 		  
@@ -154,6 +155,7 @@ public class BookSwing extends JFrame {
 		  contentPane.add(lblUtresa);
 		  
 <<<<<<< HEAD
+<<<<<<< HEAD
 		  JButton btnTillbaka = new JButton("Tillbaka");
 		  btnTillbaka.addActionListener(new ActionListener() {
 		  	public void actionPerformed(ActionEvent e) {
@@ -164,6 +166,22 @@ public class BookSwing extends JFrame {
 		  });
 		  btnTillbaka.setBounds(109, 228, 89, 23);
 		  contentPane.add(btnTillbaka);
+=======
+		  btnTillbaka = new JButton("Tillbaka");
+		  btnTillbaka.addActionListener(new ActionListener() {
+		  	public void actionPerformed(ActionEvent arg0) {
+		  		Login logoff = new Login();
+		  		dispose();
+		  		logoff.frame.setVisible(true);
+		  	}
+		  });
+		  btnTillbaka.setBounds(10, 228, 95, 23);
+		  contentPane.add(btnTillbaka);
+		  //contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, combobox, lblNewLabel_1, comboBox_1, rdbtnEnkel, rdbtnTurRetur, lblUtresa, dateChooser, lblterresa, dateChooser_1, dateChooser.getCalendarButton(), dateChooser_1.getCalendarButton(), btnSk, lblNewLabel_2, lblNewLabel_3, list, btnNewButton}));
+	}
+	public JButton getBtnTillbaka() {
+		return btnTillbaka;
+>>>>>>> 04386234443dc5b63b8f5b502bfb138e1c7ccfe2
 =======
 		  ButtonGroup group = new ButtonGroup();
 		    group.add(rdbtnEnkel);
@@ -198,5 +216,6 @@ public class BookSwing extends JFrame {
 		  
 >>>>>>> f9eac770b3b74cafbdb0c0548a70613b214badfa
 		  contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, combobox, lblNewLabel_1, comboBox_1, rdbtnEnkel, rdbtnTurRetur, lblUtresa, dateChooser, lblterresa, dateChooser_1, dateChooser.getCalendarButton(), dateChooser_1.getCalendarButton(), btnSk, lblNewLabel_2, lblNewLabel_3, list, btnNewButton}));
+>>>>>>> f9eac770b3b74cafbdb0c0548a70613b214badfa
 	}
 }

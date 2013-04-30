@@ -14,6 +14,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Login {
 
@@ -73,21 +78,30 @@ public class Login {
 		btnLoggaIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String passWord = new String(passwordField.getPassword()); 
-				User user = DB.loginUser(textFielduser.getText(), passWord);
-				if(user != null) {
-					if(user.admin_status == 1){
+				String user = new String(textFielduser.getText());
+				User login = DB.loginUser(user, passWord);
+				
+				if(login != null) {
+					if(login.admin_status == 1){
 						AdminMenu reload = new AdminMenu();
 						Login.this.frame.dispose();
 						reload.setVisible(true);
 					}
+<<<<<<< HEAD
 					if(user.admin_status == 0){
 						UserMenu reload = new UserMenu();
+=======
+					if(login.admin_status == 0){
+						BookSwing reload = new BookSwing();
+>>>>>>> 04386234443dc5b63b8f5b502bfb138e1c7ccfe2
 						Login.this.frame.dispose();
 						reload.setVisible(true);
 					}
-				} else {
+				} else if(user.length() == 0){
+					JOptionPane.showMessageDialog(null, "Du har inte skrivit in något användarnamn eller lösenord");
+				} else if(login == null && user.length() != 0) {
 					JOptionPane.showMessageDialog(null, "Fel lösenord eller användarnamn");
-				}
+				} 
 			}
 		});
 		btnLoggaIn.setBounds(157, 170, 156, 25);
