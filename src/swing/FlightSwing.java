@@ -39,6 +39,7 @@ import java.awt.FlowLayout;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 public class FlightSwing extends JFrame {
 
@@ -211,6 +212,7 @@ public class FlightSwing extends JFrame {
 		JLabel lblTid_1 = new JLabel("Tid:");
 		lblTid_1.setBounds(291, 185, 61, 16);
 		contentPane.add(lblTid_1);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblFrn, lblDatum, dateChooser, lblTid, timeSpinner, lblPris, textField, dateChooser.getCalendarButton(), lblTill, comboBox_1, lblDatum_1, dateChooser_1, timeSpinner_1, lblTid_1, lblKr, btnRensaFlten, btnLggTill, btnTillbaka, contentPane, dateChooser_1.getCalendarButton(), comboBox, lblLggTillFlygning}));
 
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
