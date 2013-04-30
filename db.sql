@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Värd: localhost
--- Skapad: 29 apr 2013 kl 11:42
+-- Skapad: 30 apr 2013 kl 08:53
 -- Serverversion: 5.5.24-log
 -- PHP-version: 5.3.13
 
@@ -28,12 +28,10 @@ USE `161957-airport`;
 --
 -- Tabellstruktur `airports`
 --
--- Skapande: 29 apr 2013 kl 09:20
---
 
 CREATE TABLE IF NOT EXISTS `airports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `city` varchar(255) NOT NULL,
+  `city` text CHARACTER SET utf8 COLLATE utf8_swedish_ci,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
@@ -61,8 +59,6 @@ INSERT INTO `airports` (`id`, `city`, `name`) VALUES
 
 --
 -- Tabellstruktur `flights`
---
--- Skapande: 29 apr 2013 kl 09:20
 --
 
 CREATE TABLE IF NOT EXISTS `flights` (
@@ -95,8 +91,6 @@ INSERT INTO `flights` (`id`, `dep_id`, `dep_date`, `dest_id`, `dest_date`, `pric
 
 --
 -- Tabellstruktur `users`
---
--- Skapande: 29 apr 2013 kl 09:20
 --
 
 CREATE TABLE IF NOT EXISTS `users` (

@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AdminMenu extends JFrame {
+public class UserMenu extends JFrame {
 
 	private JPanel contentPane;
 
@@ -24,7 +24,7 @@ public class AdminMenu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminMenu frame = new AdminMenu();
+					UserMenu frame = new UserMenu();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +36,7 @@ public class AdminMenu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AdminMenu() {
+	public UserMenu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -46,7 +46,7 @@ public class AdminMenu extends JFrame {
 		
 		JButton btn_signout = new JButton("Logga ut");
 		btn_signout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
 				Login Login = new Login();
 				Login.frame.setVisible(true);
 				setVisible(false);
@@ -55,46 +55,43 @@ public class AdminMenu extends JFrame {
 		btn_signout.setBounds(335, 11, 89, 23);
 		contentPane.add(btn_signout);
 		
-		JButton btn_users = new JButton("Konton");
-		btn_users.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btn_users.setBounds(10, 88, 115, 23);
-		contentPane.add(btn_users);
-		
-		JButton btn_airports = new JButton("Flygplatser");
-		btn_airports.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AirportSwing AirportSwing = new AirportSwing();
-				AirportSwing.setVisible(true);
-				setVisible(false);
-			}
-		});
-		btn_airports.setBounds(10, 122, 115, 23);
-		contentPane.add(btn_airports);
-		
-		JButton btn_flights = new JButton("Flygningar");
-		btn_flights.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FlightSwing flightSwing = new FlightSwing();
-				flightSwing.setVisible(true);
-				setVisible(false);
-			}
-		});
-		btn_flights.setBounds(10, 156, 115, 23);
-		contentPane.add(btn_flights);
-		
-		JLabel lbl_handle = new JLabel("Hantera");
-		lbl_handle.setBounds(10, 61, 46, 14);
-		contentPane.add(lbl_handle);
-		
 		JLabel lbl_user_lable = new JLabel("Inloggad som:");
 		lbl_user_lable.setBounds(10, 11, 82, 14);
 		contentPane.add(lbl_user_lable);
 		
 		JLabel lbl_user = new JLabel(Database.current_user);
-		lbl_user.setBounds(91, 11, 89, 14);
+		lbl_user.setBounds(91, 11, 46, 14);
 		contentPane.add(lbl_user);
+		
+		JLabel lbl_choice = new JLabel("G\u00F6r ditt val");
+		lbl_choice.setBounds(10, 89, 69, 14);
+		contentPane.add(lbl_choice);
+		
+		JButton btn_book_flight = new JButton("Boka flyg");
+		btn_book_flight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BookSwing BookSwing = new BookSwing();
+				BookSwing.setVisible(true);
+				setVisible(false);
+			}
+		});
+		btn_book_flight.setBounds(10, 114, 116, 23);
+		contentPane.add(btn_book_flight);
+		
+		JButton btn_flights = new JButton("Dina bokningar");
+		btn_flights.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btn_flights.setBounds(10, 148, 116, 23);
+		contentPane.add(btn_flights);
+		
+		JButton btn_account = new JButton("Redigera konto");
+		btn_account.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btn_account.setBounds(10, 182, 116, 23);
+		contentPane.add(btn_account);
 	}
 }

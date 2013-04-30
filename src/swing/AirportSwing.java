@@ -30,6 +30,8 @@ import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.awt.ScrollPane;
 import java.awt.Scrollbar;
+//import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 public class AirportSwing extends JFrame {
 
@@ -189,6 +191,7 @@ public class AirportSwing extends JFrame {
 		});
 		btnLggTillFlygplats.setBounds(300, 214, 165, 29);
 		contentPane.add(btnLggTillFlygplats);
+		//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblFlygplatser, contentPane, btnRedigera, btnTaBort, textField, textField_1, lblNamn, lblStad, scrollPane, list, lbllmhultFlygplatsadmin, btnLggTillFlygning, btnLggTillFlygplats}));
 	}
 	public JButton getBtnLggTill() {
 		return btnLggTill;

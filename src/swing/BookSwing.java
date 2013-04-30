@@ -2,14 +2,18 @@ package swing;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -22,8 +26,16 @@ import app.Airport;
 import app.Database;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JRadioButton;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
+//import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+<<<<<<< HEAD
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+=======
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+>>>>>>> f9eac770b3b74cafbdb0c0548a70613b214badfa
 
 public class BookSwing extends JFrame {
 
@@ -32,6 +44,7 @@ public class BookSwing extends JFrame {
 	private static ArrayList<Airport> airportlist = new ArrayList<Airport>();
 	private JList list;
 	private DefaultListModel listModel = new DefaultListModel(); 
+	private JButton btnTillbaka;
 
 	/**
 	 * Launch the application.
@@ -107,18 +120,20 @@ public class BookSwing extends JFrame {
 		  contentPane.add(lblNewLabel_3);
 		  
 		  JButton btnSk = new JButton("S\u00F6k");
-		  btnSk.setBounds(10, 228, 89, 23);
+		  btnSk.setBounds(117, 228, 89, 23);
 		  contentPane.add(btnSk);
 		  
 		  
-		  JDateChooser dateChooser = new JDateChooser();
+		  final JDateChooser dateChooser = new JDateChooser();
 			dateChooser.setDateFormatString("yyyy-MM-dd");
 			dateChooser.setBounds(10, 146, 185, 20);
+			dateChooser.setVisible(false);
 			contentPane.add(dateChooser);
 		  
-		  JDateChooser dateChooser_1 = new JDateChooser();
+		  final JDateChooser dateChooser_1 = new JDateChooser();
 		  	dateChooser_1.setDateFormatString("yyyy-MM-dd");
 		  	dateChooser_1.setBounds(10, 197, 185, 20);
+		  	dateChooser_1.setVisible(false);
 		  	contentPane.add(dateChooser_1);
 		  
 		  JRadioButton rdbtnEnkel = new JRadioButton("Enkel");
@@ -129,13 +144,78 @@ public class BookSwing extends JFrame {
 		  rdbtnTurRetur.setBounds(89, 93, 109, 23);
 		  contentPane.add(rdbtnTurRetur);
 		  
-		  JLabel lblterresa = new JLabel("\u00C5terresa");
+		  final JLabel lblterresa = new JLabel("\u00C5terresa");
 		  lblterresa.setBounds(10, 177, 89, 14);
+		  lblterresa.setVisible(false);
 		  contentPane.add(lblterresa);
 		  
-		  JLabel lblUtresa = new JLabel("Utresa");
+		  final JLabel lblUtresa = new JLabel("Utresa");
 		  lblUtresa.setBounds(10, 123, 46, 14);
+		  lblUtresa.setVisible(false);
 		  contentPane.add(lblUtresa);
+		  
+<<<<<<< HEAD
+<<<<<<< HEAD
+		  JButton btnTillbaka = new JButton("Tillbaka");
+		  btnTillbaka.addActionListener(new ActionListener() {
+		  	public void actionPerformed(ActionEvent e) {
+		  		UserMenu UserMenu = new UserMenu();
+		  		UserMenu.setVisible(true);
+				setVisible(false);
+		  	}
+		  });
+		  btnTillbaka.setBounds(109, 228, 89, 23);
+		  contentPane.add(btnTillbaka);
+=======
+		  btnTillbaka = new JButton("Tillbaka");
+		  btnTillbaka.addActionListener(new ActionListener() {
+		  	public void actionPerformed(ActionEvent arg0) {
+		  		Login logoff = new Login();
+		  		dispose();
+		  		logoff.frame.setVisible(true);
+		  	}
+		  });
+		  btnTillbaka.setBounds(10, 228, 95, 23);
+		  contentPane.add(btnTillbaka);
+		  //contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, combobox, lblNewLabel_1, comboBox_1, rdbtnEnkel, rdbtnTurRetur, lblUtresa, dateChooser, lblterresa, dateChooser_1, dateChooser.getCalendarButton(), dateChooser_1.getCalendarButton(), btnSk, lblNewLabel_2, lblNewLabel_3, list, btnNewButton}));
+	}
+	public JButton getBtnTillbaka() {
+		return btnTillbaka;
+>>>>>>> 04386234443dc5b63b8f5b502bfb138e1c7ccfe2
+=======
+		  ButtonGroup group = new ButtonGroup();
+		    group.add(rdbtnEnkel);
+		    group.add(rdbtnTurRetur);
+		    
+		    ActionListener rdbtnEnkelListner = new ActionListener() {
+		    	 
+	            @Override
+	            public void actionPerformed(ActionEvent ae) {
+	            	dateChooser.setVisible(true);
+	            	dateChooser_1.setVisible(false);
+					lblUtresa.setVisible(true);
+					lblterresa.setVisible(false);
+	            }
+	             
+	        };
+		    rdbtnEnkel.addActionListener(rdbtnEnkelListner);
+		    
+		    ActionListener rdbtnTurReturListner = new ActionListener() {
+		    	 
+	            @Override
+	            public void actionPerformed(ActionEvent ae) {
+	            	dateChooser.setVisible(true);
+	            	dateChooser_1.setVisible(true);
+	            	lblUtresa.setVisible(true);
+	            	lblterresa.setVisible(true);
+	            }
+	             
+	        };
+	        rdbtnTurRetur.addActionListener(rdbtnTurReturListner);
+		    
+		  
+>>>>>>> f9eac770b3b74cafbdb0c0548a70613b214badfa
 		  contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, combobox, lblNewLabel_1, comboBox_1, rdbtnEnkel, rdbtnTurRetur, lblUtresa, dateChooser, lblterresa, dateChooser_1, dateChooser.getCalendarButton(), dateChooser_1.getCalendarButton(), btnSk, lblNewLabel_2, lblNewLabel_3, list, btnNewButton}));
+>>>>>>> f9eac770b3b74cafbdb0c0548a70613b214badfa
 	}
 }
