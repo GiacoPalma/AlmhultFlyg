@@ -14,7 +14,7 @@ public class Database {
 
 	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
 	public static String user = "root";
-	public static String password = "root";
+	public static String password = "";
 
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
@@ -69,7 +69,7 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM airports ORDER BY city");
+			rs = st.executeQuery(" SELECT * FROM airports ORDER BY city");
 
 			while (rs.next()) {
 				Airport airport = new Airport();
