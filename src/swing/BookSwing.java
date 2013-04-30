@@ -28,17 +28,9 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JRadioButton;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
-<<<<<<< HEAD
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-=======
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-
->>>>>>> fbed866ce795d4b755a4974970a3065f98e5e59a
 
 public class BookSwing extends JFrame {
 
@@ -155,23 +147,7 @@ public class BookSwing extends JFrame {
 		  lblUtresa.setBounds(10, 123, 46, 14);
 		  lblUtresa.setVisible(false);
 		  contentPane.add(lblUtresa);
-<<<<<<< HEAD
 		  
-=======
-
-		  btnTillbaka = new JButton("Tillbaka");
-		  btnTillbaka.addActionListener(new ActionListener() {
-		  	public void actionPerformed(ActionEvent arg0) {
-		  		Login logoff = new Login();
-		  		dispose();
-		  		logoff.frame.setVisible(true);
-		  	}
-		  });
-		  btnTillbaka.setBounds(10, 228, 95, 23);
-		  contentPane.add(btnTillbaka);
-		  //contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, combobox, lblNewLabel_1, comboBox_1, rdbtnEnkel, rdbtnTurRetur, lblUtresa, dateChooser, lblterresa, dateChooser_1, dateChooser.getCalendarButton(), dateChooser_1.getCalendarButton(), btnSk, lblNewLabel_2, lblNewLabel_3, list, btnNewButton}));
-	}
->>>>>>> fbed866ce795d4b755a4974970a3065f98e5e59a
 		  ButtonGroup group = new ButtonGroup();
 		    group.add(rdbtnEnkel);
 		    group.add(rdbtnTurRetur);
@@ -207,12 +183,6 @@ public class BookSwing extends JFrame {
 	        rdbtnTurRetur.addActionListener(rdbtnTurReturListner);
 		    
 		  
-<<<<<<< HEAD
 		  contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, combobox, lblNewLabel_1, comboBox_1, rdbtnEnkel, rdbtnTurRetur, lblUtresa, dateChooser, lblterresa, dateChooser_1, dateChooser.getCalendarButton(), dateChooser_1.getCalendarButton(), btnSk, lblNewLabel_2, lblNewLabel_3, list, btnNewButton}));
-=======
-
-		  contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, combobox, lblNewLabel_1, comboBox_1, rdbtnEnkel, rdbtnTurRetur, lblUtresa, dateChooser, lblterresa, dateChooser_1, dateChooser.getCalendarButton(), dateChooser_1.getCalendarButton(), btnSk, lblNewLabel_2, lblNewLabel_3, list, btnNewButton}));
-
->>>>>>> fbed866ce795d4b755a4974970a3065f98e5e59a
 	}
 }
