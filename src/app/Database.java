@@ -15,7 +15,11 @@ public class Database {
 	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
 	public static String user = "root";
 	public static String password = "";
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> f9eac770b3b74cafbdb0c0548a70613b214badfa
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
 	String serverName = "ginger.umd.edu"; // Use this server.
@@ -69,7 +73,7 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM airports ORDER BY city");
+			rs = st.executeQuery(" SELECT * FROM airports ORDER BY city");
 
 			while (rs.next()) {
 				Airport airport = new Airport();
