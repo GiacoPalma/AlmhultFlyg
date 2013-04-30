@@ -15,9 +15,25 @@ public class Database {
 	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
 	public static String user = "root";
 	public static String password = "";
+<<<<<<< HEAD
 
 	
 	public static String current_user = "";
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+	
+	public static String current_user = "";
+=======
+>>>>>>> f9eac770b3b74cafbdb0c0548a70613b214badfa
+=======
+		
+=======
+>>>>>>> 04386234443dc5b63b8f5b502bfb138e1c7ccfe2
+>>>>>>> 92b2eb9511abb8136f96c7bf779434216aaf3683
+>>>>>>> de74ae612d7c9b07b9273cfb671f6859a6c4d15b
 
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
@@ -131,6 +147,43 @@ public class Database {
 		}
 
 		return ret;
+	}
+	
+	public static List<User> getAllUsers(){
+		
+		List<User> ret = new ArrayList<User>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM users ORDER BY email");
+
+			while (rs.next()) {
+				User user1 = new User();
+				user1.id = rs.getInt("id");
+				user1.email = rs.getString("email");
+				user1.first_name = rs.getString("first_name");
+				user1.last_name = rs.getString("last_name");
+				user1.admin_status = rs.getInt("admin_status");
+				user1.phonenumber = rs.getString("phonenumber");
+				ret.add(user1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+		
+		
 	}
 
 	public static String RemoveAirport(int id) {
@@ -364,5 +417,48 @@ public class Database {
 
 		return null;
 	
+	}
+	
+	public static String UpdateUser(int id, String email, String firstName, String lastName, String phonenumber, int adminStatus){
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("UPDATE users SET email = ?, phonenumber = ?, first_name = ?, last_name = ?, admin_status = ? WHERE id = "
+					+ id);
+			st.setString(1, email);
+			st.setString(2, phonenumber);
+			st.setString(3, firstName);
+			st.setString(4, lastName);
+			st.setInt(5, adminStatus);
+			st.executeUpdate();
+			String ret = "User has been updated";
+			return ret;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public static String RemoveUser(int id){
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM users WHERE id=" + id);
+
+			String ret = "User has been removed";
+			return ret;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }
