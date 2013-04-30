@@ -15,28 +15,8 @@ public class Database {
 	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
 	public static String user = "root";
 	public static String password = "";
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
-	
 	public static String current_user = "";
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
-	public static String current_user = "";
-=======
->>>>>>> f9eac770b3b74cafbdb0c0548a70613b214badfa
-=======
-		
-=======
->>>>>>> 04386234443dc5b63b8f5b502bfb138e1c7ccfe2
->>>>>>> 92b2eb9511abb8136f96c7bf779434216aaf3683
->>>>>>> de74ae612d7c9b07b9273cfb671f6859a6c4d15b
->>>>>>> fbed866ce795d4b755a4974970a3065f98e5e59a
 
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
