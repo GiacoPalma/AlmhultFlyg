@@ -58,6 +58,9 @@ public class AdminMenu extends JFrame {
 		JButton btn_users = new JButton("Konton");
 		btn_users.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AdminUserControl admincontrol = new AdminUserControl();
+				admincontrol.setVisible(true);
+				setVisible(false);
 			}
 		});
 		btn_users.setBounds(10, 88, 115, 23);
@@ -93,7 +96,7 @@ public class AdminMenu extends JFrame {
 		lbl_user_lable.setBounds(10, 11, 82, 14);
 		contentPane.add(lbl_user_lable);
 		
-		JLabel lbl_user = new JLabel(Database.current_user);
+		JLabel lbl_user = new JLabel(Database.current_user.toString());
 		lbl_user.setBounds(91, 11, 89, 14);
 		contentPane.add(lbl_user);
 	}

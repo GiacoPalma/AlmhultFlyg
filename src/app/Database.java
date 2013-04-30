@@ -386,7 +386,7 @@ public class Database {
 				user.first_name = rs.getString("first_name");
 				user.last_name = rs.getString("last_name");
 				user.admin_status = rs.getInt("admin_status");
-				
+				current_user = rs.getString("email");
 				return user;
 				
 				
