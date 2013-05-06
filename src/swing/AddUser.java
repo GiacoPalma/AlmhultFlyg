@@ -2,6 +2,7 @@ package swing;
 
 import app.Database;
 import app.User;
+import app.EmailValidator;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class AddUser {
 
@@ -31,6 +34,7 @@ public class AddUser {
 	private JButton btnTillbaka;
 	private Object object;
 	public Database DB = new Database();
+	
 
 	/**
 	 * Launch the application.
@@ -59,6 +63,8 @@ public class AddUser {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
@@ -107,7 +113,7 @@ public class AddUser {
 		frame.getContentPane().add(lblTelefonnr);
 		
 		lblLsenord = new JLabel("Lösenord");
-		lblLsenord.setBounds(27, 189, 70, 15);
+		lblLsenord.setBounds(27, 188, 70, 15);
 		frame.getContentPane().add(lblLsenord);
 		
 		textFieldlastname = new JTextField();
@@ -119,6 +125,15 @@ public class AddUser {
 		btnSkapaKonto.setBounds(196, 224, 135, 25);
 		btnSkapaKonto.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
+				 EmailValidator emailValidator = new EmailValidator();
+				   if(!emailValidator.validate(textFieldemail.getText().trim())) {
+					   UserMenu main = new UserMenu();
+				        /*
+				           Action that you want to take. For ex. make email id field red
+				           or give message box saying invalid email id.
+				        */
+				   }
+				   else{
 				int admin_status = 0;
 				String ret = DB.registerUser(textFieldemail.getText(), textFieldfirstname.getText(), textFieldlastname.getText(), textFieldphone.getText(), admin_status, textFieldpassword.getText());
 				JOptionPane.showMessageDialog(null, ret);
@@ -126,7 +141,7 @@ public class AddUser {
 				AddUser.this.frame.dispose();
 				reload.frame.setVisible(true);
 			}
-		});
+		}});
 		frame.getContentPane().add(btnSkapaKonto);
 		
 		btnTillbaka = new JButton("Tillbaka");
@@ -140,6 +155,7 @@ public class AddUser {
 		btnTillbaka.setBounds(67, 224, 117, 25);
 		frame.getContentPane().add(btnTillbaka);
 	}
+	
 	public JTextField getTextField() {
 		return textFieldfirstname;
 	}
