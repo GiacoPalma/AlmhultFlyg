@@ -58,7 +58,7 @@ public class AdminMenu extends JFrame {
 		contentPane.add(btn_signout);
 		
 		JButton btn_users = new JButton("Konton");
-<<<<<<< HEAD
+
 		btn_users.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdminUserControl admincontrol = new AdminUserControl();
@@ -67,9 +67,8 @@ public class AdminMenu extends JFrame {
 			}
 		});
 		btn_users.setBounds(10, 88, 115, 23);
-=======
 		btn_users.setBounds(10, 88, 188, 23);
->>>>>>> Redigera flygningar
+
 		contentPane.add(btn_users);
 		
 		JButton btn_airports = new JButton("Flygplatser");
@@ -99,11 +98,8 @@ public class AdminMenu extends JFrame {
 		contentPane.add(lbl_handle);
 		
 		JLabel lbl_user_lable = new JLabel("Inloggad som:");
-<<<<<<< HEAD
 		lbl_user_lable.setBounds(10, 11, 82, 14);
-=======
 		lbl_user_lable.setBounds(10, 11, 166, 14);
->>>>>>> Redigera flygningar
 		contentPane.add(lbl_user_lable);
 		
 		JLabel lbl_user = new JLabel(Database.current_user.toString());

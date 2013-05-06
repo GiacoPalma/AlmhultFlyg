@@ -16,11 +16,9 @@ public class Database {
 	public static String user = "root";
 	public static String password = "";
 
-<<<<<<< HEAD
-=======
+
 	public static String current_user = "";
 
->>>>>>> ac9c51c310c13fb16600c0d61e29864aef402bed
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
 	String serverName = "ginger.umd.edu"; // Use this server.
