@@ -90,6 +90,42 @@ public class Database {
 
 		return null;
 	}
+	
+	public static List<Flight> getAvailableFlights(int dep_id, int dest_id, String dep_date) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		List<Flight> ret = new ArrayList<Flight>();
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM flights WHERE dep_id=" + dep_id + " AND dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
+
+			while (rs.next()) {
+				Flight flight = new Flight();
+				flight.setId(rs.getInt("id"));
+				flight.setDepature_airport_id(rs.getInt("dep_id"));
+				flight.setDepature_date(rs.getString("dep_date"));
+				flight.setDestination_airport_id(rs.getInt("dest_id"));
+				flight.setDestination_date(rs.getString("dest_date"));
+				flight.setPrice(rs.getInt("price"));
+				ret.add(flight);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+	}
 
 	public static List<Airport> getAllAirports() {
 

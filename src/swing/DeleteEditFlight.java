@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class DeleteEditFlight extends JFrame {
 
@@ -67,11 +68,14 @@ public class DeleteEditFlight extends JFrame {
 		contentPane.setLayout(null);
 
 		final List<Flight> allFlights = database.getAllFlights();
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(37, 66, 700, 224);
+		contentPane.add(scrollPane);
 		list = new JList(listModel);
+		scrollPane.setViewportView(list);
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
-		list.setBounds(37, 66, 700, 224);
-		contentPane.add(list);
 
 		for (int i = 0; i < allFlights.size(); i++) {
 			listModel.addElement(allFlights.get(i).getAirport().getName()
@@ -97,7 +101,7 @@ public class DeleteEditFlight extends JFrame {
 					Object[] options = { "Ja", "Nej" };
 					int n = JOptionPane.showOptionDialog(new JFrame(),
 							"Vill du ta bort flygningen?",
-							"BekrŠfta borttagning", JOptionPane.YES_NO_OPTION,
+							"Bekrï¿½fta borttagning", JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE, null, options,
 							options[0]);
 
@@ -109,7 +113,7 @@ public class DeleteEditFlight extends JFrame {
 					}
 				} else {
 					JOptionPane.showMessageDialog(new JFrame(),
-							"Du mŒste vŠlja en flygning att ta bort/redigera",
+							"Du mï¿½ste vï¿½lja en flygning att ta bort/redigera",
 							"Dialog", JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -144,7 +148,7 @@ public class DeleteEditFlight extends JFrame {
 					setVisible(false);
 				} else {
 					JOptionPane.showMessageDialog(new JFrame(),
-							"Du mŒste vŠlja en flygning att ta bort/redigera",
+							"Du mï¿½ste vï¿½lja en flygning att ta bort/redigera",
 							"Dialog", JOptionPane.ERROR_MESSAGE);
 				}
 
