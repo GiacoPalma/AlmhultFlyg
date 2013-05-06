@@ -154,7 +154,6 @@ public class BookSwing extends JFrame {
 		    group.add(rdbtnEnkel);
 		    group.add(rdbtnTurRetur);
 		    
-<<<<<<< HEAD
 		    JButton btnTillbaka = new JButton("Tillbaka");
 		    btnTillbaka.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0){
@@ -165,9 +164,7 @@ public class BookSwing extends JFrame {
 			});
 		    btnTillbaka.setBounds(7, 228, 89, 23);
 		    contentPane.add(btnTillbaka);
-=======
-		    
->>>>>>> 60bc3f4d98d4b920f485d567f3e69d3eaa6a8fae
+
 		    
 		    ActionListener rdbtnEnkelListner = new ActionListener() {
 		    	 
