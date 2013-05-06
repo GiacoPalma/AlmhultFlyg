@@ -127,7 +127,8 @@ public class AddUser {
 			public void actionPerformed(ActionEvent arg0){
 				 EmailValidator emailValidator = new EmailValidator();
 				   if(!emailValidator.validate(textFieldemail.getText().trim())) {
-					   UserMenu main = new UserMenu();
+					   JOptionPane.showMessageDialog(null, "Du måste ange en giltlig Email");
+					   AddUser main = new AddUser();
 				        /*
 				           Action that you want to take. For ex. make email id field red
 				           or give message box saying invalid email id.

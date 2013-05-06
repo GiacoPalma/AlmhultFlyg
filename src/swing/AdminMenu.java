@@ -67,10 +67,7 @@ public class AdminMenu extends JFrame {
 			}
 		});
 		btn_users.setBounds(10, 88, 115, 23);
-<<<<<<< HEAD
-=======
 
->>>>>>> Söka flygningar
 		btn_users.setBounds(10, 88, 188, 23);
 
 		contentPane.add(btn_users);
@@ -102,16 +99,16 @@ public class AdminMenu extends JFrame {
 		contentPane.add(lbl_handle);
 		
 		JLabel lbl_user_lable = new JLabel("Inloggad som:");
-<<<<<<< HEAD
-		lbl_user_lable.setBounds(10, 11, 82, 14);
-		lbl_user_lable.setBounds(10, 11, 166, 14);
-=======
 
 		lbl_user_lable.setBounds(10, 11, 82, 14);
+		lbl_user_lable.setBounds(10, 11, 166, 14);
+
+
+		lbl_user_lable.setBounds(10, 11, 82, 14);
 
 		lbl_user_lable.setBounds(10, 11, 166, 14);
 
->>>>>>> Söka flygningar
+
 		contentPane.add(lbl_user_lable);
 		
 		JLabel lbl_user = new JLabel(Database.current_user.toString());

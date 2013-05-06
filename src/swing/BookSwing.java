@@ -146,9 +146,9 @@ public class BookSwing extends JFrame {
 		  contentPane.add(lblNewLabel_3);
 		  
 		  JButton btnSk = new JButton("S\u00F6k");
-<<<<<<< HEAD
+
 		  btnSk.setBounds(109, 228, 89, 23);
-=======
+
 		  btnSk.addMouseListener(new MouseAdapter() {
 		  	@Override
 		  	public void mouseClicked(MouseEvent arg0) {
@@ -179,7 +179,7 @@ public class BookSwing extends JFrame {
 		  	}
 		  });
 		  btnSk.setBounds(106, 228, 89, 23);
->>>>>>> Söka flygningar
+
 		  contentPane.add(btnSk);
 		  
 		  JRadioButton rdbtnEnkel = new JRadioButton("Enkel");
