@@ -31,6 +31,8 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class BookSwing extends JFrame {
 
@@ -114,7 +116,7 @@ public class BookSwing extends JFrame {
 		  contentPane.add(lblNewLabel_3);
 		  
 		  JButton btnSk = new JButton("S\u00F6k");
-		  btnSk.setBounds(106, 228, 89, 23);
+		  btnSk.setBounds(109, 228, 89, 23);
 		  contentPane.add(btnSk);
 		  
 		  
@@ -152,9 +154,7 @@ public class BookSwing extends JFrame {
 		    group.add(rdbtnEnkel);
 		    group.add(rdbtnTurRetur);
 		    
-		    JButton btnTillbaka = new JButton("Tillbaka");
-		    btnTillbaka.setBounds(7, 228, 89, 23);
-		    contentPane.add(btnTillbaka);
+		    
 		    
 		    ActionListener rdbtnEnkelListner = new ActionListener() {
 		    	 
@@ -181,8 +181,21 @@ public class BookSwing extends JFrame {
 	             
 	        };
 	        rdbtnTurRetur.addActionListener(rdbtnTurReturListner);
+	        
+	        JButton btnTillbaka = new JButton("Tillbaka");
+			btnTillbaka.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					UserMenu main = new UserMenu();
+					BookSwing.this.dispose();
+					main.setVisible(true);
+				}
+			});
+			btnTillbaka.setBounds(10, 228, 89, 23);
+			contentPane.add(btnTillbaka);
+		}
 		    
 		  
-		  contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblNewLabel, combobox, lblNewLabel_1, comboBox_1, rdbtnEnkel, rdbtnTurRetur, lblUtresa, dateChooser, lblterresa, dateChooser_1, dateChooser.getCalendarButton(), dateChooser_1.getCalendarButton(), btnSk, lblNewLabel_2, lblNewLabel_3, list, btnNewButton}));
+
 	}
-}
+
