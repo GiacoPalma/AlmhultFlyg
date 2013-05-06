@@ -1,12 +1,15 @@
 package swing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Window;
-
+import java.util.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -17,13 +20,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import java.awt.List;
+
 import javax.swing.JButton;
+
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import com.toedter.calendar.JCalendar;
 import java.awt.GridLayout;
 import app.Airport;
 import app.Database;
+import app.Flight;
+import javax.swing.JList;
+
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JRadioButton;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
@@ -63,7 +72,7 @@ public class BookSwing extends JFrame {
 	 */
 	public BookSwing() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -71,7 +80,14 @@ public class BookSwing extends JFrame {
 		
 		airportlist = (ArrayList<Airport>) DB.getAllAirports();
 		
-		JComboBox combobox = new JComboBox();
+		final JComboBox combobox = new JComboBox();
+		combobox.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int i = combobox.getSelectedIndex();
+				
+			}
+		});
 		airportlist = (ArrayList<Airport>) DB.getAllAirports();
 		for (int i = 0; i<airportlist.size();i++){
 			combobox.addItem(airportlist.get(i).city);		
@@ -89,15 +105,17 @@ public class BookSwing extends JFrame {
 		lblNewLabel_1.setBounds(10, 51, 67, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		List list = new List();
-		list.setBounds(255, 36, 169, 161);
+		list = new JList(listModel);
+		list.setBorder(new LineBorder(new Color(0, 0, 0)));
+		list.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
+		list.setBounds(255, 36, 539, 163);
 		contentPane.add(list);
 		
 		JLabel lblNewLabel_2 = new JLabel("Tillg\u00E4ngliga Flighter");
 		lblNewLabel_2.setBounds(254, 11, 144, 14);
 		contentPane.add(lblNewLabel_2);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		final JComboBox comboBox_1 = new JComboBox();
 		airportlist = (ArrayList<Airport>) DB.getAllAirports();
 		for (int i = 0; i<airportlist.size();i++){
 			comboBox_1.addItem(airportlist.get(i).city);		
@@ -110,27 +128,59 @@ public class BookSwing extends JFrame {
 		JButton btnNewButton = new JButton("N\u00E4sta steg");
 		btnNewButton.setBounds(309, 228, 115, 23);
 		contentPane.add(btnNewButton);
+		
+		final JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		dateChooser.setBounds(10, 146, 185, 20);
+		dateChooser.setVisible(false);
+		contentPane.add(dateChooser);
+	  
+	  final JDateChooser dateChooser_1 = new JDateChooser();
+	  	dateChooser_1.setDateFormatString("yyyy-MM-dd");
+	  	dateChooser_1.setBounds(10, 197, 185, 20);
+	  	dateChooser_1.setVisible(false);
+	  	contentPane.add(dateChooser_1);
 		  
 		  JLabel lblNewLabel_3 = new JLabel("Pris:");
 		  lblNewLabel_3.setBounds(255, 203, 46, 14);
 		  contentPane.add(lblNewLabel_3);
 		  
 		  JButton btnSk = new JButton("S\u00F6k");
+<<<<<<< HEAD
 		  btnSk.setBounds(109, 228, 89, 23);
+=======
+		  btnSk.addMouseListener(new MouseAdapter() {
+		  	@Override
+		  	public void mouseClicked(MouseEvent arg0) {
+		  		int selDep = combobox.getSelectedIndex();
+		  		int dep_id = airportlist.get(selDep).id;
+		  		int selDest = comboBox_1.getSelectedIndex();
+		  		int dest_id = airportlist.get(selDest).id;
+		  		java.util.Date depDate = dateChooser.getDate();
+		  		String inputDeptDateFormated = new SimpleDateFormat(
+						"yyyy-MM-dd").format(depDate);
+		  		List<Flight> flights = new ArrayList<Flight>();
+		  		flights = Database.getAvailableFlights(dep_id, dest_id, inputDeptDateFormated);
+		  		
+		  		if(flights != null){
+		  			listModel.clear();
+		  			System.out.println(flights.size());
+		  			for(int i=0; i<flights.size(); i++){
+		  				Airport airport = new Airport();
+		  				Airport destAirport = new Airport();
+		  				airport = Database.getAirport(flights.get(i).depature_airport_id);
+		  				destAirport = Database.getAirport(flights.get(i).destination_airport_id);
+		  				listModel.addElement(airport.getName() +" - "+ destAirport.getName() + " "+flights.get(i).getDepature_date() + " - "+ flights.get(i).getDestination_date() + " Pris: " + flights.get(i).getPrice());
+		  			}
+		  		} else {
+		  			listModel.clear();
+		  			listModel.addElement("Det finns inga flygningar");
+		  		}
+		  	}
+		  });
+		  btnSk.setBounds(106, 228, 89, 23);
+>>>>>>> Söka flygningar
 		  contentPane.add(btnSk);
-		  
-		  
-		  final JDateChooser dateChooser = new JDateChooser();
-			dateChooser.setDateFormatString("yyyy-MM-dd");
-			dateChooser.setBounds(10, 146, 185, 20);
-			dateChooser.setVisible(false);
-			contentPane.add(dateChooser);
-		  
-		  final JDateChooser dateChooser_1 = new JDateChooser();
-		  	dateChooser_1.setDateFormatString("yyyy-MM-dd");
-		  	dateChooser_1.setBounds(10, 197, 185, 20);
-		  	dateChooser_1.setVisible(false);
-		  	contentPane.add(dateChooser_1);
 		  
 		  JRadioButton rdbtnEnkel = new JRadioButton("Enkel");
 		  rdbtnEnkel.setBounds(10, 93, 77, 23);
