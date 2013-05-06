@@ -16,6 +16,7 @@ public class Database {
 	public static String user = "root";
 	public static String password = "";
 
+
 	public static String current_user = "";
 
 	Connection connection = null;
@@ -39,7 +40,7 @@ public class Database {
 			con = DriverManager.getConnection(url, user, password);
 
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM Airports WHERE id=" + id);
+			rs = st.executeQuery("SELECT * FROM airports WHERE id=" + id);
 
 			if (rs.next()) {
 				Airport airport = new Airport();
@@ -47,6 +48,41 @@ public class Database {
 				airport.city = rs.getString("city");
 
 				return airport;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public static Flight getFlight(int id) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM flights WHERE id=" + id);
+
+			if (rs.next()) {
+				Flight flight = new Flight();
+				flight.setId(rs.getInt("id"));
+				flight.setDepature_airport_id(rs.getInt("dep_id"));
+				flight.setDepature_date(rs.getString("dep_date"));
+				flight.setDestination_airport_id(rs.getInt("dest_id"));
+				flight.setDestination_date(rs.getString("dest_date"));
+				flight.setPrice(rs.getInt("price"));
+				
+				return flight;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -231,29 +267,33 @@ public class Database {
 		return null;
 	}
 
-	public static String UpdateFlight(int id, int price, int dep_id,
-			int dep_date, int dest_id, int dest_date) {
+	public static boolean UpdateFlight(Flight flight) {
 		Connection con = null;
 		java.sql.PreparedStatement st = null;
-		ResultSet rs = null;
+		
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("UPDATE flights (dep_id, dep_date, dest_id, dest_date, price) VALUES (?, ?, ?, ?, ?) WHERE id = "
-					+ id);
-			st.setNString(1, Integer.toString(dep_id));
-			st.setNString(2, Integer.toString(dep_date));
-			st.setNString(3, Integer.toString(dest_id));
-			st.setNString(4, Integer.toString(dest_date));
-			st.setNString(5, Integer.toString(price));
+			st = con.prepareStatement("UPDATE flights SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=? WHERE id=?");
+			st.setInt(1, flight.getDepature_airport_id());
+			st.setString(2, flight.getDepature_date());
+			st.setInt(3, flight.getDestination_airport_id());
+			st.setString(4, flight.getDestination_date());
+			st.setInt(5, flight.getPrice());
+			st.setInt(6, flight.getId());
 			st.executeUpdate();
-			String ret = "Flight has been updated";
-			return ret;
+			int affectedRows = st.executeUpdate();
+			if (affectedRows == 0) {
+				throw new SQLException(
+						"Att skapa flygningen misslyckades.");
+			} else {
+				return true;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return null;
+		return (Boolean) null;
 	}
 
 	public static String AddFlight(int id, int price, int dep_id, int dep_date,
@@ -386,7 +426,7 @@ public class Database {
 				user.first_name = rs.getString("first_name");
 				user.last_name = rs.getString("last_name");
 				user.admin_status = rs.getInt("admin_status");
-				
+				current_user = rs.getString("email");
 				return user;
 				
 				

@@ -168,8 +168,8 @@ public class AdminUserControl extends JFrame {
 		JButton btnNyttKonto = new JButton("Nytt konto");
 		btnNyttKonto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AddUser Adduser = new AddUser();
-				Adduser.frame.setVisible(true);
+				AddUserAdmin Adduser = new AddUserAdmin();
+				Adduser.setVisible(true);
 				setVisible(false);
 				
 			}
@@ -189,5 +189,16 @@ public class AdminUserControl extends JFrame {
 		Scrollbar scrollbar = new Scrollbar();
 		scrollbar.setBounds(192, 30, 17, 272);
 		contentPane.add(scrollbar);
+		
+		JButton btnTillbaka = new JButton("Tillbaka");
+		btnTillbaka.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AdminMenu menu = new AdminMenu();
+				menu.setVisible(true);
+				setVisible(false);
+			}
+		});
+		btnTillbaka.setBounds(265, 315, 89, 23);
+		contentPane.add(btnTillbaka);
 	}
 }

@@ -6,6 +6,14 @@ public class Airport {
 	public String name;
 	public String city;
 
+	public Airport(){
+		
+	}
+	
+	public Airport(Airport airport) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -30,9 +38,8 @@ public class Airport {
 		this.city = city;
 	}
 
-	public void Print() {
-		System.out.println(name);
-		System.out.println(city);
+	public String print() {
+		return this.city + " - " + this.name;
 	}
 
 }
