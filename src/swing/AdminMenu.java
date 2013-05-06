@@ -12,11 +12,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AdminMenu extends JFrame {
 
 	private JPanel contentPane;
-	public Database DB = new Database();
 
 	/**
 	 * Launch the application.
@@ -57,7 +58,18 @@ public class AdminMenu extends JFrame {
 		contentPane.add(btn_signout);
 		
 		JButton btn_users = new JButton("Konton");
+<<<<<<< HEAD
+		btn_users.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AdminUserControl admincontrol = new AdminUserControl();
+				admincontrol.setVisible(true);
+				setVisible(false);
+			}
+		});
 		btn_users.setBounds(10, 88, 115, 23);
+=======
+		btn_users.setBounds(10, 88, 188, 23);
+>>>>>>> Redigera flygningar
 		contentPane.add(btn_users);
 		
 		JButton btn_airports = new JButton("Flygplatser");
@@ -68,10 +80,10 @@ public class AdminMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btn_airports.setBounds(10, 122, 115, 23);
+		btn_airports.setBounds(10, 122, 188, 23);
 		contentPane.add(btn_airports);
 		
-		JButton btn_flights = new JButton("Flygningar");
+		JButton btn_flights = new JButton("L\u00E4gg till flygning");
 		btn_flights.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FlightSwing flightSwing = new FlightSwing();
@@ -79,19 +91,35 @@ public class AdminMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btn_flights.setBounds(10, 156, 115, 23);
+		btn_flights.setBounds(10, 156, 188, 23);
 		contentPane.add(btn_flights);
 		
 		JLabel lbl_handle = new JLabel("Hantera");
-		lbl_handle.setBounds(10, 61, 46, 14);
+		lbl_handle.setBounds(10, 61, 89, 14);
 		contentPane.add(lbl_handle);
 		
 		JLabel lbl_user_lable = new JLabel("Inloggad som:");
-		lbl_user_lable.setBounds(10, 11, 89, 14);
+<<<<<<< HEAD
+		lbl_user_lable.setBounds(10, 11, 82, 14);
+=======
+		lbl_user_lable.setBounds(10, 11, 166, 14);
+>>>>>>> Redigera flygningar
 		contentPane.add(lbl_user_lable);
 		
-		JLabel lbl_user = new JLabel("");
-		lbl_user.setBounds(109, 11, 89, 14);
+		JLabel lbl_user = new JLabel(Database.current_user.toString());
+		lbl_user.setBounds(91, 11, 89, 14);
 		contentPane.add(lbl_user);
+		
+		JButton btnNewButton = new JButton("Ta bort/redigera flygning");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				setVisible(false);
+				DeleteEditFlight delEdit = new DeleteEditFlight();
+				delEdit.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(10, 186, 188, 29);
+		contentPane.add(btnNewButton);
 	}
 }

@@ -29,6 +29,7 @@ public class AddUser {
 	private JTextField textFieldlastname;
 	private JButton btnSkapaKonto;
 	private JButton btnTillbaka;
+	private Object object;
 	public Database DB = new Database();
 
 	/**
@@ -51,6 +52,7 @@ public class AddUser {
 	 * Create the application.
 	 */
 	public AddUser() {
+		
 		initialize();
 	}
 

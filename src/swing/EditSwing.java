@@ -40,11 +40,12 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
 
-public class FlightSwing extends JFrame {
+public class EditSwing extends JFrame {
 
 	private JPanel contentPane;
 	public Database database = new Database();
 	private JTextField textField;
+	private int selectedId;
 
 	/**
 	 * Launch the application.
@@ -62,18 +63,19 @@ public class FlightSwing extends JFrame {
 		});
 	}
 
+	public void setId(int selectedId) {
+		this.selectedId = selectedId;
+	}
+
 	/**
 	 * Create the frame.
 	 */
-	public FlightSwing() {
-<<<<<<< Updated upstream
-		setTitle("Boka flyg");
+	public EditSwing(int selectedId) {
+		this.selectedId = selectedId;
+		final Flight selectedFlight = database.getFlight(selectedId);
+		setTitle("Lägg till flyg");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 550, 500);
-=======
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
->>>>>>> Stashed changes
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("Button.background"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -81,124 +83,117 @@ public class FlightSwing extends JFrame {
 		contentPane.setLayout(null);
 
 		final JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(315, 108, 123, 27);
+		Airport dest_airport = database.getAirport(selectedFlight
+				.getDestination_airport_id());
+		comboBox_1.setBounds(327, 107, 197, 27);
 		contentPane.add(comboBox_1);
 
 		JLabel lblTill = new JLabel("Till:");
-		lblTill.setBounds(265, 112, 24, 16);
+		lblTill.setBounds(293, 112, 24, 16);
 		contentPane.add(lblTill);
 
 		JLabel lblPris = new JLabel("Pris:");
-		lblPris.setBounds(44, 219, 27, 16);
+		lblPris.setBounds(23, 219, 27, 16);
 		contentPane.add(lblPris);
 
 		JLabel lblFrn = new JLabel("Fr\u00E5n: ");
-		lblFrn.setBounds(44, 112, 35, 16);
+		lblFrn.setBounds(23, 112, 35, 16);
 		contentPane.add(lblFrn);
-
+		Airport dep_airport = database.getAirport(selectedFlight
+				.getDepature_airport_id());
 		final JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(95, 108, 123, 27);
+		comboBox.setBounds(68, 108, 197, 27);
 		contentPane.add(comboBox);
 
-		JButton btnLggTill = new JButton("L\u00E4gg till");
+		final List<Airport> airports = database.getAllAirports();
+
+		for (int i = 0; i < airports.size(); i++) {
+			comboBox.addItem(airports.get(i).print());
+		}
+
+		for (int i = 0; i < airports.size(); i++) {
+			comboBox_1.addItem(airports.get(i).print());
+
+		}
+
+		for (int i = 0; i < comboBox.getItemCount(); i++) {
+			if (comboBox.getItemAt(i).equals(dep_airport.print())) {
+				comboBox.setSelectedIndex(i);
+				break;
+			}
+		}
+
+		for (int i = 0; i < comboBox_1.getItemCount(); i++) {
+			if (comboBox_1.getItemAt(i).equals(dest_airport.print())) {
+				comboBox_1.setSelectedIndex(i);
+				break;
+			}
+		}
+
+		JButton btnLggTill = new JButton("Uppdatera");
 		btnLggTill.setBounds(44, 272, 95, 29);
 		contentPane.add(btnLggTill);
 
-		JLabel lblLggTillFlygning = new JLabel("L\u00E4gg till flygning");
-		lblLggTillFlygning.setBounds(44, 40, 196, 25);
+		JLabel lblLggTillFlygning = new JLabel("Redigera flygning");
+		lblLggTillFlygning.setBounds(44, 40, 292, 25);
 		lblLggTillFlygning.setFont(new Font("Helvetica", Font.BOLD, 24));
 		contentPane.add(lblLggTillFlygning);
 
 		final JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("yyyy-MM-dd");
-		dateChooser.setBounds(95, 145, 138, 28);
+		dateChooser.setBounds(68, 146, 197, 28);
 		contentPane.add(dateChooser);
+		dateChooser.setDate(selectedFlight.getFormattedDepature_date());
 
 		JLabel lblDatum = new JLabel("Datum:");
-		lblDatum.setBounds(44, 149, 61, 16);
+		lblDatum.setBounds(23, 146, 61, 16);
 		contentPane.add(lblDatum);
 
 		final JDateChooser dateChooser_1 = new JDateChooser();
 		dateChooser_1.setDateFormatString("yyyy-MM-dd");
-		dateChooser_1.setBounds(315, 142, 138, 28);
+		dateChooser_1.setBounds(327, 145, 197, 28);
 		contentPane.add(dateChooser_1);
+		dateChooser_1.setDate(selectedFlight.getFormattedDestination_date());
 
 		JLabel lblDatum_1 = new JLabel("Datum:");
-		lblDatum_1.setBounds(265, 148, 61, 16);
+		lblDatum_1.setBounds(275, 145, 61, 16);
 		contentPane.add(lblDatum_1);
 
 		textField = new JTextField();
-		textField.setBounds(95, 213, 110, 28);
+		textField.setBounds(68, 213, 197, 28);
 		contentPane.add(textField);
 		textField.setColumns(10);
+		String sendPrice = Integer.toString(selectedFlight.price);
+
+		textField.setText(sendPrice);
 
 		final JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner,
 				"HH:mm");
-		timeSpinner.setBounds(95, 179, 125, 28);
+		timeSpinner.setBounds(68, 179, 197, 28);
 		timeSpinner.setEditor(timeEditor);
 		contentPane.add(timeSpinner);
 
 		final JSpinner timeSpinner_1 = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor_1 = new JSpinner.DateEditor(
 				timeSpinner_1, "HH:mm");
-		timeSpinner_1.setBounds(315, 178, 125, 28);
+		timeSpinner_1.setBounds(327, 179, 197, 28);
 		timeSpinner_1.setEditor(timeEditor_1);
 		contentPane.add(timeSpinner_1);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		Date noonTime;
-		try {
-			noonTime = sdf.parse("12:00:00");
-			timeSpinner.setValue(noonTime);
-			timeSpinner_1.setValue(noonTime);
-		} catch (java.text.ParseException e1) {
-			e1.printStackTrace();
-		}
+		Date depTime = selectedFlight.getFormattedDepature_date();
+		Date destTime = selectedFlight.getFormattedDestination_date();
 
-		final List<Airport> airports = database.getAllAirports();
-
-		for (int i = 0; i < airports.size(); i++) {
-			comboBox.addItem(airports.get(i).getName() + " - "
-					+ airports.get(i).getCity());
-		}
-		comboBox.setSelectedIndex(-1);
-
-		for (int i = 0; i < airports.size(); i++) {
-			comboBox_1.addItem(airports.get(i).getName() + " - "
-					+ airports.get(i).getCity());
-		}
-		comboBox_1.setSelectedIndex(-1);
-
-		JButton btnRensaFlten = new JButton("Rensa f\u00E4lten");
-		btnRensaFlten.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				comboBox.setSelectedIndex(-1);
-				comboBox_1.setSelectedIndex(-1);
-				dateChooser.setDate(null);
-				dateChooser_1.setDate(null);
-				textField.setText(null);
-				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-				Date noonTime;
-				try {
-					noonTime = sdf.parse("12:00:00");
-					timeSpinner.setValue(noonTime);
-					timeSpinner_1.setValue(noonTime);
-				} catch (java.text.ParseException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnRensaFlten.setBounds(152, 272, 117, 29);
-		contentPane.add(btnRensaFlten);
+		timeSpinner.setValue(depTime);
+		timeSpinner_1.setValue(destTime);
 
 		JButton btnTillbaka = new JButton("Tillbaka");
 		btnTillbaka.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				AirportSwing airportSwing = new AirportSwing();
-				airportSwing.setVisible(true);
+				DeleteEditFlight deleteEditFlight = new DeleteEditFlight();
+				deleteEditFlight.setVisible(true);
 				setVisible(false);
 			}
 		});
@@ -206,21 +201,22 @@ public class FlightSwing extends JFrame {
 		contentPane.add(btnTillbaka);
 
 		JLabel lblKr = new JLabel("kr");
-		lblKr.setBounds(208, 219, 61, 16);
+		lblKr.setBounds(275, 219, 61, 16);
 		contentPane.add(lblKr);
 
 		JLabel lblTid = new JLabel("Tid:");
-		lblTid.setBounds(44, 185, 61, 16);
+		lblTid.setBounds(23, 185, 61, 16);
 		contentPane.add(lblTid);
 
 		JLabel lblTid_1 = new JLabel("Tid:");
-		lblTid_1.setBounds(266, 183, 61, 16);
+		lblTid_1.setBounds(291, 185, 61, 16);
 		contentPane.add(lblTid_1);
 
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Flight flight = new Flight();
+				flight.setId(selectedFlight.getId());
 				if (comboBox.getSelectedIndex() == -1) {
 					flight.setDepature_airport_id(0);
 				} else {
@@ -260,25 +256,11 @@ public class FlightSwing extends JFrame {
 
 				}
 				if (flight.validate()) {
-					boolean created = database.createFlight(flight);
-					if (created) {
+					boolean updated = database.UpdateFlight(flight);
+					if (updated) {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Flygningen har lagts till", "Dialog",
+								"Flygningen har uppdaterats", "Dialog",
 								JOptionPane.INFORMATION_MESSAGE);
-						comboBox.setSelectedIndex(-1);
-						comboBox_1.setSelectedIndex(-1);
-						dateChooser.setDate(null);
-						dateChooser_1.setDate(null);
-						textField.setText(null);
-						SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-						Date noonTime;
-						try {
-							noonTime = sdf.parse("12:00:00");
-							timeSpinner.setValue(noonTime);
-							timeSpinner_1.setValue(noonTime);
-						} catch (java.text.ParseException e1) {
-							e1.printStackTrace();
-						}
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
 								"NŒgonting gick fel", "Dialog",

@@ -11,11 +11,16 @@ import java.util.List;
 import com.mysql.jdbc.PreparedStatement;
 
 public class Database {
-	
+
 	public static String url = "jdbc:mysql://localhost:3306/161957-airport";
 	public static String user = "root";
 	public static String password = "";
 
+<<<<<<< HEAD
+=======
+	public static String current_user = "";
+
+>>>>>>> ac9c51c310c13fb16600c0d61e29864aef402bed
 	Connection connection = null;
 	public static String driverName = "com.mysql.jdbc.Driver"; // for MySql
 	String serverName = "ginger.umd.edu"; // Use this server.
@@ -25,7 +30,7 @@ public class Database {
 	public static Airport getAirport(int id) {
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;		
+		ResultSet rs = null;
 
 		try {
 			try {
@@ -37,7 +42,7 @@ public class Database {
 			con = DriverManager.getConnection(url, user, password);
 
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM Airports WHERE id=" + id);
+			rs = st.executeQuery("SELECT * FROM airports WHERE id=" + id);
 
 			if (rs.next()) {
 				Airport airport = new Airport();
@@ -45,6 +50,41 @@ public class Database {
 				airport.city = rs.getString("city");
 
 				return airport;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public static Flight getFlight(int id) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM flights WHERE id=" + id);
+
+			if (rs.next()) {
+				Flight flight = new Flight();
+				flight.setId(rs.getInt("id"));
+				flight.setDepature_airport_id(rs.getInt("dep_id"));
+				flight.setDepature_date(rs.getString("dep_date"));
+				flight.setDestination_airport_id(rs.getInt("dest_id"));
+				flight.setDestination_date(rs.getString("dest_date"));
+				flight.setPrice(rs.getInt("price"));
+				
+				return flight;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,6 +169,43 @@ public class Database {
 
 		return ret;
 	}
+	
+	public static List<User> getAllUsers(){
+		
+		List<User> ret = new ArrayList<User>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM users ORDER BY email");
+
+			while (rs.next()) {
+				User user1 = new User();
+				user1.id = rs.getInt("id");
+				user1.email = rs.getString("email");
+				user1.first_name = rs.getString("first_name");
+				user1.last_name = rs.getString("last_name");
+				user1.admin_status = rs.getInt("admin_status");
+				user1.phonenumber = rs.getString("phonenumber");
+				ret.add(user1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+		
+		
+	}
 
 	public static String RemoveAirport(int id) {
 		Connection con = null;
@@ -192,29 +269,33 @@ public class Database {
 		return null;
 	}
 
-	public static String UpdateFlight(int id, int price, int dep_id,
-			int dep_date, int dest_id, int dest_date) {
+	public static boolean UpdateFlight(Flight flight) {
 		Connection con = null;
 		java.sql.PreparedStatement st = null;
-		ResultSet rs = null;
+		
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("UPDATE flights (dep_id, dep_date, dest_id, dest_date, price) VALUES (?, ?, ?, ?, ?) WHERE id = "
-					+ id);
-			st.setNString(1, Integer.toString(dep_id));
-			st.setNString(2, Integer.toString(dep_date));
-			st.setNString(3, Integer.toString(dest_id));
-			st.setNString(4, Integer.toString(dest_date));
-			st.setNString(5, Integer.toString(price));
+			st = con.prepareStatement("UPDATE flights SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=? WHERE id=?");
+			st.setInt(1, flight.getDepature_airport_id());
+			st.setString(2, flight.getDepature_date());
+			st.setInt(3, flight.getDestination_airport_id());
+			st.setString(4, flight.getDestination_date());
+			st.setInt(5, flight.getPrice());
+			st.setInt(6, flight.getId());
 			st.executeUpdate();
-			String ret = "Flight has been updated";
-			return ret;
+			int affectedRows = st.executeUpdate();
+			if (affectedRows == 0) {
+				throw new SQLException(
+						"Att skapa flygningen misslyckades.");
+			} else {
+				return true;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return null;
+		return (Boolean) null;
 	}
 
 	public static String AddFlight(int id, int price, int dep_id, int dep_date,
@@ -347,7 +428,7 @@ public class Database {
 				user.first_name = rs.getString("first_name");
 				user.last_name = rs.getString("last_name");
 				user.admin_status = rs.getInt("admin_status");
-				
+				current_user = rs.getString("email");
 				return user;
 				
 				
@@ -359,5 +440,48 @@ public class Database {
 
 		return null;
 	
+	}
+	
+	public static String UpdateUser(int id, String email, String firstName, String lastName, String phonenumber, int adminStatus){
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("UPDATE users SET email = ?, phonenumber = ?, first_name = ?, last_name = ?, admin_status = ? WHERE id = "
+					+ id);
+			st.setString(1, email);
+			st.setString(2, phonenumber);
+			st.setString(3, firstName);
+			st.setString(4, lastName);
+			st.setInt(5, adminStatus);
+			st.executeUpdate();
+			String ret = "User has been updated";
+			return ret;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public static String RemoveUser(int id){
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM users WHERE id=" + id);
+
+			String ret = "User has been removed";
+			return ret;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }
