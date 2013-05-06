@@ -167,7 +167,6 @@ public class BookSwing extends JFrame {
 
 		    
 		    ActionListener rdbtnEnkelListner = new ActionListener() {
-		    	 
 	            @Override
 	            public void actionPerformed(ActionEvent ae) {
 	            	dateChooser.setVisible(true);
@@ -192,18 +191,7 @@ public class BookSwing extends JFrame {
 	        };
 	        rdbtnTurRetur.addActionListener(rdbtnTurReturListner);
 	        
-	        JButton btnTillbaka = new JButton("Tillbaka");
-			btnTillbaka.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					UserMenu main = new UserMenu();
-					BookSwing.this.dispose();
-					main.setVisible(true);
-				}
-			});
-			btnTillbaka.setBounds(10, 228, 89, 23);
-			contentPane.add(btnTillbaka);
-		}
+	        }
 		    
 		  
 
