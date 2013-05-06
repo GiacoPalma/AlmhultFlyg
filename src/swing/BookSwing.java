@@ -153,6 +153,13 @@ public class BookSwing extends JFrame {
 		    group.add(rdbtnTurRetur);
 		    
 		    JButton btnTillbaka = new JButton("Tillbaka");
+		    btnTillbaka.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0){
+					UserMenu reload = new UserMenu();
+					dispose();
+					reload.setVisible(true);
+				}
+			});
 		    btnTillbaka.setBounds(7, 228, 89, 23);
 		    contentPane.add(btnTillbaka);
 		    
