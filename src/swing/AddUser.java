@@ -95,7 +95,7 @@ public class AddUser {
 		frame.getContentPane().add(lblFrnamn);
 		
 		lblEfternamn = new JLabel("Efternamn:");
-		lblEfternamn.setBounds(31, 90, 93, 15);
+		lblEfternamn.setBounds(27, 91, 93, 15);
 		frame.getContentPane().add(lblEfternamn);
 		
 		lblEmail = new JLabel("Email:");
@@ -103,11 +103,11 @@ public class AddUser {
 		frame.getContentPane().add(lblEmail);
 		
 		lblTelefonnr = new JLabel("Telefonnr:");
-		lblTelefonnr.setBounds(27, 155, 97, 15);
+		lblTelefonnr.setBounds(27, 156, 97, 15);
 		frame.getContentPane().add(lblTelefonnr);
 		
 		lblLsenord = new JLabel("Lösenord");
-		lblLsenord.setBounds(27, 188, 70, 15);
+		lblLsenord.setBounds(27, 189, 70, 15);
 		frame.getContentPane().add(lblLsenord);
 		
 		textFieldlastname = new JTextField();

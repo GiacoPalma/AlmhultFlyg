@@ -64,27 +64,27 @@ public class AddUserAdmin extends JFrame {
 		contentPane.add(lblSkapaNyttKonto);
 		
 		firstnameField = new JTextField();
-		firstnameField.setBounds(143, 59, 121, 32);
+		firstnameField.setBounds(155, 59, 121, 32);
 		contentPane.add(firstnameField);
 		firstnameField.setColumns(10);
 		
 		lastnameField = new JTextField();
-		lastnameField.setBounds(143, 90, 121, 32);
+		lastnameField.setBounds(155, 90, 121, 32);
 		contentPane.add(lastnameField);
 		lastnameField.setColumns(10);
 		
 		emailField = new JTextField();
-		emailField.setBounds(143, 123, 121, 32);
+		emailField.setBounds(155, 123, 121, 32);
 		contentPane.add(emailField);
 		emailField.setColumns(10);
 		
 		phoneField = new JTextField();
-		phoneField.setBounds(143, 154, 121, 32);
+		phoneField.setBounds(155, 154, 121, 32);
 		contentPane.add(phoneField);
 		phoneField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("F\u00F6rnamn:");
-		lblNewLabel.setBounds(46, 68, 46, 14);
+		lblNewLabel.setBounds(46, 68, 67, 14);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblEfternamn = new JLabel("Efternamn:");
@@ -129,7 +129,7 @@ public class AddUserAdmin extends JFrame {
 				
 			}
 		});
-		btnSkapaNyttKonto.setBounds(225, 282, 121, 23);
+		btnSkapaNyttKonto.setBounds(225, 282, 144, 23);
 		contentPane.add(btnSkapaNyttKonto);
 		
 		JLabel lblAdminstatus = new JLabel("Adminstatus:");
@@ -141,7 +141,7 @@ public class AddUserAdmin extends JFrame {
 		contentPane.add(adminCheckBox);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(143, 186, 121, 30);
+		passwordField.setBounds(155, 186, 121, 30);
 		contentPane.add(passwordField);
 	}
 }

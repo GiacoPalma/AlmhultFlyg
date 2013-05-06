@@ -75,7 +75,7 @@ public class UserMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btn_book_flight.setBounds(10, 114, 116, 23);
+		btn_book_flight.setBounds(10, 114, 127, 23);
 		contentPane.add(btn_book_flight);
 		
 		JButton btn_flights = new JButton("Dina bokningar");
@@ -83,7 +83,7 @@ public class UserMenu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btn_flights.setBounds(10, 148, 116, 23);
+		btn_flights.setBounds(10, 148, 127, 23);
 		contentPane.add(btn_flights);
 		
 		JButton btn_account = new JButton("Redigera konto");
@@ -91,7 +91,7 @@ public class UserMenu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btn_account.setBounds(10, 182, 116, 23);
+		btn_account.setBounds(10, 182, 127, 23);
 		contentPane.add(btn_account);
 	}
 }
