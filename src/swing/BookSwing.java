@@ -72,7 +72,7 @@ public class BookSwing extends JFrame {
 	 */
 	public BookSwing() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 800, 300);
+		setBounds(100, 100, 850, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -108,11 +108,11 @@ public class BookSwing extends JFrame {
 		list = new JList(listModel);
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
-		list.setBounds(255, 36, 539, 163);
+		list.setBounds(216, 28, 628, 163);
 		contentPane.add(list);
 		
 		JLabel lblNewLabel_2 = new JLabel("Tillg\u00E4ngliga Flighter");
-		lblNewLabel_2.setBounds(254, 11, 144, 14);
+		lblNewLabel_2.setBounds(217, 11, 144, 14);
 		contentPane.add(lblNewLabel_2);
 		
 		final JComboBox comboBox_1 = new JComboBox();
@@ -126,7 +126,7 @@ public class BookSwing extends JFrame {
 		contentPane.add(comboBox_1);
 		
 		JButton btnNewButton = new JButton("N\u00E4sta steg");
-		btnNewButton.setBounds(309, 228, 115, 23);
+		btnNewButton.setBounds(216, 229, 115, 23);
 		contentPane.add(btnNewButton);
 		
 		final JDateChooser dateChooser = new JDateChooser();
@@ -142,7 +142,7 @@ public class BookSwing extends JFrame {
 	  	contentPane.add(dateChooser_1);
 		  
 		  JLabel lblNewLabel_3 = new JLabel("Pris:");
-		  lblNewLabel_3.setBounds(255, 203, 46, 14);
+		  lblNewLabel_3.setBounds(216, 203, 46, 14);
 		  contentPane.add(lblNewLabel_3);
 		  
 		  JButton btnSk = new JButton("S\u00F6k");
@@ -162,7 +162,7 @@ public class BookSwing extends JFrame {
 		  		List<Flight> flights = new ArrayList<Flight>();
 		  		flights = Database.getAvailableFlights(dep_id, dest_id, inputDeptDateFormated);
 		  		
-		  		if(flights != null){
+		  		if(!(flights.size()==0)){
 		  			listModel.clear();
 		  			System.out.println(flights.size());
 		  			for(int i=0; i<flights.size(); i++){
