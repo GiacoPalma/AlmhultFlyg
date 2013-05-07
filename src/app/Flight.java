@@ -52,17 +52,6 @@ public class Flight {
 			return true;
 		}
 	}
-	
-	public boolean bookValidate() {
-		this.checkDeparture();
-		this.checkDestination();
-		this.checkDestinationDate();
-		if (errorMessages.size() > 0) {
-			return false;
-		} else {
-			return true;
-		}
-	}
 
 	public boolean checkDepartureAndDestination() {
 		if (this.getDepature_airport_id() == this.getDestination_airport_id()) {

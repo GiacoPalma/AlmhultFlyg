@@ -96,7 +96,7 @@ public class Database {
 		Statement st = null;
 		ResultSet rs = null;
 		List<Flight> ret = new ArrayList<Flight>();
-
+		
 		try {
 			try {
 				Class.forName(driverName);
