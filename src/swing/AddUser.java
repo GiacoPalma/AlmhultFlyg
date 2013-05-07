@@ -4,6 +4,8 @@ import app.Database;
 import app.PhoneValidator;
 import app.User;
 import app.EmailValidator;
+
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -130,6 +132,7 @@ public class AddUser {
 				 PhoneValidator phoneValidator = new PhoneValidator();
 				   if(!emailValidator.validate(textFieldemail.getText().trim())) {
 					   JOptionPane.showMessageDialog(null, "Du måste ange en giltlig Email");
+					   textFieldemail.setBackground(Color.red);
 				        /*
 				           Action that you want to take. For ex. make email id field red
 				           or give message box saying invalid email id.
@@ -137,7 +140,7 @@ public class AddUser {
 				   }
 				   else if(!phoneValidator.validate(textFieldphone.getText().trim())) {
 					   JOptionPane.showMessageDialog(null, "Du måste ange ett Telefonnummer");
-				       
+				       textFieldphone.setBackground(Color.red);
 				   }
 				   else{
 				int admin_status = 0;
