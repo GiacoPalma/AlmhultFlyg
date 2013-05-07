@@ -102,20 +102,13 @@ public class AdminMenu extends JFrame {
 		
 		JLabel lbl_user_lable = new JLabel("Inloggad som:");
 		
-		lbl_user_lable.setBounds(10, 11, 82, 14);
-		lbl_user_lable.setBounds(10, 11, 166, 14);
-
-
-		lbl_user_lable.setBounds(10, 11, 82, 14);
-
-		lbl_user_lable.setBounds(10, 11, 166, 14);
-
-
+		lbl_user_lable.setBounds(10, 11, 89, 23);
 		contentPane.add(lbl_user_lable);
 		
 		JLabel lbl_user = new JLabel(Database.current_user.toString());
 		lbl_user.setForeground(Color.BLUE);
-		lbl_user.setBounds(91, 11, 89, 14);
+		lbl_user.setBounds(91, 11, 198, 23);
+		contentPane.add(lbl_user);
 		contentPane.add(lbl_user);
 		
 		JButton btnNewButton = new JButton("Ta bort/redigera flygning");
