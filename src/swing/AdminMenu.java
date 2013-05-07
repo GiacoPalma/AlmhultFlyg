@@ -4,12 +4,14 @@ import app.User;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -99,7 +101,7 @@ public class AdminMenu extends JFrame {
 		contentPane.add(lbl_handle);
 		
 		JLabel lbl_user_lable = new JLabel("Inloggad som:");
-
+		
 		lbl_user_lable.setBounds(10, 11, 82, 14);
 		lbl_user_lable.setBounds(10, 11, 166, 14);
 
@@ -112,6 +114,7 @@ public class AdminMenu extends JFrame {
 		contentPane.add(lbl_user_lable);
 		
 		JLabel lbl_user = new JLabel(Database.current_user.toString());
+		lbl_user.setForeground(Color.BLUE);
 		lbl_user.setBounds(91, 11, 89, 14);
 		contentPane.add(lbl_user);
 		
