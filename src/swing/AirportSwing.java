@@ -91,16 +91,20 @@ public class AirportSwing extends JFrame {
 		btnRedigera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = list.getSelectedIndex();
-				String city = textField_1.getText();
-				String name = textField.getText();
-				String updated = DB.UpdateAirport(airportlist.get(i).id, textField_1.getText(), textField.getText());
-				JOptionPane.showMessageDialog(null, updated);
-				AirportSwing reload = new AirportSwing();
-				AirportSwing.this.dispose();
-				reload.setVisible(true);
-				reload.textField.setText(name);
-				reload.textField_1.setText(city);
-				reload.list.setSelectedIndex(i);
+				if(i >= 0){
+					String city = textField_1.getText();
+					String name = textField.getText();
+					String updated = DB.UpdateAirport(airportlist.get(i).id, textField_1.getText(), textField.getText());
+					JOptionPane.showMessageDialog(null, updated);
+					AirportSwing reload = new AirportSwing();
+					AirportSwing.this.dispose();
+					reload.setVisible(true);
+					reload.textField.setText(name);
+					reload.textField_1.setText(city);
+					reload.list.setSelectedIndex(i);
+				} else {
+					JOptionPane.showMessageDialog(null, "Du måste välja en flygplats!");
+				}
 			}
 		});
 		btnRedigera.setBounds(331, 128, 134, 29);
@@ -110,11 +114,15 @@ public class AirportSwing extends JFrame {
 		btnTaBort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = list.getSelectedIndex();
-				String removed = DB.RemoveAirport(airportlist.get(i).id);
-				JOptionPane.showMessageDialog(null, removed);
-				AirportSwing reload = new AirportSwing();
-				AirportSwing.this.dispose();
-				reload.setVisible(true);
+				if(i >= 0){
+					String removed = DB.RemoveAirport(airportlist.get(i).id);
+					JOptionPane.showMessageDialog(null, removed);
+					AirportSwing reload = new AirportSwing();
+					AirportSwing.this.dispose();
+					reload.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Du måste välja en flygplats!");
+				}
 			}
 		});		
 		btnTaBort.setBounds(331, 156, 134, 29);

@@ -126,20 +126,23 @@ public class AdminUserControl extends JFrame {
 		btnUppdatera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = list.getSelectedIndex();
-				User user = users.get(i);
-				int adminStatus = 0;
-				if(adminCheckBox.isSelected()){
-					adminStatus = 1;
-				}else if(adminCheckBox.isSelected() == false){
-					adminStatus = 0;
+				if(i >= 0){
+					User user = users.get(i);
+					int adminStatus = 0;
+					if(adminCheckBox.isSelected()){
+						adminStatus = 1;
+					}else if(adminCheckBox.isSelected() == false){
+						adminStatus = 0;
+					}
+					
+					String ret = DB.UpdateUser(user.id, emailField.getText(), firstnameField.getText(), lastnameField.getText(), phoneField.getText(), adminStatus);
+					JOptionPane.showMessageDialog(null, ret);
+					AdminUserControl reload = new AdminUserControl();
+					AdminUserControl.this.dispose();
+					reload.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Du måste välja en användare!");
 				}
-				
-				String ret = DB.UpdateUser(user.id, emailField.getText(), firstnameField.getText(), lastnameField.getText(), phoneField.getText(), adminStatus);
-				JOptionPane.showMessageDialog(null, ret);
-				AdminUserControl reload = new AdminUserControl();
-				AdminUserControl.this.dispose();
-				reload.setVisible(true);
-				
 			}
 		});
 		btnUppdatera.setBounds(390, 215, 99, 23);
@@ -153,12 +156,16 @@ public class AdminUserControl extends JFrame {
 		btnTaBort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = list.getSelectedIndex();
-				User user = users.get(i);
-				String ret = DB.RemoveUser(user.id);
-				JOptionPane.showMessageDialog(null, ret);
-				AdminUserControl reload = new AdminUserControl();
-				AdminUserControl.this.dispose();
-				reload.setVisible(true);
+				if(i >= 0) {
+					User user = users.get(i);
+					String ret = DB.RemoveUser(user.id);
+					JOptionPane.showMessageDialog(null, ret);
+					AdminUserControl reload = new AdminUserControl();
+					AdminUserControl.this.dispose();
+					reload.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Du måste välja en användare!");
+				}
 			}
 		});
 		btnTaBort.setBounds(390, 245, 99, 23);

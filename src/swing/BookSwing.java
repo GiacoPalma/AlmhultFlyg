@@ -150,33 +150,38 @@ public class BookSwing extends JFrame {
 		  btnSk.setBounds(109, 228, 89, 23);
 
 		  btnSk.addMouseListener(new MouseAdapter() {
-		  	@Override
-		  	public void mouseClicked(MouseEvent arg0) {
-		  		int selDep = combobox.getSelectedIndex();
-		  		int dep_id = airportlist.get(selDep).id;
-		  		int selDest = comboBox_1.getSelectedIndex();
-		  		int dest_id = airportlist.get(selDest).id;
-		  		java.util.Date depDate = dateChooser.getDate();
-		  		String inputDeptDateFormated = new SimpleDateFormat(
-						"yyyy-MM-dd").format(depDate);
-		  		List<Flight> flights = new ArrayList<Flight>();
-		  		flights = Database.getAvailableFlights(dep_id, dest_id, inputDeptDateFormated);
-		  		
-		  		if(!(flights.size()==0)){
-		  			listModel.clear();
-		  			System.out.println(flights.size());
-		  			for(int i=0; i<flights.size(); i++){
-		  				Airport airport = new Airport();
-		  				Airport destAirport = new Airport();
-		  				airport = Database.getAirport(flights.get(i).depature_airport_id);
-		  				destAirport = Database.getAirport(flights.get(i).destination_airport_id);
-		  				listModel.addElement(airport.getName() +" - "+ destAirport.getName() + " "+flights.get(i).getDepature_date() + " - "+ flights.get(i).getDestination_date() + " Pris: " + flights.get(i).getPrice());
-		  			}
-		  		} else {
-		  			listModel.clear();
-		  			listModel.addElement("Det finns inga flygningar");
-		  		}
-		  	}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int selDep = combobox.getSelectedIndex();
+				JOptionPane.showMessageDialog(null, selDep);
+				if(selDep >= 0) {
+					int dep_id = airportlist.get(selDep).id;
+			  		int selDest = comboBox_1.getSelectedIndex();
+			  		int dest_id = airportlist.get(selDest).id;
+			  		java.util.Date depDate = dateChooser.getDate();
+			  		String inputDeptDateFormated = new SimpleDateFormat("yyyy-MM-dd").format(depDate);
+			  		List<Flight> flights = new ArrayList<Flight>();
+			  		flights = Database.getAvailableFlights(dep_id, dest_id, inputDeptDateFormated);
+					
+					if(!(flights.size()==0)){
+						listModel.clear();
+						System.out.println(flights.size());
+						for(int i=0; i<flights.size(); i++){
+							Airport airport = new Airport();
+							Airport destAirport = new Airport();
+							airport = Database.getAirport(flights.get(i).depature_airport_id);
+							destAirport = Database.getAirport(flights.get(i).destination_airport_id);
+							listModel.addElement(airport.getName() +" - "+ destAirport.getName() + " "+flights.get(i).getDepature_date() + " - "+ flights.get(i).getDestination_date() + " Pris: " + flights.get(i).getPrice());
+					} 
+				} else {
+					listModel.clear();
+					listModel.addElement("Det finns inga flygningar");
+				}
+			} else {
+				listModel.clear();
+				listModel.addElement("Du måste välja avgång och destination");
+			}
+		  }
 		  });
 		  btnSk.setBounds(106, 228, 89, 23);
 
