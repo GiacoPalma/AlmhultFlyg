@@ -1,6 +1,7 @@
 package swing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,6 +17,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 
 import app.Database;
+import app.EmailValidator;
+import app.PhoneValidator;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -117,6 +120,8 @@ public class AddUserAdmin extends JFrame {
 		JButton btnSkapaNyttKonto = new JButton("Skapa nytt konto");
 		btnSkapaNyttKonto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				EmailValidator emailValidator = new EmailValidator();
+				 PhoneValidator phoneValidator = new PhoneValidator();
 				String passWord = new String(passwordField.getPassword()); 
 				int admin_status = 0;
 				if(adminCheckBox.isSelected()){
@@ -124,11 +129,23 @@ public class AddUserAdmin extends JFrame {
 				}else if(adminCheckBox.isSelected() == false){
 					admin_status = 0;
 				}
-				String ret = DB.registerUser(emailField.getText(), firstnameField.getText(), lastnameField.getText(), phoneField.getText(), admin_status, passWord);
+				if(!emailValidator.validate(emailField.getText().trim())) {
+					   JOptionPane.showMessageDialog(null, "Du måste ange en giltlig Email");
+					   emailField.setBackground(Color.red);
+				        /*
+				           Action that you want to take. For ex. make email id field red
+				           or give message box saying invalid email id.
+				        */
+				   }
+				   else if(!phoneValidator.validate(phoneField.getText().trim())) {
+					   JOptionPane.showMessageDialog(null, "Du måste ange ett Telefonnummer");
+					   phoneField.setBackground(Color.red);
+				   }
+				   else{String ret = DB.registerUser(emailField.getText(), firstnameField.getText(), lastnameField.getText(), phoneField.getText(), admin_status, passWord);
 				JOptionPane.showMessageDialog(null, ret);
 				
 			}
-		});
+		}});
 		btnSkapaNyttKonto.setBounds(225, 282, 144, 23);
 		contentPane.add(btnSkapaNyttKonto);
 		
