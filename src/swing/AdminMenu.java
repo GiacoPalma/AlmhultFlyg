@@ -50,7 +50,7 @@ public class AdminMenu extends JFrame {
 		btn_signout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Login Login = new Login();
-				Login.frame.setVisible(true);
+				Login.frmAlmhultAirlinesFlygbokning.setVisible(true);
 				setVisible(false);
 			}
 		});

@@ -309,7 +309,7 @@ public class Database {
 		
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("UPDATE flights SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=? WHERE id=?");
+			st = con.prepareStatement("UPDATE flights SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=?, airplane = 1 WHERE id=?");
 			st.setInt(1, flight.getDepature_airport_id());
 			st.setString(2, flight.getDepature_date());
 			st.setInt(3, flight.getDestination_airport_id());
@@ -339,12 +339,13 @@ public class Database {
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("INSERT INTO flights (dep_id, dep_date, dest_id, dest_date, price) VALUES (?, ?, ?, ?, ?)");
+			st = con.prepareStatement("INSERT INTO flights (dep_id, dep_date, dest_id, dest_date, price, airplane) VALUES (?, ?, ?, ?, ?, ?)");
 			st.setNString(1, Integer.toString(dep_id));
 			st.setNString(2, Integer.toString(dep_date));
 			st.setNString(3, Integer.toString(dest_id));
 			st.setNString(4, Integer.toString(dest_date));
 			st.setNString(5, Integer.toString(price));
+			st.setInt(6, 1);
 			st.executeUpdate();
 			String ret = "Flight has been added";
 			return ret;
@@ -381,13 +382,14 @@ public class Database {
 
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			String SQL_INSERT = "INSERT INTO flights (dep_id, dep_date, dest_id, dest_date, price) VALUES (?, ?, ?, ?, ?)";
+			String SQL_INSERT = "INSERT INTO flights (dep_id, dep_date, dest_id, dest_date, price, airplane) VALUES (?, ?, ?, ?, ?, ?)";
 			st = (PreparedStatement) con.prepareStatement(SQL_INSERT);
 			st.setInt(1, flight.getDepature_airport_id());
 			st.setString(2, flight.getDepature_date());
 			st.setInt(3, flight.getDestination_airport_id());
 			st.setString(4, flight.getDestination_date());
 			st.setInt(5, flight.getPrice());
+			st.setInt(6, 1);
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
 				throw new SQLException(

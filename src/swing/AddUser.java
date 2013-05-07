@@ -148,7 +148,7 @@ public class AddUser {
 				JOptionPane.showMessageDialog(null, ret);
 				Login reload = new Login();
 				AddUser.this.frame.dispose();
-				reload.frame.setVisible(true);
+				reload.frmAlmhultAirlinesFlygbokning.setVisible(true);
 			}
 		}});
 		frame.getContentPane().add(btnSkapaKonto);
@@ -158,7 +158,7 @@ public class AddUser {
 			public void actionPerformed(ActionEvent arg0) {
 				Login reload = new Login();
 				AddUser.this.frame.dispose();
-				reload.frame.setVisible(true);
+				reload.frmAlmhultAirlinesFlygbokning.setVisible(true);
 				}
 			});
 		btnTillbaka.setBounds(67, 224, 117, 25);

@@ -49,7 +49,7 @@ public class UserMenu extends JFrame {
 		btn_signout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Login Login = new Login();
-				Login.frame.setVisible(true);
+				Login.frmAlmhultAirlinesFlygbokning.setVisible(true);
 				setVisible(false);
 			}
 		});
