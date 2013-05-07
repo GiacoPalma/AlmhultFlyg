@@ -3,6 +3,7 @@ import app.Database;
 import app.User;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -56,11 +57,12 @@ public class UserMenu extends JFrame {
 		contentPane.add(btn_signout);
 		
 		JLabel lbl_user_lable = new JLabel("Inloggad som:");
-		lbl_user_lable.setBounds(10, 11, 82, 14);
+		lbl_user_lable.setBounds(10, 11, 89, 23);
 		contentPane.add(lbl_user_lable);
 		
 		JLabel lbl_user = new JLabel(Database.current_user);
-		lbl_user.setBounds(91, 11, 46, 14);
+		lbl_user.setForeground(Color.BLUE);
+		lbl_user.setBounds(91, 11, 198, 23);
 		contentPane.add(lbl_user);
 		
 		JLabel lbl_choice = new JLabel("G\u00F6r ditt val");
