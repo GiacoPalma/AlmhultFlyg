@@ -1,6 +1,7 @@
 package swing;
 
 import app.Database;
+import app.PhoneValidator;
 import app.User;
 import app.EmailValidator;
 import java.awt.EventQueue;
@@ -128,12 +129,16 @@ public class AddUser {
 				 EmailValidator emailValidator = new EmailValidator();
 				   if(!emailValidator.validate(textFieldemail.getText().trim())) {
 					   JOptionPane.showMessageDialog(null, "Du måste ange en giltlig Email");
-					   AddUser main = new AddUser();
 				        /*
 				           Action that you want to take. For ex. make email id field red
 				           or give message box saying invalid email id.
 				        */
-				   }
+				   
+				   PhoneValidator phoneValidator = new PhoneValidator();
+				   if(!phoneValidator.validate(textFieldphone.getText().trim())) {
+					   JOptionPane.showMessageDialog(null, "Du måste ange ett Telefonnummer");
+				       
+				   }}
 				   else{
 				int admin_status = 0;
 				String ret = DB.registerUser(textFieldemail.getText(), textFieldfirstname.getText(), textFieldlastname.getText(), textFieldphone.getText(), admin_status, textFieldpassword.getText());
