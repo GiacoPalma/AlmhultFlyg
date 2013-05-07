@@ -19,15 +19,23 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import java.awt.Color;
 
 public class Login {
 
-	public JFrame frame;
+	public JFrame frmAlmhultAirlinesFlygbokning;
 	private JTextField textFielduser;
 	private JButton btnSkapaNyttKonto;
 	private JButton btnLoggaIn;
 	private JPasswordField passwordField;
 	public Database DB = new Database();
+	private JLabel label;
+	private JLabel lblVlkommenTillAlmhult;
 
 	/**
 	 * Launch the application.
@@ -37,7 +45,7 @@ public class Login {
 			public void run() {
 				try {
 					Login window = new Login();
-					window.frame.setVisible(true);
+					window.frmAlmhultAirlinesFlygbokning.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,22 +64,24 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmAlmhultAirlinesFlygbokning = new JFrame();
+		frmAlmhultAirlinesFlygbokning.setTitle("Almhult Airlines Flygbokning v 1.0");
+		frmAlmhultAirlinesFlygbokning.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Giaco\\Downloads\\plane.png"));
+		frmAlmhultAirlinesFlygbokning.setBounds(100, 100, 769, 488);
+		frmAlmhultAirlinesFlygbokning.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmAlmhultAirlinesFlygbokning.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Email:");
-		lblNewLabel.setBounds(110, 96, 55, 15);
-		frame.getContentPane().add(lblNewLabel);
+		lblNewLabel.setBounds(255, 148, 55, 15);
+		frmAlmhultAirlinesFlygbokning.getContentPane().add(lblNewLabel);
 		
 		JLabel lblLsenord = new JLabel("Lösenord:");
-		lblLsenord.setBounds(89, 139, 87, 15);
-		frame.getContentPane().add(lblLsenord);
+		lblLsenord.setBounds(254, 191, 87, 15);
+		frmAlmhultAirlinesFlygbokning.getContentPane().add(lblLsenord);
 		
 		textFielduser = new JTextField();
-		textFielduser.setBounds(177, 88, 121, 32);
-		frame.getContentPane().add(textFielduser);
+		textFielduser.setBounds(311, 139, 121, 32);
+		frmAlmhultAirlinesFlygbokning.getContentPane().add(textFielduser);
 		textFielduser.setColumns(10);
 		
 		btnLoggaIn = new JButton("Logga in");
@@ -84,12 +94,12 @@ public class Login {
 				if(login != null) {
 					if(login.admin_status == 1){
 						AdminMenu reload = new AdminMenu();
-						Login.this.frame.dispose();
+						Login.this.frmAlmhultAirlinesFlygbokning.dispose();
 						reload.setVisible(true);
 					}
 					if(login.admin_status == 0){
 						UserMenu reload = new UserMenu();
-						Login.this.frame.dispose();
+						Login.this.frmAlmhultAirlinesFlygbokning.dispose();
 						reload.setVisible(true);
 					}
 				} else if(user.length() == 0){
@@ -99,29 +109,44 @@ public class Login {
 				} 
 			}
 		});
-		btnLoggaIn.setBounds(157, 170, 156, 25);
-		frame.getContentPane().add(btnLoggaIn);
+		btnLoggaIn.setBounds(291, 232, 156, 25);
+		frmAlmhultAirlinesFlygbokning.getContentPane().add(btnLoggaIn);
 		
 		btnSkapaNyttKonto = new JButton("Skapa nytt konto");
 		btnSkapaNyttKonto.addActionListener(new ActionListener() {
 		
 			public void actionPerformed(ActionEvent arg0) {
 				AddUser newWindow = new AddUser();
-				Login.this.frame.dispose();
+				Login.this.frmAlmhultAirlinesFlygbokning.dispose();
 				newWindow.frame.setVisible(true);
 			}
 		});
-		btnSkapaNyttKonto.setBounds(157, 203, 156, 25);
-		frame.getContentPane().add(btnSkapaNyttKonto);
+		btnSkapaNyttKonto.setBounds(291, 268, 156, 25);
+		frmAlmhultAirlinesFlygbokning.getContentPane().add(btnSkapaNyttKonto);
 		
 		JLabel lblLoggaIn = new JLabel("Logga in");
 		lblLoggaIn.setFont(new Font("Dialog", Font.BOLD, 25));
-		lblLoggaIn.setBounds(134, 12, 147, 58);
-		frame.getContentPane().add(lblLoggaIn);
+		lblLoggaIn.setBounds(323, 82, 147, 58);
+		frmAlmhultAirlinesFlygbokning.getContentPane().add(lblLoggaIn);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(177, 131, 121, 32);
-		frame.getContentPane().add(passwordField);
+		passwordField.setBounds(311, 182, 121, 32);
+		frmAlmhultAirlinesFlygbokning.getContentPane().add(passwordField);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(512, 103, 212, 336);
+		frmAlmhultAirlinesFlygbokning.getContentPane().add(panel);
+		
+		label = new JLabel("");
+		label.setBackground(Color.LIGHT_GRAY);
+		label.setIcon(new ImageIcon(Login.class.getResource("/swing/plane.png")));
+		label.setOpaque(true);
+		panel.add(label);
+		
+		lblVlkommenTillAlmhult = new JLabel("V\u00E4lkommen till Almhult Airlines Flygbokning");
+		lblVlkommenTillAlmhult.setFont(new Font("Dialog", Font.BOLD, 25));
+		lblVlkommenTillAlmhult.setBounds(124, 39, 545, 32);
+		frmAlmhultAirlinesFlygbokning.getContentPane().add(lblVlkommenTillAlmhult);
 	}
 
 	public JButton getBtnSkapaNyttKonto() {
@@ -136,6 +161,4 @@ public class Login {
 	public JPasswordField getPasswordField() {
 		return passwordField;
 	}
-
-		
 }
