@@ -1,8 +1,11 @@
 package swing;
 
 import app.Database;
+import app.EmailValidator;
+import app.PhoneValidator;
 import app.User;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +128,8 @@ public class AdminUserControl extends JFrame {
 		JButton btnUppdatera = new JButton("Uppdatera");
 		btnUppdatera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				EmailValidator emailValidator = new EmailValidator();
+				 PhoneValidator phoneValidator = new PhoneValidator();
 				int i = list.getSelectedIndex();
 				if(i >= 0){
 					User user = users.get(i);
@@ -134,13 +139,25 @@ public class AdminUserControl extends JFrame {
 					}else if(adminCheckBox.isSelected() == false){
 						adminStatus = 0;
 					}
+					if(!emailValidator.validate(emailField.getText().trim())) {
+						   JOptionPane.showMessageDialog(null, "Du måste ange en giltlig Email");
+						   emailField.setBackground(Color.red);
+					        /*
+					           Action that you want to take. For ex. make email id field red
+					           or give message box saying invalid email id.
+					        */
+					   }
+					   else if(!phoneValidator.validate(phoneField.getText().trim())) {
+						   JOptionPane.showMessageDialog(null, "Du måste ange ett Telefonnummer");
+						   phoneField.setBackground(Color.red);
+					   }
 					
-					String ret = DB.UpdateUser(user.id, emailField.getText(), firstnameField.getText(), lastnameField.getText(), phoneField.getText(), adminStatus);
+					   else{String ret = DB.UpdateUser(user.id, emailField.getText(), firstnameField.getText(), lastnameField.getText(), phoneField.getText(), adminStatus);
 					JOptionPane.showMessageDialog(null, ret);
 					AdminUserControl reload = new AdminUserControl();
 					AdminUserControl.this.dispose();
 					reload.setVisible(true);
-				} else {
+					   }} else {
 					JOptionPane.showMessageDialog(null, "Du måste välja en användare!");
 				}
 			}
