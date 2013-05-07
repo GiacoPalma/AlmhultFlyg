@@ -52,6 +52,17 @@ public class Flight {
 			return true;
 		}
 	}
+	
+	public boolean bookValidate() {
+		this.checkDeparture();
+		this.checkDestination();
+		this.checkDestinationDate();
+		if (errorMessages.size() > 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 	public boolean checkDepartureAndDestination() {
 		if (this.getDepature_airport_id() == this.getDestination_airport_id()) {
@@ -73,7 +84,7 @@ public class Flight {
 	}
 
 	public boolean checkDeparture() {
-		if (this.depature_airport_id == null || this.depature_airport_id == 0) {
+		if (this.depature_airport_id == null || this.depature_airport_id <= 0) {
 			errorMessages.add("Du mŒste vŠlja avreseort");
 			return false;
 		} else {
@@ -83,7 +94,7 @@ public class Flight {
 
 	public boolean checkDestination() {
 		if (this.destination_airport_id == null
-				|| this.destination_airport_id == 0) {
+				|| this.destination_airport_id <= 0) {
 			errorMessages.add("Du mŒste vŠlja destination");
 			return false;
 		} else {
@@ -92,7 +103,7 @@ public class Flight {
 	}
 
 	public boolean checkDepartureDate() {
-		if (this.depature_date == null) {
+		if (this.depature_date == null || this.depature_date == "") {
 			errorMessages.add("Du mŒste vŠlja ett datum fšr avresa");
 			return false;
 		} else {
