@@ -80,7 +80,7 @@ public class UserMenu extends JFrame {
 		btn_book_flight.setBounds(10, 114, 127, 23);
 		contentPane.add(btn_book_flight);
 		
-		JButton btn_flights = new JButton("Dina bokningar");
+		JButton btn_flights = new JButton("Mina bokningar");
 		btn_flights.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
