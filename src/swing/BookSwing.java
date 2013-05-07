@@ -153,12 +153,11 @@ public class BookSwing extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				int selDep = combobox.getSelectedIndex();
-				JOptionPane.showMessageDialog(null, selDep);
-				if(selDep >= 0) {
+				int selDest = comboBox_1.getSelectedIndex();
+				java.util.Date depDate = dateChooser.getDate();
+				if(selDep >= 0 && selDest >= 0 && depDate != null) {
 					int dep_id = airportlist.get(selDep).id;
-			  		int selDest = comboBox_1.getSelectedIndex();
 			  		int dest_id = airportlist.get(selDest).id;
-			  		java.util.Date depDate = dateChooser.getDate();
 			  		String inputDeptDateFormated = new SimpleDateFormat("yyyy-MM-dd").format(depDate);
 			  		List<Flight> flights = new ArrayList<Flight>();
 			  		flights = Database.getAvailableFlights(dep_id, dest_id, inputDeptDateFormated);
