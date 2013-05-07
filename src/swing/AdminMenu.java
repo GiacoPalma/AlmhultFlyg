@@ -101,8 +101,21 @@ public class AdminMenu extends JFrame {
 		contentPane.add(lbl_handle);
 		
 		JLabel lbl_user_lable = new JLabel("Inloggad som:");
+<<<<<<< HEAD
 		
 		lbl_user_lable.setBounds(10, 11, 89, 23);
+=======
+
+		lbl_user_lable.setBounds(10, 11, 82, 14);
+		lbl_user_lable.setBounds(10, 11, 166, 14);
+
+
+		lbl_user_lable.setBounds(10, 11, 82, 14);
+
+		lbl_user_lable.setBounds(10, 11, 166, 14);
+
+
+>>>>>>> Förbättrad sökning
 		contentPane.add(lbl_user_lable);
 		
 		JLabel lbl_user = new JLabel(Database.current_user.toString());

@@ -107,8 +107,26 @@ public class Database {
 			con = DriverManager.getConnection(url, user, password);
 
 			st = con.createStatement();
+			if(dep_id > 0 && dest_id > 0 && dep_date !=null){
 			rs = st.executeQuery("SELECT * FROM flights WHERE dep_id=" + dep_id + " AND dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
-
+			} else if(dep_id == 0 && dest_id > 0 && dep_date != null) {
+				rs = st.executeQuery("SELECT * FROM flights WHERE dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
+			} else if(dep_id > 0 && dest_id == 0 && dep_date != null){
+				rs = st.executeQuery("SELECT * FROM flights WHERE dep_id="+dep_id+" AND dep_date LIKE '"+dep_date+"%'");
+			} else if(dep_id > 0 && dest_id > 0 && dep_date == null) {
+				rs = st.executeQuery("SELECT * FROM flights WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
+			} else if(dep_id > 0 && dest_id > 0 && dep_date == null){
+				rs = st.executeQuery("SELECT * FROM flights WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
+			} else if (dep_id == 0 && dest_id == 0 && dep_date != null){
+				rs = st.executeQuery("SELECT * FROM flights WHERE dep_date LIKE '"+dep_date+"%'");
+				System.out.println(rs);
+			} else if (dep_id > 0 && dest_id == 0 && dep_date == null){
+				rs = st.executeQuery("SELECT * FROM flights WHERE dep_id="+dep_id);
+			} else if (dep_id == 0 && dest_id > 0 && dep_date == null){
+				rs = st.executeQuery("SELECT * FROM flights WHERE dest_id="+dest_id);
+			} else if (dep_id == 0 && dest_id == 0 && dep_date == null){
+				rs = st.executeQuery("SELECT * FROM flights");
+			}
 			while (rs.next()) {
 				Flight flight = new Flight();
 				flight.setId(rs.getInt("id"));
