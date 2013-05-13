@@ -100,7 +100,7 @@ public class Database {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
-		ResultSet rs1 = null;
+		
 		List<Flight> ret = new ArrayList<Flight>();
 		
 		try {
@@ -114,26 +114,26 @@ public class Database {
 
 			st = con.createStatement();
 			if(dep_id > 0 && dest_id > 0 && dep_date !=null){
-			rs = st.executeQuery("SELECT * FROM routes WHERE dep_id=" + dep_id + " AND dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
+			rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id=" + dep_id + " AND dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
 			} else if(dep_id == 0 && dest_id > 0 && dep_date != null) {
-				rs = st.executeQuery("SELECT * FROM routes WHERE dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
 			} else if(dep_id > 0 && dest_id == 0 && dep_date != null){
-				rs = st.executeQuery("SELECT * FROM routes WHERE dep_id="+dep_id+" AND dep_date LIKE '"+dep_date+"%'");
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="+dep_id+" AND dep_date LIKE '"+dep_date+"%'");
 			} else if(dep_id > 0 && dest_id > 0 && dep_date == null) {
-				rs = st.executeQuery("SELECT * FROM routes WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
 			} else if(dep_id > 0 && dest_id > 0 && dep_date == null){
-				rs = st.executeQuery("SELECT * FROM routes WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
 			} else if (dep_id == 0 && dest_id == 0 && dep_date != null){
-				rs = st.executeQuery("SELECT * FROM routes WHERE dep_date LIKE '"+dep_date+"%'");
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_date LIKE '"+dep_date+"%'");
 				System.out.println(rs);
 			} else if (dep_id > 0 && dest_id == 0 && dep_date == null){
-				rs = st.executeQuery("SELECT * FROM routes WHERE dep_id="+dep_id);
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="+dep_id);
 			} else if (dep_id == 0 && dest_id > 0 && dep_date == null){
-				rs = st.executeQuery("SELECT * FROM routes WHERE dest_id="+dest_id);
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dest_id="+dest_id);
 			} else if (dep_id == 0 && dest_id == 0 && dep_date == null){
-				rs = st.executeQuery("SELECT * FROM routes");
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id");
 			}
-			rs1 = st.executeQuery("SELECT * FROM flights WHERE route1_id = "+ rs.getInt("id"));
+			
 			while (rs.next()) {
 				Route route1 = new Route();
 				route1.id = rs.getInt("id");
@@ -146,7 +146,7 @@ public class Database {
 				route1.airplane = rs.getInt("airplane");
 				
 				Flight flight = new Flight(route1);
-				flight.id = rs1.getInt("id");
+				flight.id = rs.getInt("flight_id");
 				ret.add(flight);
 				
 			}
