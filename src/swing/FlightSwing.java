@@ -40,6 +40,7 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import javax.swing.JTextPane;
 
 public class FlightSwing extends JFrame {
 
@@ -77,68 +78,68 @@ public class FlightSwing extends JFrame {
 		contentPane.setLayout(null);
 
 		final JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(327, 107, 197, 27);
+		comboBox_1.setBounds(327, 90, 197, 27);
 		contentPane.add(comboBox_1);
 
 		JLabel lblTill = new JLabel("Till:");
-		lblTill.setBounds(293, 112, 24, 16);
+		lblTill.setBounds(287, 95, 24, 16);
 		contentPane.add(lblTill);
 
 		JLabel lblPris = new JLabel("Pris:");
-		lblPris.setBounds(23, 219, 27, 16);
+		lblPris.setBounds(23, 212, 27, 16);
 		contentPane.add(lblPris);
 
 		JLabel lblFrn = new JLabel("Fr\u00E5n: ");
-		lblFrn.setBounds(23, 112, 35, 16);
+		lblFrn.setBounds(15, 95, 35, 16);
 		contentPane.add(lblFrn);
 
 		final JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(68, 108, 197, 27);
+		comboBox.setBounds(68, 90, 197, 27);
 		contentPane.add(comboBox);
 
 		JButton btnLggTill = new JButton("L\u00E4gg till");
-		btnLggTill.setBounds(44, 272, 95, 29);
+		btnLggTill.setBounds(375, 206, 95, 29);
 		contentPane.add(btnLggTill);
 
 		JLabel lblLggTillFlygning = new JLabel("L\u00E4gg till flygning");
-		lblLggTillFlygning.setBounds(44, 40, 196, 25);
+		lblLggTillFlygning.setBounds(44, 31, 196, 37);
 		lblLggTillFlygning.setFont(new Font("Helvetica", Font.BOLD, 24));
 		contentPane.add(lblLggTillFlygning);
 
 		final JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("yyyy-MM-dd");
-		dateChooser.setBounds(68, 146, 197, 28);
+		dateChooser.setBounds(68, 128, 197, 28);
 		contentPane.add(dateChooser);
 
 		JLabel lblDatum = new JLabel("Datum:");
-		lblDatum.setBounds(23, 146, 61, 16);
+		lblDatum.setBounds(10, 140, 61, 16);
 		contentPane.add(lblDatum);
 
 		final JDateChooser dateChooser_1 = new JDateChooser();
 		dateChooser_1.setDateFormatString("yyyy-MM-dd");
-		dateChooser_1.setBounds(327, 145, 197, 28);
+		dateChooser_1.setBounds(327, 128, 197, 28);
 		contentPane.add(dateChooser_1);
 
 		JLabel lblDatum_1 = new JLabel("Datum:");
-		lblDatum_1.setBounds(275, 145, 61, 16);
+		lblDatum_1.setBounds(275, 140, 35, 16);
 		contentPane.add(lblDatum_1);
 
 		textField = new JTextField();
-		textField.setBounds(68, 213, 197, 28);
+		textField.setBounds(68, 206, 197, 28);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		final JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner,
 				"HH:mm");
-		timeSpinner.setBounds(68, 179, 197, 28);
+		timeSpinner.setBounds(68, 167, 197, 28);
 		timeSpinner.setEditor(timeEditor);
 		contentPane.add(timeSpinner);
 
 		final JSpinner timeSpinner_1 = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor_1 = new JSpinner.DateEditor(
 				timeSpinner_1, "HH:mm");
-		timeSpinner_1.setBounds(327, 179, 197, 28);
+		timeSpinner_1.setBounds(327, 167, 197, 28);
 		timeSpinner_1.setEditor(timeEditor_1);
 		contentPane.add(timeSpinner_1);
 
@@ -186,7 +187,7 @@ public class FlightSwing extends JFrame {
 				}
 			}
 		});
-		btnRensaFlten.setBounds(152, 272, 117, 29);
+		btnRensaFlten.setBounds(364, 246, 117, 29);
 		contentPane.add(btnRensaFlten);
 
 		JButton btnTillbaka = new JButton("Tillbaka");
@@ -198,21 +199,29 @@ public class FlightSwing extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnTillbaka.setBounds(44, 318, 117, 29);
+		btnTillbaka.setBounds(364, 286, 117, 29);
 		contentPane.add(btnTillbaka);
 
-		JLabel lblKr = new JLabel("kr");
-		lblKr.setBounds(275, 219, 61, 16);
-		contentPane.add(lblKr);
-
 		JLabel lblTid = new JLabel("Tid:");
-		lblTid.setBounds(23, 185, 61, 16);
+		lblTid.setBounds(26, 173, 24, 16);
 		contentPane.add(lblTid);
 
 		JLabel lblTid_1 = new JLabel("Tid:");
-		lblTid_1.setBounds(291, 185, 61, 16);
+		lblTid_1.setBounds(287, 173, 24, 16);
 		contentPane.add(lblTid_1);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblFrn, lblDatum, dateChooser, lblTid, timeSpinner, lblPris, textField, dateChooser.getCalendarButton(), lblTill, comboBox_1, lblDatum_1, dateChooser_1, timeSpinner_1, lblTid_1, lblKr, btnRensaFlten, btnLggTill, btnTillbaka, contentPane, dateChooser_1.getCalendarButton(), comboBox, lblLggTillFlygning}));
+		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(68, 246, 197, 28);
+		contentPane.add(comboBox_2);
+		
+		JLabel lblFlygplan = new JLabel("Flygplan:");
+		lblFlygplan.setBounds(10, 253, 46, 14);
+		contentPane.add(lblFlygplan);
+		
+		JLabel lblKronor = new JLabel("Kronor");
+		lblKronor.setBounds(269, 213, 46, 14);
+		contentPane.add(lblKronor);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblFrn, lblDatum, dateChooser, lblTid, timeSpinner, lblPris, textField, dateChooser.getCalendarButton(), lblTill, comboBox_1, lblDatum_1, dateChooser_1, timeSpinner_1, lblTid_1, btnRensaFlten, btnLggTill, btnTillbaka, contentPane, dateChooser_1.getCalendarButton(), comboBox, lblLggTillFlygning}));
 
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
