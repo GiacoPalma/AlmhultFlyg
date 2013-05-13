@@ -98,7 +98,7 @@ public class Login {
 						reload.setVisible(true);
 					}
 					if(login.admin_status == 0){
-						UserMenu reload = new UserMenu();
+						UserMenu reload = new UserMenu(login);
 						Login.this.frmAlmhultAirlinesFlygbokning.dispose();
 						reload.setVisible(true);
 					}

@@ -90,7 +90,7 @@ public class EditSwing extends JFrame {
 		contentPane.add(comboBox_1);
 
 		JLabel lblTill = new JLabel("Till:");
-		lblTill.setBounds(293, 112, 24, 16);
+		lblTill.setBounds(293, 118, 24, 16);
 		contentPane.add(lblTill);
 
 		JLabel lblPris = new JLabel("Pris:");
@@ -98,7 +98,7 @@ public class EditSwing extends JFrame {
 		contentPane.add(lblPris);
 
 		JLabel lblFrn = new JLabel("Fr\u00E5n: ");
-		lblFrn.setBounds(23, 112, 35, 16);
+		lblFrn.setBounds(15, 118, 35, 16);
 		contentPane.add(lblFrn);
 		Airport dep_airport = database.getAirport(selectedFlight.route1.getDepature_airport_id());
 		final JComboBox comboBox = new JComboBox();
@@ -131,7 +131,7 @@ public class EditSwing extends JFrame {
 		}
 
 		JButton btnLggTill = new JButton("Uppdatera");
-		btnLggTill.setBounds(44, 272, 95, 29);
+		btnLggTill.setBounds(374, 234, 95, 29);
 		contentPane.add(btnLggTill);
 
 		JLabel lblLggTillFlygning = new JLabel("Redigera flygning");
@@ -146,7 +146,7 @@ public class EditSwing extends JFrame {
 		dateChooser.setDate(selectedFlight.route1.getFormattedDepature_date());
 
 		JLabel lblDatum = new JLabel("Datum:");
-		lblDatum.setBounds(23, 146, 61, 16);
+		lblDatum.setBounds(10, 158, 61, 16);
 		contentPane.add(lblDatum);
 
 		final JDateChooser dateChooser_1 = new JDateChooser();
@@ -156,7 +156,7 @@ public class EditSwing extends JFrame {
 		dateChooser_1.setDate(selectedFlight.route1.getFormattedDestination_date());
 
 		JLabel lblDatum_1 = new JLabel("Datum:");
-		lblDatum_1.setBounds(275, 145, 61, 16);
+		lblDatum_1.setBounds(275, 158, 61, 16);
 		contentPane.add(lblDatum_1);
 
 		textField = new JTextField();
@@ -197,12 +197,8 @@ public class EditSwing extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnTillbaka.setBounds(44, 318, 117, 29);
+		btnTillbaka.setBounds(374, 275, 95, 29);
 		contentPane.add(btnTillbaka);
-
-		JLabel lblKr = new JLabel("kr");
-		lblKr.setBounds(275, 219, 61, 16);
-		contentPane.add(lblKr);
 
 		JLabel lblTid = new JLabel("Tid:");
 		lblTid.setBounds(23, 185, 61, 16);
@@ -211,6 +207,18 @@ public class EditSwing extends JFrame {
 		JLabel lblTid_1 = new JLabel("Tid:");
 		lblTid_1.setBounds(291, 185, 61, 16);
 		contentPane.add(lblTid_1);
+		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(68, 252, 197, 27);
+		contentPane.add(comboBox_2);
+		
+		JLabel lblFlygplan = new JLabel("Flygplan:");
+		lblFlygplan.setBounds(10, 258, 46, 14);
+		contentPane.add(lblFlygplan);
+		
+		JLabel lblKronor = new JLabel("Kronor");
+		lblKronor.setBounds(271, 220, 46, 14);
+		contentPane.add(lblKronor);
 
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override

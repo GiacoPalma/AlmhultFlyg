@@ -1,99 +1,156 @@
--- phpMyAdmin SQL Dump
--- version 3.5.1
--- http://www.phpmyadmin.net
---
--- Värd: localhost
--- Skapad: 30 apr 2013 kl 08:53
--- Serverversion: 5.5.24-log
--- PHP-version: 5.3.13
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 4096
+#
+# http://www.sequelpro.com/
+# http://code.google.com/p/sequel-pro/
+#
+# Värd: 127.0.0.1 (MySQL 5.5.25)
+# Databas: 161957-airport
+# Genereringstid: 2013-05-13 10:39:00 +0000
+# ************************************************************
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Databas: `161957-airport`
---
-DROP DATABASE `161957-airport`;
-CREATE DATABASE `161957-airport` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `161957-airport`;
 
--- --------------------------------------------------------
+# Tabelldump airplanes
+# ------------------------------------------------------------
 
---
--- Tabellstruktur `airports`
---
+DROP TABLE IF EXISTS `airplanes`;
 
-CREATE TABLE IF NOT EXISTS `airports` (
+CREATE TABLE `airplanes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `city` text CHARACTER SET utf8 COLLATE utf8_swedish_ci,
+  `model` varchar(150) NOT NULL,
+  `seats_total` int(11) NOT NULL,
+  `added_cost` int(11) NOT NULL,
+  `travel_speed` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `airplanes` WRITE;
+/*!40000 ALTER TABLE `airplanes` DISABLE KEYS */;
+
+INSERT INTO `airplanes` (`id`, `model`, `seats_total`, `added_cost`, `travel_speed`)
+VALUES
+	(1,'Boeing 777',550,1000,'fast'),
+	(2,'Boeing 747',190,300,'slow');
+
+/*!40000 ALTER TABLE `airplanes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Tabelldump airports
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `airports`;
+
+CREATE TABLE `airports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `city` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumpning av Data i tabell `airports`
---
+LOCK TABLES `airports` WRITE;
+/*!40000 ALTER TABLE `airports` DISABLE KEYS */;
 
-INSERT INTO `airports` (`id`, `city`, `name`) VALUES
-(1, 'London', 'Heathrow Airport'),
-(2, 'Paris', 'Charles de Gaulle Airport'),
-(3, 'Barcelona', 'El Prat Airport'),
-(4, 'Älmhult', 'IKEA Airport'),
-(5, 'Rio de Janiero', 'Galeão Airport'),
-(6, 'Kairo', 'Cairo Airport'),
-(7, 'Stockholm', 'Arlanda Airport'),
-(8, 'Köpenhamn', 'Kastrup Airport'),
-(9, 'Hawaii', 'Honolulu Airport'),
-(10, 'Reykjavik', 'Keflavik Airport'),
-(11, 'Frankfurt', 'Frankfurt Airport'),
-(12, 'New York', 'JFK Airport'),
-(13, 'Växjö', 'Smaland Airport');
+INSERT INTO `airports` (`id`, `city`, `name`)
+VALUES
+	(1,'London','London_Airport'),
+	(2,'Paris','Paris_Airport'),
+	(3,'Barcelona','Barcelona_Airport'),
+	(4,'Älmhult','Älmhult_Airport'),
+	(5,'Rio de Janiero','Rio_Airport'),
+	(6,'New York','NewYork_Airport'),
+	(9,'Kairo','Egypt_Airport'),
+	(10,'Stockholm','Arlanda_Airport'),
+	(11,'Köpenhamn','Kastrup_Airport'),
+	(12,'Hawaii','Hawaii_Airport'),
+	(13,'Reykjavik','Reykjavik_Airport'),
+	(15,'Frankfurt','Frankfurt_Airport'),
+	(16,'Stockholm','Arlanda_Airport'),
+	(17,'New York','JFK Airport');
 
--- --------------------------------------------------------
+/*!40000 ALTER TABLE `airports` ENABLE KEYS */;
+UNLOCK TABLES;
 
---
--- Tabellstruktur `flights`
---
 
-CREATE TABLE IF NOT EXISTS `flights` (
+# Tabelldump bookings
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `bookings`;
+
+CREATE TABLE `bookings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `flight_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `bookings` WRITE;
+/*!40000 ALTER TABLE `bookings` DISABLE KEYS */;
+
+INSERT INTO `bookings` (`id`, `flight_id`, `user_id`)
+VALUES
+	(1,1,1),
+	(2,10,1),
+	(3,8,5),
+	(4,7,5),
+	(5,8,5);
+
+/*!40000 ALTER TABLE `bookings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Tabelldump flights
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `flights`;
+
+CREATE TABLE `flights` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dep_id` int(11) NOT NULL,
   `dep_date` datetime NOT NULL,
   `dest_id` int(11) NOT NULL,
   `dest_date` datetime NOT NULL,
   `price` int(11) NOT NULL,
+  `airplane` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumpning av Data i tabell `flights`
---
+LOCK TABLES `flights` WRITE;
+/*!40000 ALTER TABLE `flights` DISABLE KEYS */;
 
-INSERT INTO `flights` (`id`, `dep_id`, `dep_date`, `dest_id`, `dest_date`, `price`) VALUES
-(1, 4, '2013-06-14 08:20:00', 1, '2013-06-14 10:00:00', 500),
-(2, 4, '2013-06-08 12:20:00', 2, '2013-06-08 14:20:00', 800),
-(3, 4, '2013-04-09 03:00:00', 9, '2013-04-09 08:38:00', 1200),
-(4, 4, '2013-04-22 14:00:00', 10, '2013-04-22 14:50:00', 300),
-(5, 6, '2013-04-25 17:00:00', 10, '2013-04-25 18:40:00', 500),
-(6, 7, '2013-04-22 23:10:00', 2, '2013-04-23 01:20:00', 1500),
-(7, 4, '2013-04-13 19:00:00', 9, '2013-04-14 03:00:00', 5000),
-(8, 4, '2013-06-22 07:00:00', 13, '2013-06-22 10:00:00', 1000),
-(9, 13, '2013-06-22 11:00:00', 12, '2013-06-22 15:00:00', 1500),
-(10, 4, '2013-04-18 12:00:00', 3, '2013-04-18 15:00:00', 1000);
+INSERT INTO `flights` (`id`, `dep_id`, `dep_date`, `dest_id`, `dest_date`, `price`, `airplane`)
+VALUES
+	(1,4,'2013-06-14 08:20:00',1,'2013-06-14 10:00:00',500,1),
+	(2,4,'2013-06-08 12:20:00',2,'2013-06-08 14:20:00',800,1),
+	(3,4,'2013-04-09 03:00:00',9,'2013-04-09 08:38:00',1200,1),
+	(4,4,'2013-04-22 14:00:00',10,'2013-04-22 14:50:00',300,2),
+	(5,6,'2013-04-25 17:00:00',10,'2013-04-25 18:40:00',500,2),
+	(6,7,'2013-04-22 23:10:00',2,'2013-04-23 01:20:00',1500,1),
+	(7,4,'2013-04-13 19:00:00',9,'2013-04-14 03:00:00',5000,1),
+	(8,4,'2013-06-22 07:00:00',13,'2013-06-22 10:00:00',1000,1),
+	(9,13,'2013-06-22 11:00:00',12,'2013-06-22 15:00:00',1500,1),
+	(10,4,'2013-04-12 12:00:00',9,'2013-04-16 21:00:00',3666,1);
 
--- --------------------------------------------------------
+/*!40000 ALTER TABLE `flights` ENABLE KEYS */;
+UNLOCK TABLES;
 
---
--- Tabellstruktur `users`
---
 
-CREATE TABLE IF NOT EXISTS `users` (
+# Tabelldump users
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(250) NOT NULL,
   `phonenumber` varchar(50) NOT NULL,
@@ -102,17 +159,25 @@ CREATE TABLE IF NOT EXISTS `users` (
   `admin_status` int(11) NOT NULL,
   `password` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumpning av Data i tabell `users`
---
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `email`, `phonenumber`, `first_name`, `last_name`, `admin_status`, `password`) VALUES
-(1, 'te', 'sda', 'Giaco', 'Palma', 1, 'ssss'),
-(2, 'gipa', '00202', 'test1', 'test2', 0, '1234'),
-(3, 'hej', '112', 'Lukas', 'Andersson', 0, 'hej');
+INSERT INTO `users` (`id`, `email`, `phonenumber`, `first_name`, `last_name`, `admin_status`, `password`)
+VALUES
+	(2,'gipa88@hotmail.com','032130','Giacomo','Palma',1,'1234'),
+	(4,'test','test','test','test',1,'test'),
+	(5,'user','12345','user','user',0,'user');
 
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

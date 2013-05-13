@@ -30,7 +30,11 @@ import java.awt.GridLayout;
 import app.Airport;
 import app.Database;
 import app.Flight;
+<<<<<<< HEAD
 import app.Route;
+=======
+import app.User;
+>>>>>>> 6422c94443fde1b1e2644247109a0ac1dddc375e
 
 import javax.swing.JList;
 
@@ -46,6 +50,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
 public class BookSwing extends JFrame {
 
 	public Database DB = new Database();
@@ -58,6 +63,7 @@ public class BookSwing extends JFrame {
 	private int dest_id = 0;
 	private int dep_id = 0;
 	private String inputDeptDateFormated = null;
+	private List<Flight> availableFlights = new ArrayList<Flight>();
 
 	/**
 	 * Launch the application.
@@ -66,7 +72,7 @@ public class BookSwing extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BookSwing frame = new BookSwing();
+					BookSwing frame = new BookSwing(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -78,14 +84,14 @@ public class BookSwing extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BookSwing() {
+	public BookSwing(final User user) {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 900, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
 		airportlist = (ArrayList<Airport>) DB.getAllAirports();
 
 		final JComboBox combobox = new JComboBox();
@@ -133,7 +139,46 @@ public class BookSwing extends JFrame {
 		comboBox_1.setBounds(10, 66, 185, 20);
 		contentPane.add(comboBox_1);
 
-		JButton btnNewButton = new JButton("N\u00E4sta steg");
+		JButton btnNewButton = new JButton("Boka");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Flight flight = new Flight();
+				
+				
+				int i = list.getSelectedIndex();
+				flight = flights.get(i);
+				if(i >= 0){
+					boolean booked = Database.AddBooking(flight, user);
+					if(booked){
+						Object[] options = {"OK"};
+						
+						int n = JOptionPane.showOptionDialog(new JFrame(),
+				                   "Flygningen är bokad","Title",
+				                   JOptionPane.PLAIN_MESSAGE,
+				                   JOptionPane.QUESTION_MESSAGE,
+				                   null,
+				                   options,
+				                   options[0]);
+						if(n==0){
+							UserMenu reload = new UserMenu(user);
+							dispose();
+							reload.setVisible(true);
+						}
+						
+					} else {
+						JOptionPane.showMessageDialog(new JFrame(),
+								"Någontingting gick fel.",
+								"Dialog", JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Du måste välja en flygning.",
+							"Dialog", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
 		btnNewButton.setBounds(226, 228, 115, 23);
 		contentPane.add(btnNewButton);
 
@@ -183,7 +228,7 @@ public class BookSwing extends JFrame {
 		JButton btnTillbaka = new JButton("Tillbaka");
 		btnTillbaka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UserMenu reload = new UserMenu();
+				UserMenu reload = new UserMenu(user);
 				dispose();
 				reload.setVisible(true);
 			}
