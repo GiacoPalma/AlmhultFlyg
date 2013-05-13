@@ -1,8 +1,11 @@
 package app;
 
 public class Flight {
-	Route route;
+	public int id;
+	public Route route1;
+	public Route route2;
 	public Flight(Route route){
-		this.route = route;
+		this.route1 = route;
 	}
+	
 }

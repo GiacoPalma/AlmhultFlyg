@@ -13,6 +13,8 @@ public class Route {
 	public Integer destination_airport_id;
 	public String destination_date;
 	public Integer price;
+	public Integer airplane;
+	public Integer distance;
 	public List<String> errorMessages = new ArrayList<String>();
 	public Airport airport;
 	public Airport dest_airport;
