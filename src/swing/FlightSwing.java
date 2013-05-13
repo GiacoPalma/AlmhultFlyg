@@ -23,6 +23,8 @@ import javax.swing.SpinnerDateModel;
 import app.Airport;
 import app.Database;
 import app.Flight;
+import app.Route;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -226,18 +228,18 @@ public class FlightSwing extends JFrame {
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Flight flight = new Flight();
+				Route route = new Route();
 				if (comboBox.getSelectedIndex() == -1) {
-					flight.setDepature_airport_id(0);
+					route.setDepature_airport_id(0);
 				} else {
 					int deptId = comboBox.getSelectedIndex();
-					flight.setDepature_airport_id(airports.get(deptId).getId());
+					route.setDepature_airport_id(airports.get(deptId).getId());
 				}
 				if (comboBox_1.getSelectedIndex() == -1) {
-					flight.setDestination_airport_id(0);
+					route.setDestination_airport_id(0);
 				} else {
 					int destId = comboBox_1.getSelectedIndex();
-					flight.setDestination_airport_id(airports.get(destId)
+					route.setDestination_airport_id(airports.get(destId)
 							.getId());
 				}
 				try {
@@ -247,26 +249,26 @@ public class FlightSwing extends JFrame {
 					SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 					Date time = (Date) timeSpinner.getValue();
 					String formattedDate = format.format(time);
-					flight.setDepature_date(inputDeptDateFormated + " "
+					route.setDepature_date(inputDeptDateFormated + " "
 							+ formattedDate);
 					Date inputDestDate = dateChooser_1.getDate();
 					String inputDestDateFormated = new SimpleDateFormat(
 							"yyyy-MM-dd").format(inputDestDate);
 					Date time2 = (Date) timeSpinner_1.getValue();
 					String formattedDate2 = format.format(time2);
-					flight.setDestination_date(inputDestDateFormated + " "
+					route.setDestination_date(inputDestDateFormated + " "
 							+ formattedDate2);
 				} catch (NullPointerException e) {
 
 				}
 				try {
 					int inputPrice = Integer.parseInt(textField.getText());
-					flight.setPrice(inputPrice);
+					route.setPrice(inputPrice);
 				} catch (NumberFormatException e) {
 
 				}
-				if (flight.validate()) {
-					boolean created = database.createFlight(flight);
+				if (route.validate()) {
+					boolean created = database.AddRoute(route.price, route.depature_airport_id, route.depature_date, route.destination_airport_id, route.destination_date, route.distance);
 					if (created) {
 						JOptionPane.showMessageDialog(new JFrame(),
 								"Flygningen har lagts till", "Dialog",
@@ -292,7 +294,7 @@ public class FlightSwing extends JFrame {
 					}
 				} else {
 					String output = StringUtils.join(
-							flight.errorMessages.toArray(), "\n");
+							route.errorMessages.toArray(), "\n");
 					JOptionPane.showMessageDialog(new JFrame(), output,
 							"Dialog", JOptionPane.ERROR_MESSAGE);
 				}

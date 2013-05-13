@@ -23,6 +23,8 @@ import javax.swing.SpinnerDateModel;
 import app.Airport;
 import app.Database;
 import app.Flight;
+import app.Route;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -83,8 +85,7 @@ public class EditSwing extends JFrame {
 		contentPane.setLayout(null);
 
 		final JComboBox comboBox_1 = new JComboBox();
-		Airport dest_airport = database.getAirport(selectedFlight
-				.getDestination_airport_id());
+		Airport dest_airport = database.getAirport(selectedFlight.route1.getDestination_airport_id());
 		comboBox_1.setBounds(327, 107, 197, 27);
 		contentPane.add(comboBox_1);
 
@@ -99,8 +100,7 @@ public class EditSwing extends JFrame {
 		JLabel lblFrn = new JLabel("Fr\u00E5n: ");
 		lblFrn.setBounds(23, 112, 35, 16);
 		contentPane.add(lblFrn);
-		Airport dep_airport = database.getAirport(selectedFlight
-				.getDepature_airport_id());
+		Airport dep_airport = database.getAirport(selectedFlight.route1.getDepature_airport_id());
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(68, 108, 197, 27);
 		contentPane.add(comboBox);
@@ -143,7 +143,7 @@ public class EditSwing extends JFrame {
 		dateChooser.setDateFormatString("yyyy-MM-dd");
 		dateChooser.setBounds(68, 146, 197, 28);
 		contentPane.add(dateChooser);
-		dateChooser.setDate(selectedFlight.getFormattedDepature_date());
+		dateChooser.setDate(selectedFlight.route1.getFormattedDepature_date());
 
 		JLabel lblDatum = new JLabel("Datum:");
 		lblDatum.setBounds(23, 146, 61, 16);
@@ -153,7 +153,7 @@ public class EditSwing extends JFrame {
 		dateChooser_1.setDateFormatString("yyyy-MM-dd");
 		dateChooser_1.setBounds(327, 145, 197, 28);
 		contentPane.add(dateChooser_1);
-		dateChooser_1.setDate(selectedFlight.getFormattedDestination_date());
+		dateChooser_1.setDate(selectedFlight.route1.getFormattedDestination_date());
 
 		JLabel lblDatum_1 = new JLabel("Datum:");
 		lblDatum_1.setBounds(275, 145, 61, 16);
@@ -163,7 +163,7 @@ public class EditSwing extends JFrame {
 		textField.setBounds(68, 213, 197, 28);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		String sendPrice = Integer.toString(selectedFlight.price);
+		String sendPrice = Integer.toString(selectedFlight.route1.price);
 
 		textField.setText(sendPrice);
 
@@ -182,8 +182,8 @@ public class EditSwing extends JFrame {
 		contentPane.add(timeSpinner_1);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		Date depTime = selectedFlight.getFormattedDepature_date();
-		Date destTime = selectedFlight.getFormattedDestination_date();
+		Date depTime = selectedFlight.route1.getFormattedDepature_date();
+		Date destTime = selectedFlight.route1.getFormattedDestination_date();
 
 		timeSpinner.setValue(depTime);
 		timeSpinner_1.setValue(destTime);
@@ -215,19 +215,20 @@ public class EditSwing extends JFrame {
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Flight flight = new Flight();
-				flight.setId(selectedFlight.getId());
+				Route route = new Route();
+			
+				route.id = selectedFlight.route1.id;
 				if (comboBox.getSelectedIndex() == -1) {
-					flight.setDepature_airport_id(0);
+					route.setDepature_airport_id(0);
 				} else {
 					int deptId = comboBox.getSelectedIndex();
-					flight.setDepature_airport_id(airports.get(deptId).getId());
+					route.setDepature_airport_id(airports.get(deptId).getId());
 				}
 				if (comboBox_1.getSelectedIndex() == -1) {
-					flight.setDestination_airport_id(0);
+					route.setDestination_airport_id(0);
 				} else {
 					int destId = comboBox_1.getSelectedIndex();
-					flight.setDestination_airport_id(airports.get(destId)
+					route.setDestination_airport_id(airports.get(destId)
 							.getId());
 				}
 				try {
@@ -237,26 +238,26 @@ public class EditSwing extends JFrame {
 					SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 					Date time = (Date) timeSpinner.getValue();
 					String formattedDate = format.format(time);
-					flight.setDepature_date(inputDeptDateFormated + " "
+					route.setDepature_date(inputDeptDateFormated + " "
 							+ formattedDate);
 					Date inputDestDate = dateChooser_1.getDate();
 					String inputDestDateFormated = new SimpleDateFormat(
 							"yyyy-MM-dd").format(inputDestDate);
 					Date time2 = (Date) timeSpinner_1.getValue();
 					String formattedDate2 = format.format(time2);
-					flight.setDestination_date(inputDestDateFormated + " "
+					route.setDestination_date(inputDestDateFormated + " "
 							+ formattedDate2);
 				} catch (NullPointerException e) {
 
 				}
 				try {
 					int inputPrice = Integer.parseInt(textField.getText());
-					flight.setPrice(inputPrice);
+					route.setPrice(inputPrice);
 				} catch (NumberFormatException e) {
 
 				}
-				if (flight.validate()) {
-					boolean updated = database.UpdateFlight(flight);
+				if (route.validate()) {
+					boolean updated = database.UpdateRoute(route);
 					if (updated) {
 						JOptionPane.showMessageDialog(new JFrame(),
 								"Flygningen har uppdaterats", "Dialog",
@@ -268,7 +269,7 @@ public class EditSwing extends JFrame {
 					}
 				} else {
 					String output = StringUtils.join(
-							flight.errorMessages.toArray(), "\n");
+							route.errorMessages.toArray(), "\n");
 					JOptionPane.showMessageDialog(new JFrame(), output,
 							"Dialog", JOptionPane.ERROR_MESSAGE);
 				}

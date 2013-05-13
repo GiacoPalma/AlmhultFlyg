@@ -78,11 +78,11 @@ public class DeleteEditFlight extends JFrame {
 		list.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 
 		for (int i = 0; i < allFlights.size(); i++) {
-			listModel.addElement(allFlights.get(i).getAirport().getName()
-					+ " - " + allFlights.get(i).getDest_airport().getName()
-					+ " | " + allFlights.get(i).getDepature_date() + " - "
-					+ allFlights.get(i).getDestination_date() + " | Pris: "
-					+ allFlights.get(i).getPrice() + " kr");
+			listModel.addElement(allFlights.get(i).route1.getAirport().getName()
+					+ " - " + allFlights.get(i).route1.getDest_airport().getName()
+					+ " | " + allFlights.get(i).route1.getDepature_date() + " - "
+					+ allFlights.get(i).route1.getDestination_date() + " | Pris: "
+					+ allFlights.get(i).route1.getPrice() + " kr");
 		}
 
 		JLabel lblTaBortFlygning = new JLabel("Ta bort/redigera flygning");
@@ -96,7 +96,7 @@ public class DeleteEditFlight extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = list.getSelectedIndex();
 				if (i >= 0) {
-					int id = allFlights.get(i).getId();
+					int id = allFlights.get(i).id;
 
 					Object[] options = { "Ja", "Nej" };
 					int n = JOptionPane.showOptionDialog(new JFrame(),
@@ -141,7 +141,7 @@ public class DeleteEditFlight extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				if (list.getSelectedIndex() >= 0) {
 					selectedId = list.getSelectedIndex();
-					int sendId = allFlights.get(selectedId).getId();
+					int sendId = allFlights.get(selectedId).id;
 					EditSwing editFlight = new EditSwing(sendId);
 					editFlight.setId(selectedId);
 					editFlight.setVisible(true);
