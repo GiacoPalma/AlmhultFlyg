@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 public class UserMenu extends JFrame {
 
 	private JPanel contentPane;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -25,7 +25,7 @@ public class UserMenu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserMenu frame = new UserMenu();
+					UserMenu frame = new UserMenu(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +37,7 @@ public class UserMenu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UserMenu() {
+	public UserMenu(final User user) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -56,8 +56,8 @@ public class UserMenu extends JFrame {
 		btn_signout.setBounds(335, 11, 89, 23);
 		contentPane.add(btn_signout);
 		
-		JLabel lbl_user_lable = new JLabel("Inloggad som:");
-		lbl_user_lable.setBounds(10, 11, 89, 23);
+		JLabel lbl_user_lable = new JLabel("Inloggad som: " + user.first_name + " " + user.last_name);
+		lbl_user_lable.setBounds(10, 11, 198, 23);
 		contentPane.add(lbl_user_lable);
 		
 		JLabel lbl_user = new JLabel(Database.current_user);
@@ -72,7 +72,7 @@ public class UserMenu extends JFrame {
 		JButton btn_book_flight = new JButton("Boka flyg");
 		btn_book_flight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BookSwing BookSwing = new BookSwing();
+				BookSwing BookSwing = new BookSwing(user);
 				BookSwing.setVisible(true);
 				setVisible(false);
 			}

@@ -320,6 +320,31 @@ public class Database {
 
 		return null;
 	}
+	
+	public static boolean AddBooking(Flight flight, User bookinguser) {
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("INSERT INTO bookings(flight_id, user_id) VALUES (?, ?)");
+			st.setInt(1, flight.id);
+			st.setInt(2, bookinguser.id);
+			
+			int affectedRows = st.executeUpdate();
+			if (affectedRows == 0) {
+				throw new SQLException(
+						"Att skapa bokningen misslyckades.");
+			} else {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return (Boolean) null;
+	}
 
 	public static boolean UpdateFlight(Flight flight) {
 		Connection con = null;
