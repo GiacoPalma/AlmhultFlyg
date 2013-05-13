@@ -263,7 +263,7 @@ public class FlightSwing extends JFrame {
 				}
 				try {
 					int inputPrice = Integer.parseInt(textField.getText());
-					route.setPrice(inputPrice);
+					route.price = inputPrice;
 				} catch (NumberFormatException e) {
 
 				}
