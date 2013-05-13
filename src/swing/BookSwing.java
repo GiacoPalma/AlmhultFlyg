@@ -30,11 +30,8 @@ import java.awt.GridLayout;
 import app.Airport;
 import app.Database;
 import app.Flight;
-<<<<<<< HEAD
 import app.Route;
-=======
 import app.User;
->>>>>>> 6422c94443fde1b1e2644247109a0ac1dddc375e
 
 import javax.swing.JList;
 
@@ -143,13 +140,13 @@ public class BookSwing extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Flight flight = new Flight();
+				
 				
 				
 				int i = list.getSelectedIndex();
-				flight = flights.get(i);
+				
 				if(i >= 0){
-					boolean booked = Database.AddBooking(flight, user);
+					boolean booked = Database.AddBooking(flights.get(i), user);
 					if(booked){
 						Object[] options = {"OK"};
 						
