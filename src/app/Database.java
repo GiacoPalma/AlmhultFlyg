@@ -71,16 +71,21 @@ public class Database {
 			con = DriverManager.getConnection(url, user, password);
 
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM flights WHERE id=" + id);
+			rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM `routes` JOIN `flights` ON flights.route1_id = routes.id WHERE flights.id =" + id);
 
 			if (rs.next()) {
-				Flight flight = new Flight();
-				flight.setId(rs.getInt("id"));
-				flight.setDepature_airport_id(rs.getInt("dep_id"));
-				flight.setDepature_date(rs.getString("dep_date"));
-				flight.setDestination_airport_id(rs.getInt("dest_id"));
-				flight.setDestination_date(rs.getString("dest_date"));
-				flight.setPrice(rs.getInt("price"));
+				Route route1 = new Route();
+				route1.depature_airport_id = rs.getInt("dep_id");
+				route1.depature_date = rs.getString("dep_date");
+				route1.destination_airport_id = rs.getInt("dest_id");
+				route1.destination_date = rs.getString("dest_date");
+				route1.price = rs.getInt("price");
+				route1.airplane = rs.getInt("airplane");
+				route1.distance = rs.getInt("distance");
+		
+				Flight flight = new Flight(route1);
+				flight.id = rs.getInt("flight_id");
+				
 				
 				return flight;
 			}
@@ -95,6 +100,7 @@ public class Database {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
+		ResultSet rs1 = null;
 		List<Flight> ret = new ArrayList<Flight>();
 		
 		try {
@@ -108,33 +114,39 @@ public class Database {
 
 			st = con.createStatement();
 			if(dep_id > 0 && dest_id > 0 && dep_date !=null){
-			rs = st.executeQuery("SELECT * FROM flights WHERE dep_id=" + dep_id + " AND dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
+			rs = st.executeQuery("SELECT * FROM routes WHERE dep_id=" + dep_id + " AND dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
 			} else if(dep_id == 0 && dest_id > 0 && dep_date != null) {
-				rs = st.executeQuery("SELECT * FROM flights WHERE dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
+				rs = st.executeQuery("SELECT * FROM routes WHERE dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
 			} else if(dep_id > 0 && dest_id == 0 && dep_date != null){
-				rs = st.executeQuery("SELECT * FROM flights WHERE dep_id="+dep_id+" AND dep_date LIKE '"+dep_date+"%'");
+				rs = st.executeQuery("SELECT * FROM routes WHERE dep_id="+dep_id+" AND dep_date LIKE '"+dep_date+"%'");
 			} else if(dep_id > 0 && dest_id > 0 && dep_date == null) {
-				rs = st.executeQuery("SELECT * FROM flights WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
+				rs = st.executeQuery("SELECT * FROM routes WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
 			} else if(dep_id > 0 && dest_id > 0 && dep_date == null){
-				rs = st.executeQuery("SELECT * FROM flights WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
+				rs = st.executeQuery("SELECT * FROM routes WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
 			} else if (dep_id == 0 && dest_id == 0 && dep_date != null){
-				rs = st.executeQuery("SELECT * FROM flights WHERE dep_date LIKE '"+dep_date+"%'");
+				rs = st.executeQuery("SELECT * FROM routes WHERE dep_date LIKE '"+dep_date+"%'");
 				System.out.println(rs);
 			} else if (dep_id > 0 && dest_id == 0 && dep_date == null){
-				rs = st.executeQuery("SELECT * FROM flights WHERE dep_id="+dep_id);
+				rs = st.executeQuery("SELECT * FROM routes WHERE dep_id="+dep_id);
 			} else if (dep_id == 0 && dest_id > 0 && dep_date == null){
-				rs = st.executeQuery("SELECT * FROM flights WHERE dest_id="+dest_id);
+				rs = st.executeQuery("SELECT * FROM routes WHERE dest_id="+dest_id);
 			} else if (dep_id == 0 && dest_id == 0 && dep_date == null){
-				rs = st.executeQuery("SELECT * FROM flights");
+				rs = st.executeQuery("SELECT * FROM routes");
 			}
+			rs1 = st.executeQuery("SELECT * FROM flights WHERE route1_id = "+ rs.getInt("id"));
 			while (rs.next()) {
-				Flight flight = new Flight();
-				flight.setId(rs.getInt("id"));
-				flight.setDepature_airport_id(rs.getInt("dep_id"));
-				flight.setDepature_date(rs.getString("dep_date"));
-				flight.setDestination_airport_id(rs.getInt("dest_id"));
-				flight.setDestination_date(rs.getString("dest_date"));
-				flight.setPrice(rs.getInt("price"));
+				Route route1 = new Route();
+				route1.id = rs.getInt("id");
+				route1.depature_airport_id = rs.getInt("dep_id");
+				route1.depature_date = rs.getString("dep_date");
+				route1.destination_airport_id = rs.getInt("dest_id");
+				route1.destination_date = rs.getString("dest_date");
+				route1.price = rs.getInt("price");
+				route1.distance = rs.getInt("distance");
+				route1.airplane = rs.getInt("airplane");
+				
+				Flight flight = new Flight(route1);
+				flight.id = rs1.getInt("id");
 				ret.add(flight);
 				
 			}
@@ -194,22 +206,26 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT A.name AS departure, B.name AS destination, flights.* FROM flights LEFT JOIN airports AS A ON A.id = flights.dep_id LEFT JOIN airports AS B ON B.id = flights.dest_id");
+			rs = st.executeQuery("SELECT flights.id AS flight_id, A.name AS departure, B.name AS destination, routes.* FROM routes LEFT JOIN airports AS A ON A.id = routes.dep_id LEFT JOIN airports AS B ON B.id = routes.dest_id LEFT JOIN flights on flights.route1_id = routes.id");
 
 			while (rs.next()) {
-				Flight flight = new Flight();
-				flight.setId(rs.getInt("id"));
-				flight.setDepature_airport_id(rs.getInt("dep_id"));
-				flight.setDestination_airport_id(rs.getInt("dest_id"));
-				flight.setDepature_date(rs.getString("dep_date"));
-				flight.setDestination_date(rs.getString("dest_date"));
-				flight.setPrice(rs.getInt("price"));
+				Route route1 = new Route();
+				route1.id = rs.getInt("id");
+				route1.depature_airport_id = rs.getInt("dep_id");
+				route1.depature_date = rs.getString("dep_date");
+				route1.destination_airport_id = rs.getInt("dest_id");
+				route1.destination_date = rs.getString("dest_date");
+				route1.price = rs.getInt("price");
+				route1.airplane = rs.getInt("airplane");
+				route1.distance = rs.getInt("distance");
 				Airport airport = new Airport();
-				flight.setAirport(airport);
-				flight.airport.setName(rs.getString("departure"));
+				route1.airport = airport;
+				route1.airport.setName(rs.getString("departure"));
 				Airport airportDest = new Airport();
-				flight.setDest_airport(airportDest);
-				flight.dest_airport.setName(rs.getString("destination"));
+				route1.dest_airport = airportDest;
+				route1.dest_airport.setName(rs.getString("destination"));
+				Flight flight = new Flight(route1);
+				flight.id = rs.getInt("flight_id");
 
 				
 
@@ -346,19 +362,19 @@ public class Database {
 		return (Boolean) null;
 	}
 
-	public static boolean UpdateFlight(Flight flight) {
+	public static boolean UpdateRoute(Route route) {
 		Connection con = null;
 		java.sql.PreparedStatement st = null;
 		
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("UPDATE flights SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=?, airplane = 1 WHERE id=?");
-			st.setInt(1, flight.getDepature_airport_id());
-			st.setString(2, flight.getDepature_date());
-			st.setInt(3, flight.getDestination_airport_id());
-			st.setString(4, flight.getDestination_date());
-			st.setInt(5, flight.getPrice());
-			st.setInt(6, flight.getId());
+			st = con.prepareStatement("UPDATE routes SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=?, airplane = 1 WHERE id=?");
+			st.setInt(1, route.getDepature_airport_id());
+			st.setString(2, route.getDepature_date());
+			st.setInt(3, route.getDestination_airport_id());
+			st.setString(4, route.getDestination_date());
+			st.setInt(5, route.getPrice());
+			st.setInt(6, route.getId());
 			st.executeUpdate();
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
@@ -375,22 +391,47 @@ public class Database {
 		return (Boolean) null;
 	}
 
-	public static String AddFlight(int id, int price, int dep_id, int dep_date,
-			int dest_id, int dest_date) {
+	public static boolean AddRoute(int price, int dep_id, String dep_date,
+			int dest_id, String dest_date, int distance) {
 		Connection con = null;
 		java.sql.PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("INSERT INTO flights (dep_id, dep_date, dest_id, dest_date, price, airplane) VALUES (?, ?, ?, ?, ?, ?)");
+			st = con.prepareStatement("INSERT INTO routes (dep_id, dep_date, dest_id, dest_date, price, airplane, distance) VALUES (?, ?, ?, ?, ?, ?, ?)");
 			st.setNString(1, Integer.toString(dep_id));
-			st.setNString(2, Integer.toString(dep_date));
+			st.setNString(2, dep_date);
 			st.setNString(3, Integer.toString(dest_id));
-			st.setNString(4, Integer.toString(dest_date));
+			st.setNString(4, dest_date);
 			st.setNString(5, Integer.toString(price));
 			st.setInt(6, 1);
-			st.executeUpdate();
-			String ret = "Flight has been added";
+			st.setInt(7, distance);
+			int affectedRows = st.executeUpdate();
+			if (affectedRows == 0) {
+				throw new SQLException(
+						"Att skapa rutten misslyckades.");
+			} else {
+				return true;
+			}
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return (Boolean) null;
+	}
+	
+	public static String RemoveRoute(int id){
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM routes WHERE id=" + id);
+
+			String ret = "Route has been removed";
 			return ret;
 
 		} catch (SQLException e) {
@@ -399,7 +440,7 @@ public class Database {
 
 		return null;
 	}
-
+	
 	public static String RemoveFlight(int id) {
 		Connection con = null;
 		Statement st = null;
@@ -419,20 +460,17 @@ public class Database {
 		return null;
 	}
 
-	public static boolean createFlight(Flight flight) {
+	public static boolean addFlight(int route1_id, int route2_id) {
 		Connection con = null;
 		PreparedStatement st = null;
 
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			String SQL_INSERT = "INSERT INTO flights (dep_id, dep_date, dest_id, dest_date, price, airplane) VALUES (?, ?, ?, ?, ?, ?)";
+			String SQL_INSERT = "INSERT INTO flights (route1_id, route2_id) VALUES (?, ?)";
 			st = (PreparedStatement) con.prepareStatement(SQL_INSERT);
-			st.setInt(1, flight.getDepature_airport_id());
-			st.setString(2, flight.getDepature_date());
-			st.setInt(3, flight.getDestination_airport_id());
-			st.setString(4, flight.getDestination_date());
-			st.setInt(5, flight.getPrice());
-			st.setInt(6, 1);
+			st.setInt(1, route1_id);
+			st.setInt(2, route2_id);
+			
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
 				throw new SQLException(

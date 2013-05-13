@@ -30,7 +30,11 @@ import java.awt.GridLayout;
 import app.Airport;
 import app.Database;
 import app.Flight;
+<<<<<<< HEAD
+import app.Route;
+=======
 import app.User;
+>>>>>>> 6422c94443fde1b1e2644247109a0ac1dddc375e
 
 import javax.swing.JList;
 
@@ -235,17 +239,18 @@ public class BookSwing extends JFrame {
 		btnSk.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Flight flight = new Flight();
+				Route route = new Route();
+				Flight flight = new Flight(route);
 				int selDep = combobox.getSelectedIndex();
 				try {
 					dep_id = airportlist.get(selDep).id;
-					flight.setDepature_airport_id(dep_id);
+					flight.route1.setDepature_airport_id(dep_id);
 				} catch (ArrayIndexOutOfBoundsException e) {
 				}
 				try {
 					int selDest = comboBox_1.getSelectedIndex();
 					dest_id = airportlist.get(selDest).id;
-					flight.setDestination_airport_id(dest_id);
+					flight.route1.setDestination_airport_id(dest_id);
 				} catch (ArrayIndexOutOfBoundsException e) {
 				}
 				try {
@@ -255,7 +260,7 @@ public class BookSwing extends JFrame {
 						inputDeptDateFormated = new SimpleDateFormat(
 								"yyyy-MM-dd").format(depDate);
 					}
-					flight.setDepature_date(inputDeptDateFormated);
+					flight.route1.setDepature_date(inputDeptDateFormated);
 
 				} catch (NullPointerException e) {
 
@@ -269,13 +274,13 @@ public class BookSwing extends JFrame {
 					for (int i = 0; i < flights.size(); i++) {
 						Airport airport = new Airport();
 						Airport destAirport = new Airport();
-						airport = Database.getAirport(flights.get(i).depature_airport_id);
-						destAirport = Database.getAirport(flights.get(i).destination_airport_id);
+						airport = Database.getAirport(flights.get(i).route1.depature_airport_id);
+						destAirport = Database.getAirport(flights.get(i).route1.destination_airport_id);
 						listModel.addElement(airport.getName() + " - "
 								+ destAirport.getName() + " "
-								+ flights.get(i).getDepature_date() + " - "
-								+ flights.get(i).getDestination_date()
-								+ " Pris: " + flights.get(i).getPrice());
+								+ flights.get(i).route1.getDepature_date() + " - "
+								+ flights.get(i).route1.getDestination_date()
+								+ " Pris: " + flights.get(i).route1.getPrice());
 					}
 				} else {
 					listModel.clear();
