@@ -15,11 +15,10 @@ public class Route {
 	public Integer price;
 	public Integer distance;
 	public Integer airplane_id;
-<<<<<<< HEAD
-=======
+
 	public Integer airplane;
 
->>>>>>> d07f366fc988ab0cbad68aa405ca4c461c1277bb
+
 	public List<String> errorMessages = new ArrayList<String>();
 	public Airport airport;
 	public Airport dest_airport;
