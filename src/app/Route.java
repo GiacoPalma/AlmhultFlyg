@@ -13,17 +13,14 @@ public class Route {
 	public Integer destination_airport_id;
 	public String destination_date;
 	public Integer price;
-<<<<<<< HEAD
 	public Integer distance;
 	public Integer airplane_id;
-=======
 	public Integer airplane;
-	public Integer distance;
->>>>>>> 573b32528dfdef074444d92d4068d68ae5bff6de
+
 	public List<String> errorMessages = new ArrayList<String>();
 	public Airport airport;
 	public Airport dest_airport;
-	public Airplane airplane;
+	public Airplane airplanetest;
 
 	public Airport getDest_airport() {
 		return dest_airport;
@@ -194,10 +191,10 @@ public class Route {
 		return price;
 	}
 
-	public void setPrice(int distance, int fuel_per_km, int seatstotal){//int price) {
+	public void setPrice(int distance, int fuel_per_km, int persons){//int price) {
 		//this.price = price;
 		int fuel = distance * fuel_per_km;
-		this.price = 250 + (fuel / seatstotal) + 280;
+		this.price = 250 + (fuel / persons) + 280;
 	}
 
 	public int getDuration() {
