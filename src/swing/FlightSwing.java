@@ -20,6 +20,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SpinnerDateModel;
+
 import app.Airport;
 import app.Database;
 import app.Flight;
@@ -32,16 +33,24 @@ import java.awt.event.MouseEvent;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
+
 import javax.swing.UIManager;
+
 import org.apache.commons.lang3.StringUtils;
+
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import com.toedter.calendar.JCalendar;
+
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+
 import com.toedter.calendar.JDateChooser;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
+
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
 import javax.swing.JTextPane;
 
 public class FlightSwing extends JFrame {
@@ -282,8 +291,8 @@ public class FlightSwing extends JFrame {
 				} catch (NumberFormatException e) {
 
 				}
-				if (route.validate()) {
-					boolean created = database.AddRoute(route.price, route.depature_airport_id, route.depature_date, route.destination_airport_id, route.destination_date, route.distance);
+				if (route.validate()) { 
+					boolean created = database.AddRoute(route.depature_airport_id, route.depature_date, route.destination_airport_id, route.destination_date, route.price, route.airplane, route.distance);
 					if (created) {
 						JOptionPane.showMessageDialog(new JFrame(),
 								"Flygningen har lagts till", "Dialog",
