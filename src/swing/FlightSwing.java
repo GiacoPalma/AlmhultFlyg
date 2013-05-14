@@ -60,6 +60,7 @@ public class FlightSwing extends JFrame {
 	private JTextField textField;
 	public int dep;
 	public int dest;
+	public Route route = new Route();;
 
 	/**
 	 * Launch the application.
@@ -93,9 +94,11 @@ public class FlightSwing extends JFrame {
 		final JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				dest = comboBox_1.getSelectedIndex();
+				route.setPrice(100, 100, 5);
 				if(dep >= 0 && dest >= 0){
-					System.out.println(dep+""+dest);
+					textField.setText(""+route.price);
 				}
 			}
 		});
