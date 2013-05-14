@@ -190,6 +190,50 @@ public class Database {
 		return ret;
 	}
 	
+	public static List<Booking> getAllBookings(User userb) {
+
+		List<Booking> ret = new ArrayList<Booking>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT bookings.*, routes.*, dep.name as dep_name, dest.name as dest_name FROM bookings LEFT JOIN routes ON bookings.flight_id=routes.id JOIN airports AS dep ON routes.dep_id=dep.id JOIN airports AS dest ON routes.dest_id=dest.id where bookings.user_id="+userb.id);
+
+			while (rs.next()) {
+				Booking booking = new Booking();
+				booking.setId(rs.getInt("id"));
+				booking.setFlightId(rs.getInt("flight_id"));
+				booking.setUserId(rs.getInt("user_id"));
+				Airport depAirport = new Airport();
+				booking.depAirport= depAirport;
+				Airport destAirport = new Airport();
+				booking.destAirport= destAirport;
+				booking.depAirport.setName(rs.getString("dep_name"));
+				booking.destAirport.setName(rs.getString("dest_name"));
+				Route route = new Route();
+				booking.route = route;
+				booking.route.setDepature_date(rs.getString("dep_date"));
+				booking.route.setDestination_date(rs.getString("dest_date"));
+				booking.route.price = rs.getInt("price");
+				
+				ret.add(booking);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+	}
+	
 	public static List<Flight> getAllFlights() {
 
 		List<Flight> ret = new ArrayList<Flight>();
@@ -600,5 +644,28 @@ public class Database {
 		}
 
 		return null;
+	}
+	
+	public static boolean RemoveBooking(int id){
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			int affectedRows = st.executeUpdate("DELETE FROM bookings WHERE id=" + id);
+
+			if (affectedRows == 0) {
+				throw new SQLException(
+						"NŒgonting gick fel. Fšrsšk igen");
+			} else {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return (Boolean) null;
 	}
 }

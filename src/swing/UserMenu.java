@@ -56,13 +56,13 @@ public class UserMenu extends JFrame {
 		btn_signout.setBounds(335, 11, 89, 23);
 		contentPane.add(btn_signout);
 		
-		JLabel lbl_user_lable = new JLabel("Inloggad som: " + user.first_name + " " + user.last_name);
-		lbl_user_lable.setBounds(10, 11, 198, 23);
+		JLabel lbl_user_lable = new JLabel("Inloggad som:");
+		lbl_user_lable.setBounds(10, 12, 180, 23);
 		contentPane.add(lbl_user_lable);
 		
 		JLabel lbl_user = new JLabel(Database.current_user);
 		lbl_user.setForeground(Color.BLUE);
-		lbl_user.setBounds(91, 11, 198, 23);
+		lbl_user.setBounds(105, 12, 198, 23);
 		contentPane.add(lbl_user);
 		
 		JLabel lbl_choice = new JLabel("G\u00F6r ditt val");
@@ -83,6 +83,9 @@ public class UserMenu extends JFrame {
 		JButton btn_flights = new JButton("Mina bokningar");
 		btn_flights.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				MyBookings myBookings = new MyBookings(user);
+				myBookings.setVisible(true);
+				dispose();
 			}
 		});
 		btn_flights.setBounds(10, 148, 127, 23);
