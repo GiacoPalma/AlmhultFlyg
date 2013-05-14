@@ -20,6 +20,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SpinnerDateModel;
+
+import app.Airplane;
 import app.Airport;
 import app.Database;
 import app.Flight;
@@ -32,16 +34,24 @@ import java.awt.event.MouseEvent;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
+
 import javax.swing.UIManager;
+
 import org.apache.commons.lang3.StringUtils;
+
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import com.toedter.calendar.JCalendar;
+
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+
 import com.toedter.calendar.JDateChooser;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
+
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
 import javax.swing.JTextPane;
 
 public class FlightSwing extends JFrame {
@@ -49,7 +59,11 @@ public class FlightSwing extends JFrame {
 	private JPanel contentPane;
 	public Database database = new Database();
 	private JTextField textField;
-
+	private int dep;
+	private int dest;
+	public Airplane airplane = new Airplane();
+	public Route route = new Route();
+	private JComboBox comboBox_2;
 	/**
 	 * Launch the application.
 	 */
@@ -70,7 +84,7 @@ public class FlightSwing extends JFrame {
 	 * Create the frame.
 	 */
 	public FlightSwing() {
-		setTitle("Lägg till flyg");
+		setTitle("Lï¿½gg till flyg");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -80,6 +94,16 @@ public class FlightSwing extends JFrame {
 		contentPane.setLayout(null);
 
 		final JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dest = comboBox_1.getSelectedIndex();
+				if(dep >= 0 && dest >= 0){
+					route.setPrice(30000, 14, 100);
+					//route.setPrice(distance, fuel_per_km, persons);
+					textField.setText(""+route.price);
+				}
+			}
+		});
 		comboBox_1.setBounds(327, 90, 197, 27);
 		contentPane.add(comboBox_1);
 
@@ -96,6 +120,11 @@ public class FlightSwing extends JFrame {
 		contentPane.add(lblFrn);
 
 		final JComboBox comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dep = comboBox.getSelectedIndex();
+			}
+		});
 		comboBox.setBounds(68, 90, 197, 27);
 		contentPane.add(comboBox);
 
@@ -212,7 +241,7 @@ public class FlightSwing extends JFrame {
 		lblTid_1.setBounds(287, 173, 24, 16);
 		contentPane.add(lblTid_1);
 		
-		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2 = new JComboBox();
 		comboBox_2.setBounds(68, 246, 197, 28);
 		contentPane.add(comboBox_2);
 		
@@ -228,7 +257,7 @@ public class FlightSwing extends JFrame {
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Route route = new Route();
+				//Route route = new Route();
 				if (comboBox.getSelectedIndex() == -1) {
 					route.setDepature_airport_id(0);
 				} else {
@@ -289,7 +318,7 @@ public class FlightSwing extends JFrame {
 						}
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"NŒgonting gick fel", "Dialog",
+								"Nï¿½gonting gick fel", "Dialog",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
@@ -301,5 +330,8 @@ public class FlightSwing extends JFrame {
 			}
 		});
 
+	}
+	public JComboBox getComboBox_2() {
+		return comboBox_2;
 	}
 }
