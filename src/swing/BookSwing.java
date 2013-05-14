@@ -27,7 +27,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import com.toedter.calendar.JCalendar;
 import java.awt.GridLayout;
+
+import app.Airplane;
 import app.Airport;
+import app.Booking;
 import app.Database;
 import app.Flight;
 import app.Route;
@@ -140,7 +143,7 @@ public class BookSwing extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
+				Booking booking = new Booking();
 				
 				
 				int i = list.getSelectedIndex();
@@ -238,6 +241,7 @@ public class BookSwing extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				Route route = new Route();
 				Flight flight = new Flight(route);
+				Booking booking = new Booking();
 				int selDep = combobox.getSelectedIndex();
 				try {
 					dep_id = airportlist.get(selDep).id;
@@ -262,7 +266,7 @@ public class BookSwing extends JFrame {
 				} catch (NullPointerException e) {
 
 				}
-
+				
 				flights = Database.getAvailableFlights(dep_id, dest_id,
 						inputDeptDateFormated);
 				if (!(flights.size() == 0)) {
@@ -273,11 +277,19 @@ public class BookSwing extends JFrame {
 						Airport destAirport = new Airport();
 						airport = Database.getAirport(flights.get(i).route1.depature_airport_id);
 						destAirport = Database.getAirport(flights.get(i).route1.destination_airport_id);
+						Airplane airplane = new Airplane();
+						airplane = Database.getAirplane(flights.get(i).route1.airplane);
+						String available;
+						if(booking.checkAvailability(airplane.getSeatsTotal(), flights.get(i).route1.seats_booked)){
+							available = "";
+						} else {
+							available = "Fullbokad";
+						}
 						listModel.addElement(airport.getName() + " - "
 								+ destAirport.getName() + " "
 								+ flights.get(i).route1.getDepature_date() + " - "
 								+ flights.get(i).route1.getDestination_date()
-								+ " Pris: " + flights.get(i).route1.getPrice());
+								+ " Pris: " + flights.get(i).route1.getPrice() + " " + available);
 					}
 				} else {
 					listModel.clear();

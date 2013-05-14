@@ -16,7 +16,6 @@ public class Database {
 	public static String user = "root";
 	public static String password = "";
 
-
 	public static String current_user = "";
 
 	Connection connection = null;
@@ -56,6 +55,39 @@ public class Database {
 		return null;
 	}
 	
+	public static Airplane getAirplane(int id) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM airplanes WHERE id=" + id);
+
+			if (rs.next()) {
+				Airplane airplane = new Airplane();
+				airplane.setId(rs.getInt("id"));
+				airplane.setModel(rs.getString("model"));
+				airplane.setSeatsTotal(rs.getInt("seats_total"));
+				
+
+				return airplane;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	public static Flight getFlight(int id) {
 		Connection con = null;
 		Statement st = null;
@@ -71,7 +103,8 @@ public class Database {
 			con = DriverManager.getConnection(url, user, password);
 
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM `routes` JOIN `flights` ON flights.route1_id = routes.id WHERE flights.id =" + id);
+			rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM `routes` JOIN `flights` ON flights.route1_id = routes.id WHERE flights.id ="
+					+ id);
 
 			if (rs.next()) {
 				Route route1 = new Route();
@@ -82,11 +115,10 @@ public class Database {
 				route1.price = rs.getInt("price");
 				route1.airplane = rs.getInt("airplane");
 				route1.distance = rs.getInt("distance");
-		
+
 				Flight flight = new Flight(route1);
 				flight.id = rs.getInt("flight_id");
-				
-				
+
 				return flight;
 			}
 		} catch (SQLException e) {
@@ -95,14 +127,15 @@ public class Database {
 
 		return null;
 	}
-	
-	public static List<Flight> getAvailableFlights(int dep_id, int dest_id, String dep_date) {
+
+	public static List<Flight> getAvailableFlights(int dep_id, int dest_id,
+			String dep_date) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
-		
+
 		List<Flight> ret = new ArrayList<Flight>();
-		
+
 		try {
 			try {
 				Class.forName(driverName);
@@ -113,27 +146,38 @@ public class Database {
 			con = DriverManager.getConnection(url, user, password);
 
 			st = con.createStatement();
-			if(dep_id > 0 && dest_id > 0 && dep_date !=null){
-			rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id=" + dep_id + " AND dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
-			} else if(dep_id == 0 && dest_id > 0 && dep_date != null) {
-				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dest_id="+dest_id+" AND dep_date LIKE '"+dep_date+"%'");
-			} else if(dep_id > 0 && dest_id == 0 && dep_date != null){
-				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="+dep_id+" AND dep_date LIKE '"+dep_date+"%'");
-			} else if(dep_id > 0 && dest_id > 0 && dep_date == null) {
-				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
-			} else if(dep_id > 0 && dest_id > 0 && dep_date == null){
-				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id=" + dep_id + " AND dest_id="+dest_id);
-			} else if (dep_id == 0 && dest_id == 0 && dep_date != null){
-				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_date LIKE '"+dep_date+"%'");
+			if (dep_id > 0 && dest_id > 0 && dep_date != null) {
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="
+						+ dep_id
+						+ " AND dest_id="
+						+ dest_id
+						+ " AND dep_date LIKE '" + dep_date + "%'");
+			} else if (dep_id == 0 && dest_id > 0 && dep_date != null) {
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dest_id="
+						+ dest_id + " AND dep_date LIKE '" + dep_date + "%'");
+			} else if (dep_id > 0 && dest_id == 0 && dep_date != null) {
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="
+						+ dep_id + " AND dep_date LIKE '" + dep_date + "%'");
+			} else if (dep_id > 0 && dest_id > 0 && dep_date == null) {
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="
+						+ dep_id + " AND dest_id=" + dest_id);
+			} else if (dep_id > 0 && dest_id > 0 && dep_date == null) {
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="
+						+ dep_id + " AND dest_id=" + dest_id);
+			} else if (dep_id == 0 && dest_id == 0 && dep_date != null) {
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_date LIKE '"
+						+ dep_date + "%'");
 				System.out.println(rs);
-			} else if (dep_id > 0 && dest_id == 0 && dep_date == null){
-				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="+dep_id);
-			} else if (dep_id == 0 && dest_id > 0 && dep_date == null){
-				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dest_id="+dest_id);
-			} else if (dep_id == 0 && dest_id == 0 && dep_date == null){
+			} else if (dep_id > 0 && dest_id == 0 && dep_date == null) {
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="
+						+ dep_id);
+			} else if (dep_id == 0 && dest_id > 0 && dep_date == null) {
+				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dest_id="
+						+ dest_id);
+			} else if (dep_id == 0 && dest_id == 0 && dep_date == null) {
 				rs = st.executeQuery("SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id");
 			}
-			
+
 			while (rs.next()) {
 				Route route1 = new Route();
 				route1.id = rs.getInt("id");
@@ -144,11 +188,12 @@ public class Database {
 				route1.price = rs.getInt("price");
 				route1.distance = rs.getInt("distance");
 				route1.airplane = rs.getInt("airplane");
-				
+				route1.seats_booked = rs.getInt("seats_booked");
+
 				Flight flight = new Flight(route1);
 				flight.id = rs.getInt("flight_id");
 				ret.add(flight);
-				
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -189,7 +234,7 @@ public class Database {
 
 		return ret;
 	}
-	
+
 	public static List<Booking> getAllBookings(User userb) {
 
 		List<Booking> ret = new ArrayList<Booking>();
@@ -206,7 +251,8 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT bookings.*, routes.*, dep.name as dep_name, dest.name as dest_name FROM bookings LEFT JOIN routes ON bookings.flight_id=routes.id JOIN airports AS dep ON routes.dep_id=dep.id JOIN airports AS dest ON routes.dest_id=dest.id where bookings.user_id="+userb.id);
+			rs = st.executeQuery("SELECT bookings.*, routes.*, dep.name as dep_name, dest.name as dest_name FROM bookings LEFT JOIN routes ON bookings.flight_id=routes.id JOIN airports AS dep ON routes.dep_id=dep.id JOIN airports AS dest ON routes.dest_id=dest.id where bookings.user_id="
+					+ userb.id);
 
 			while (rs.next()) {
 				Booking booking = new Booking();
@@ -214,9 +260,9 @@ public class Database {
 				booking.setFlightId(rs.getInt("flight_id"));
 				booking.setUserId(rs.getInt("user_id"));
 				Airport depAirport = new Airport();
-				booking.depAirport= depAirport;
+				booking.depAirport = depAirport;
 				Airport destAirport = new Airport();
-				booking.destAirport= destAirport;
+				booking.destAirport = destAirport;
 				booking.depAirport.setName(rs.getString("dep_name"));
 				booking.destAirport.setName(rs.getString("dest_name"));
 				Route route = new Route();
@@ -224,7 +270,7 @@ public class Database {
 				booking.route.setDepature_date(rs.getString("dep_date"));
 				booking.route.setDestination_date(rs.getString("dest_date"));
 				booking.route.price = rs.getInt("price");
-				
+
 				ret.add(booking);
 			}
 		} catch (SQLException e) {
@@ -233,7 +279,7 @@ public class Database {
 
 		return ret;
 	}
-	
+
 	public static List<Flight> getAllFlights() {
 
 		List<Flight> ret = new ArrayList<Flight>();
@@ -271,8 +317,6 @@ public class Database {
 				Flight flight = new Flight(route1);
 				flight.id = rs.getInt("flight_id");
 
-				
-
 				ret.add(flight);
 			}
 		} catch (SQLException e) {
@@ -281,9 +325,9 @@ public class Database {
 
 		return ret;
 	}
-	
-	public static List<User> getAllUsers(){
-		
+
+	public static List<User> getAllUsers() {
+
 		List<User> ret = new ArrayList<User>();
 		Connection con = null;
 		Statement st = null;
@@ -315,8 +359,7 @@ public class Database {
 		}
 
 		return ret;
-		
-		
+
 	}
 
 	public static String RemoveAirport(int id) {
@@ -380,21 +423,25 @@ public class Database {
 
 		return null;
 	}
-	
+
 	public static boolean AddBooking(Flight flight, User bookinguser) {
 		Connection con = null;
 		java.sql.PreparedStatement st = null;
+		java.sql.PreparedStatement st2 = null;
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			st = con.prepareStatement("INSERT INTO bookings(flight_id, user_id) VALUES (?, ?)");
 			st.setInt(1, flight.id);
 			st.setInt(2, bookinguser.id);
-			
+			st2 = con
+					.prepareStatement("UPDATE routes SET seats_booked = seats_booked + 1 WHERE id=?");
+			st2.setInt(1, flight.id);
+			st2.executeUpdate();
+
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
-				throw new SQLException(
-						"Att skapa bokningen misslyckades.");
+				throw new SQLException("Att skapa bokningen misslyckades.");
 			} else {
 				return true;
 			}
@@ -409,7 +456,7 @@ public class Database {
 	public static boolean UpdateRoute(Route route) {
 		Connection con = null;
 		java.sql.PreparedStatement st = null;
-		
+
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			st = con.prepareStatement("UPDATE routes SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=?, airplane = ? WHERE id=?");
@@ -422,8 +469,10 @@ public class Database {
 			st.executeUpdate();
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
+
 				throw new SQLException(
 						"Att uppdatera rutten misslyckades.");
+
 			} else {
 				return true;
 			}
@@ -451,14 +500,13 @@ public class Database {
 			st.setNString(5, Integer.toString(price));
 			st.setInt(6, airplane);
 			st.setInt(7, distance);
+
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
-				throw new SQLException(
-						"Att skapa rutten misslyckades.");
+				throw new SQLException("Att skapa rutten misslyckades.");
 			} else {
 				return true;
 			}
-
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -466,8 +514,8 @@ public class Database {
 
 		return (Boolean) null;
 	}
-	
-	public static String RemoveRoute(int id){
+
+	public static String RemoveRoute(int id) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -485,7 +533,7 @@ public class Database {
 
 		return null;
 	}
-	
+
 	public static String RemoveFlight(int id) {
 		Connection con = null;
 		Statement st = null;
@@ -515,11 +563,10 @@ public class Database {
 			st = (PreparedStatement) con.prepareStatement(SQL_INSERT);
 			st.setInt(1, route1_id);
 			st.setInt(2, route2_id);
-			
+
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
-				throw new SQLException(
-						"Att skapa flygningen misslyckades.");
+				throw new SQLException("Att skapa flygningen misslyckades.");
 			} else {
 				return true;
 			}
@@ -530,8 +577,10 @@ public class Database {
 
 		return (Boolean) null;
 	}
-	
-	public static String registerUser(String email, String firstName, String lastName, String phonenumber, int adminStatus, String passWord){
+
+	public static String registerUser(String email, String firstName,
+			String lastName, String phonenumber, int adminStatus,
+			String passWord) {
 		Connection con = null;
 		PreparedStatement st = null;
 		String ret = "";
@@ -552,25 +601,22 @@ public class Database {
 						"Registreringen misslyckades, vï¿½nligen fï¿½rsï¿½k igen senare.");
 			} else {
 				ret = "Registreringen lyckades!";
-				
+
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		
 		return ret;
-		
-	
+
 	}
-	
-	public static User loginUser(String email, String passWord){
+
+	public static User loginUser(String email, String passWord) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
-		
-		
+
 		try {
 			try {
 				Class.forName(driverName);
@@ -580,7 +626,8 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM users WHERE email='" + email + "' AND password='" + passWord.toString()+"'");
+			rs = st.executeQuery("SELECT * FROM users WHERE email='" + email
+					+ "' AND password='" + passWord.toString() + "'");
 
 			if (rs.next()) {
 				User user = new User();
@@ -592,19 +639,19 @@ public class Database {
 				user.admin_status = rs.getInt("admin_status");
 				current_user = rs.getString("email");
 				return user;
-				
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return null;
-	
+
 	}
-	
-	public static String UpdateUser(int id, String email, String firstName, String lastName, String phonenumber, int adminStatus){
+
+	public static String UpdateUser(int id, String email, String firstName,
+			String lastName, String phonenumber, int adminStatus) {
 		Connection con = null;
 		java.sql.PreparedStatement st = null;
 		ResultSet rs = null;
@@ -627,8 +674,8 @@ public class Database {
 
 		return null;
 	}
-	
-	public static String RemoveUser(int id){
+
+	public static String RemoveUser(int id) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -646,19 +693,19 @@ public class Database {
 
 		return null;
 	}
-	
-	public static boolean RemoveBooking(int id){
+
+	public static boolean RemoveBooking(int id) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			int affectedRows = st.executeUpdate("DELETE FROM bookings WHERE id=" + id);
+			int affectedRows = st
+					.executeUpdate("DELETE FROM bookings WHERE id=" + id);
 
 			if (affectedRows == 0) {
-				throw new SQLException(
-						"NŒgonting gick fel. Fšrsšk igen");
+				throw new SQLException("NŒgonting gick fel. Fšrsšk igen");
 			} else {
 				return true;
 			}

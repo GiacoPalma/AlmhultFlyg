@@ -15,7 +15,7 @@ public class Route {
 	public Integer price;
 	public Integer distance;
 	public Integer airplane;
-
+	public Integer seats_booked;
 
 	public List<String> errorMessages = new ArrayList<String>();
 	public Airport airport;
