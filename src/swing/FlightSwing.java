@@ -20,6 +20,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SpinnerDateModel;
+
+import app.Airplane;
 import app.Airport;
 import app.Database;
 import app.Flight;
@@ -49,6 +51,7 @@ public class FlightSwing extends JFrame {
 	private JPanel contentPane;
 	public Database database = new Database();
 	private JTextField textField;
+	private JTextField textFieldDistance;
 
 	/**
 	 * Launch the application.
@@ -212,9 +215,13 @@ public class FlightSwing extends JFrame {
 		lblTid_1.setBounds(287, 173, 24, 16);
 		contentPane.add(lblTid_1);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(68, 246, 197, 28);
-		contentPane.add(comboBox_2);
+		final JComboBox comboBox_airplane = new JComboBox();
+		comboBox_airplane.setBounds(68, 246, 197, 28);
+		contentPane.add(comboBox_airplane);
+		final List<Airplane> airplanes = database.getAllAirplanes();
+		for (int i = 0; i<airplanes.size();i++){
+			comboBox_airplane.addItem(airplanes.get(i).model);
+		}
 		
 		JLabel lblFlygplan = new JLabel("Flygplan:");
 		lblFlygplan.setBounds(10, 253, 46, 14);
@@ -223,12 +230,26 @@ public class FlightSwing extends JFrame {
 		JLabel lblKronor = new JLabel("Kronor");
 		lblKronor.setBounds(269, 213, 46, 14);
 		contentPane.add(lblKronor);
+		
+		textFieldDistance = new JTextField();
+		textFieldDistance.setBounds(68, 290, 197, 29);
+		contentPane.add(textFieldDistance);
+		textFieldDistance.setColumns(10);
+		
+		JLabel lblAvstnd = new JLabel("Avst\u00E5nd:");
+		lblAvstnd.setBounds(10, 297, 67, 14);
+		contentPane.add(lblAvstnd);
+		
+		JLabel lblKilometer = new JLabel("Kilometer");
+		lblKilometer.setBounds(269, 297, 46, 14);
+		contentPane.add(lblKilometer);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblFrn, lblDatum, dateChooser, lblTid, timeSpinner, lblPris, textField, dateChooser.getCalendarButton(), lblTill, comboBox_1, lblDatum_1, dateChooser_1, timeSpinner_1, lblTid_1, btnRensaFlten, btnLggTill, btnTillbaka, contentPane, dateChooser_1.getCalendarButton(), comboBox, lblLggTillFlygning}));
 
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Route route = new Route();
+				
 				if (comboBox.getSelectedIndex() == -1) {
 					route.setDepature_airport_id(0);
 				} else {
@@ -241,6 +262,12 @@ public class FlightSwing extends JFrame {
 					int destId = comboBox_1.getSelectedIndex();
 					route.setDestination_airport_id(airports.get(destId)
 							.getId());
+				}
+				if (comboBox_airplane.getSelectedIndex() == -1){
+					route.airplane = 0;
+				}else{
+					int airplane_id = comboBox_airplane.getSelectedIndex();
+					route.airplane = airplane_id;
 				}
 				try {
 					Date inputDeptDate = dateChooser.getDate();
@@ -259,38 +286,49 @@ public class FlightSwing extends JFrame {
 					route.setDestination_date(inputDestDateFormated + " "
 							+ formattedDate2);
 				} catch (NullPointerException e) {
-
+					System.out.println(e.getMessage());
 				}
 				try {
 					int inputPrice = Integer.parseInt(textField.getText());
 					route.price = inputPrice;
 				} catch (NumberFormatException e) {
-
+					System.out.println("pris fel format");
+				}
+				try{
+					int inputDistance = Integer.parseInt(textFieldDistance.getText());
+					route.distance = inputDistance;
+				}catch(NumberFormatException e){
+					System.out.println("Distance fel format");
 				}
 				if (route.validate()) {
-					boolean created = database.AddRoute(route.price, route.depature_airport_id, route.depature_date, route.destination_airport_id, route.destination_date, route.distance);
-					if (created) {
-						JOptionPane.showMessageDialog(new JFrame(),
-								"Flygningen har lagts till", "Dialog",
-								JOptionPane.INFORMATION_MESSAGE);
-						comboBox.setSelectedIndex(-1);
-						comboBox_1.setSelectedIndex(-1);
-						dateChooser.setDate(null);
-						dateChooser_1.setDate(null);
-						textField.setText(null);
-						SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-						Date noonTime;
-						try {
-							noonTime = sdf.parse("12:00:00");
-							timeSpinner.setValue(noonTime);
-							timeSpinner_1.setValue(noonTime);
-						} catch (java.text.ParseException e1) {
-							e1.printStackTrace();
+					try{
+						boolean created = database.AddRoute(route.depature_airport_id, route.depature_date, route.destination_airport_id, route.destination_date, route.price, route.airplane, route.distance);
+						
+						if (created) {
+							JOptionPane.showMessageDialog(new JFrame(),
+									"Flygningen har lagts till", "Dialog",
+									JOptionPane.INFORMATION_MESSAGE);
+							comboBox.setSelectedIndex(-1);
+							comboBox_1.setSelectedIndex(-1);
+							dateChooser.setDate(null);
+							dateChooser_1.setDate(null);
+							textField.setText(null);
+							SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+							Date noonTime;
+							try {
+								noonTime = sdf.parse("12:00:00");
+								timeSpinner.setValue(noonTime);
+								timeSpinner_1.setValue(noonTime);
+							} catch (java.text.ParseException e1) {
+								e1.printStackTrace();
+							}
+						} else {
+							JOptionPane.showMessageDialog(new JFrame(),
+									"NŒgonting gick fel", "Dialog",
+									JOptionPane.ERROR_MESSAGE);
 						}
-					} else {
-						JOptionPane.showMessageDialog(new JFrame(),
-								"NŒgonting gick fel", "Dialog",
-								JOptionPane.ERROR_MESSAGE);
+					}catch(NullPointerException e){
+						System.out.println("Addroute funkar inte");
 					}
 				} else {
 					String output = StringUtils.join(

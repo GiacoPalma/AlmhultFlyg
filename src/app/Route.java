@@ -14,8 +14,6 @@ public class Route {
 	public String destination_date;
 	public Integer price;
 	public Integer distance;
-	public Integer airplane_id;
-
 	public Integer airplane;
 
 
