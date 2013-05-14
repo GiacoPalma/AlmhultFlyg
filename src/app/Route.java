@@ -16,7 +16,7 @@ public class Route {
 	public Integer distance;
 	public Integer airplane;
 	public Integer seats_booked;
-
+	public boolean available;
 	public List<String> errorMessages = new ArrayList<String>();
 	public Airport airport;
 	public Airport dest_airport;

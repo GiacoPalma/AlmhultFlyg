@@ -64,6 +64,7 @@ public class BookSwing extends JFrame {
 	private int dep_id = 0;
 	private String inputDeptDateFormated = null;
 	private List<Flight> availableFlights = new ArrayList<Flight>();
+	private String available="";
 
 	/**
 	 * Launch the application.
@@ -144,11 +145,17 @@ public class BookSwing extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Booking booking = new Booking();
-				
-				
+				String errorMessage;
 				int i = list.getSelectedIndex();
 				
-				if(i >= 0){
+				if(flights.get(i).route1.available){
+					errorMessage = "Du måste välja en flygning.";
+				} else {
+					errorMessage = "Flygningen är fullbokad";
+				}
+				
+				
+				if(i >= 0 && flights.get(i).route1.available){
 					boolean booked = Database.AddBooking(flights.get(i), user);
 					if(booked){
 						Object[] options = {"OK"};
@@ -173,7 +180,7 @@ public class BookSwing extends JFrame {
 					}
 				} else {
 					JOptionPane.showMessageDialog(new JFrame(),
-							"Du måste välja en flygning.",
+							errorMessage,
 							"Dialog", JOptionPane.ERROR_MESSAGE);
 				}
 				
@@ -279,11 +286,13 @@ public class BookSwing extends JFrame {
 						destAirport = Database.getAirport(flights.get(i).route1.destination_airport_id);
 						Airplane airplane = new Airplane();
 						airplane = Database.getAirplane(flights.get(i).route1.airplane);
-						String available;
+						
 						if(booking.checkAvailability(airplane.getSeatsTotal(), flights.get(i).route1.seats_booked)){
 							available = "";
+							flights.get(i).route1.available = true; 
 						} else {
 							available = "Fullbokad";
+							flights.get(i).route1.available = false;
 						}
 						listModel.addElement(airport.getName() + " - "
 								+ destAirport.getName() + " "
