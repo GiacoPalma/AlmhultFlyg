@@ -412,18 +412,18 @@ public class Database {
 		
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("UPDATE routes SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=?, airplane = 1 WHERE id=?");
+			st = con.prepareStatement("UPDATE routes SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=?, airplane = ? WHERE id=?");
 			st.setInt(1, route.getDepature_airport_id());
 			st.setString(2, route.getDepature_date());
 			st.setInt(3, route.getDestination_airport_id());
 			st.setString(4, route.getDestination_date());
 			st.setInt(5, route.getPrice());
-			st.setInt(6, route.getId());
+			st.setInt(6, route.airplane);
 			st.executeUpdate();
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
 				throw new SQLException(
-						"Att skapa flygningen misslyckades.");
+						"Att uppdatera rutten misslyckades.");
 			} else {
 				return true;
 			}
@@ -434,9 +434,10 @@ public class Database {
 
 		return (Boolean) null;
 	}
+	
 
-	public static boolean AddRoute(int price, int dep_id, String dep_date,
-			int dest_id, String dest_date, int distance) {
+	public static boolean AddRoute(int dep_id, String dep_date,
+			int dest_id, String dest_date, int price, int airplane, int distance) {
 		Connection con = null;
 		java.sql.PreparedStatement st = null;
 		ResultSet rs = null;
@@ -448,7 +449,7 @@ public class Database {
 			st.setNString(3, Integer.toString(dest_id));
 			st.setNString(4, dest_date);
 			st.setNString(5, Integer.toString(price));
-			st.setInt(6, 1);
+			st.setInt(6, airplane);
 			st.setInt(7, distance);
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
@@ -667,5 +668,39 @@ public class Database {
 		}
 
 		return (Boolean) null;
+	}
+	
+	public static List<Airplane> getAllAirplanes(){
+		List<Airplane> ret = new ArrayList<Airplane>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM airplanes");
+
+			while (rs.next()) {
+				Airplane airplane = new Airplane();
+				airplane.id = rs.getInt("id");
+				airplane.fuel_per_km = rs.getInt("fuel_per_km");
+				airplane.model = rs.getString("model");
+				airplane.seats_total = rs.getInt("seats_total");
+				airplane.travel_speed = rs.getInt("travel_speed");
+				ret.add(airplane);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+		
 	}
 }

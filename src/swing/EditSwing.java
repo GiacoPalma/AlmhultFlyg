@@ -20,6 +20,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SpinnerDateModel;
+
+import app.Airplane;
 import app.Airport;
 import app.Database;
 import app.Flight;
@@ -48,6 +50,7 @@ public class EditSwing extends JFrame {
 	public Database database = new Database();
 	private JTextField textField;
 	private int selectedId;
+	private JTextField textFieldDistance;
 
 	/**
 	 * Launch the application.
@@ -208,9 +211,15 @@ public class EditSwing extends JFrame {
 		lblTid_1.setBounds(291, 185, 61, 16);
 		contentPane.add(lblTid_1);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(68, 252, 197, 27);
-		contentPane.add(comboBox_2);
+		final JComboBox comboBox_airplane = new JComboBox();
+		comboBox_airplane.setBounds(68, 252, 197, 27);
+		contentPane.add(comboBox_airplane);
+		final List<Airplane> airplanes = database.getAllAirplanes();
+		
+		for(int i = 0; i<airplanes.size();i++){
+			comboBox_airplane.addItem(airplanes.get(i).model);
+		}
+		comboBox_airplane.setSelectedIndex(selectedFlight.route1.airplane);
 		
 		JLabel lblFlygplan = new JLabel("Flygplan:");
 		lblFlygplan.setBounds(10, 258, 46, 14);
@@ -219,6 +228,19 @@ public class EditSwing extends JFrame {
 		JLabel lblKronor = new JLabel("Kronor");
 		lblKronor.setBounds(271, 220, 46, 14);
 		contentPane.add(lblKronor);
+		
+		textFieldDistance = new JTextField();
+		textFieldDistance.setBounds(68, 290, 197, 27);
+		contentPane.add(textFieldDistance);
+		textFieldDistance.setColumns(10);
+		
+		JLabel lblAvstnd = new JLabel("Avst\u00E5nd:");
+		lblAvstnd.setBounds(10, 296, 61, 14);
+		contentPane.add(lblAvstnd);
+		
+		JLabel lblKilometer = new JLabel("Kilometer");
+		lblKilometer.setBounds(271, 296, 46, 14);
+		contentPane.add(lblKilometer);
 
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
@@ -238,6 +260,12 @@ public class EditSwing extends JFrame {
 					int destId = comboBox_1.getSelectedIndex();
 					route.setDestination_airport_id(airports.get(destId)
 							.getId());
+				}
+				if (comboBox_airplane.getSelectedIndex() == -1){
+					route.airplane = 0;
+				}else{
+					int airplane_id = comboBox_airplane.getSelectedIndex();
+					route.airplane = airplanes.get(airplane_id).id;
 				}
 				try {
 					Date inputDeptDate = dateChooser.getDate();
@@ -263,6 +291,12 @@ public class EditSwing extends JFrame {
 					route.price = inputPrice;
 				} catch (NumberFormatException e) {
 
+				}
+				try{
+					int inputDistance = Integer.parseInt(textFieldDistance.getText());
+					route.distance = inputDistance;
+				}catch(NumberFormatException e){
+					
 				}
 				if (route.validate()) {
 					boolean updated = database.UpdateRoute(route);

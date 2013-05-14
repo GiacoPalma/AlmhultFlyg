@@ -20,8 +20,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SpinnerDateModel;
-
-import app.Airplane;
 import app.Airport;
 import app.Database;
 import app.Flight;
@@ -34,24 +32,16 @@ import java.awt.event.MouseEvent;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
-
 import javax.swing.UIManager;
-
 import org.apache.commons.lang3.StringUtils;
-
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import com.toedter.calendar.JCalendar;
-
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
-
 import com.toedter.calendar.JDateChooser;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
-
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-
 import javax.swing.JTextPane;
 
 public class FlightSwing extends JFrame {
@@ -59,11 +49,9 @@ public class FlightSwing extends JFrame {
 	private JPanel contentPane;
 	public Database database = new Database();
 	private JTextField textField;
-	private int dep;
-	private int dest;
-	public Airplane airplane = new Airplane();
-	public Route route = new Route();
-	private JComboBox comboBox_2;
+	public int dep;
+	public int dest;
+
 	/**
 	 * Launch the application.
 	 */
@@ -98,9 +86,7 @@ public class FlightSwing extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				dest = comboBox_1.getSelectedIndex();
 				if(dep >= 0 && dest >= 0){
-					route.setPrice(30000, 14, 100);
-					//route.setPrice(distance, fuel_per_km, persons);
-					textField.setText(""+route.price);
+					System.out.println(dep+""+dest);
 				}
 			}
 		});
@@ -241,7 +227,7 @@ public class FlightSwing extends JFrame {
 		lblTid_1.setBounds(287, 173, 24, 16);
 		contentPane.add(lblTid_1);
 		
-		comboBox_2 = new JComboBox();
+		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setBounds(68, 246, 197, 28);
 		contentPane.add(comboBox_2);
 		
@@ -257,7 +243,7 @@ public class FlightSwing extends JFrame {
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//Route route = new Route();
+				Route route = new Route();
 				if (comboBox.getSelectedIndex() == -1) {
 					route.setDepature_airport_id(0);
 				} else {
@@ -330,8 +316,5 @@ public class FlightSwing extends JFrame {
 			}
 		});
 
-	}
-	public JComboBox getComboBox_2() {
-		return comboBox_2;
 	}
 }
