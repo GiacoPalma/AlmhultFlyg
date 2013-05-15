@@ -18,6 +18,7 @@ import javax.swing.JButton;
 
 import app.Database;
 import app.Flight;
+import app.Route;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -67,7 +68,7 @@ public class DeleteEditFlight extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		final List<Flight> allFlights = database.getAllFlights();
+		final List<Route> allRoutes = database.getAllRoutes();
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(37, 66, 700, 224);
@@ -77,12 +78,12 @@ public class DeleteEditFlight extends JFrame {
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
 
-		for (int i = 0; i < allFlights.size(); i++) {
-			listModel.addElement(allFlights.get(i).route1.getAirport().getName()
-					+ " - " + allFlights.get(i).route1.getDest_airport().getName()
-					+ " | " + allFlights.get(i).route1.getDepature_date() + " - "
-					+ allFlights.get(i).route1.getDestination_date() + " | Pris: "
-					+ allFlights.get(i).route1.getPrice() + " kr");
+		for (int i = 0; i < allRoutes.size(); i++) {
+			listModel.addElement(allRoutes.get(i).getAirport().getName()
+					+ " - " + allRoutes.get(i).getDest_airport().getName()
+					+ " | " + allRoutes.get(i).getDepature_date() + " - "
+					+ allRoutes.get(i).getDestination_date() + " | Pris: "
+					+ allRoutes.get(i).getPrice() + " kr");
 		}
 
 		JLabel lblTaBortFlygning = new JLabel("Ta bort/redigera flygning");
@@ -96,24 +97,24 @@ public class DeleteEditFlight extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = list.getSelectedIndex();
 				if (i >= 0) {
-					int id = allFlights.get(i).id;
+					int id = allRoutes.get(i).id;
 
 					Object[] options = { "Ja", "Nej" };
 					int n = JOptionPane.showOptionDialog(new JFrame(),
-							"Vill du ta bort flygningen?",
+							"Vill du ta bort rutten?",
 							"Bekr�fta borttagning", JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE, null, options,
 							options[0]);
 
 					if (n == 0) {
-						database.RemoveFlight(id);
+						database.RemoveRoute(id);
 						dispose();
 						DeleteEditFlight delEdit = new DeleteEditFlight();
 						delEdit.setVisible(true);
 					}
 				} else {
 					JOptionPane.showMessageDialog(new JFrame(),
-							"Du m�ste v�lja en flygning att ta bort/redigera",
+							"Du m�ste v�lja en rutt att ta bort/redigera",
 							"Dialog", JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -141,14 +142,15 @@ public class DeleteEditFlight extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				if (list.getSelectedIndex() >= 0) {
 					selectedId = list.getSelectedIndex();
-					int sendId = allFlights.get(selectedId).id;
-					EditSwing editFlight = new EditSwing(sendId);
-					editFlight.setId(selectedId);
-					editFlight.setVisible(true);
+					int sendId = allRoutes.get(selectedId).id;
+					System.out.println("sendi"+sendId);
+					EditSwing editRoute = new EditSwing(sendId);
+					editRoute.setId(selectedId);
+					editRoute.setVisible(true);
 					setVisible(false);
 				} else {
 					JOptionPane.showMessageDialog(new JFrame(),
-							"Du m�ste v�lja en flygning att ta bort/redigera",
+							"Du m�ste v�lja en rutt att ta bort/redigera",
 							"Dialog", JOptionPane.ERROR_MESSAGE);
 				}
 

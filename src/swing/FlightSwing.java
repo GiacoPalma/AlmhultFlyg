@@ -53,6 +53,10 @@ import javax.swing.JList;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import javax.swing.JTextPane;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class FlightSwing extends JFrame {
 
@@ -61,9 +65,9 @@ public class FlightSwing extends JFrame {
 	private JTextField textField;
 	public int dep;
 	public int dest;
-	public Route route = new Route();
-	private JTextField textFieldDistance;;
+	public Route route = new Route();;
 	final List<Airplane> airplanes = database.getAllAirplanes();
+	private JButton btnHmtaPris;
 
 	/**
 	 * Launch the application.
@@ -85,7 +89,7 @@ public class FlightSwing extends JFrame {
 	 * Create the frame.
 	 */
 	public FlightSwing() {
-		setTitle("Lï¿½gg till flyg");
+		setTitle("Lägg till rutt");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -97,12 +101,9 @@ public class FlightSwing extends JFrame {
 		final JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				dest = comboBox_1.getSelectedIndex();
-				
-				route.setPrice(route.distance, airplanes.get(route.airplane).fuel_per_km, airplanes.get(route.airplane).seats_total);
 				if(dep >= 0 && dest >= 0){
-					textField.setText(""+route.price);
+					
 				}
 			}
 		});
@@ -260,11 +261,6 @@ public class FlightSwing extends JFrame {
 		lblKronor.setBounds(269, 213, 46, 14);
 		contentPane.add(lblKronor);
 		
-		textFieldDistance = new JTextField();
-		textFieldDistance.setBounds(68, 286, 197, 29);
-		contentPane.add(textFieldDistance);
-		textFieldDistance.setColumns(10);
-		
 		JLabel lblAvstnd = new JLabel("Avst\u00E5nd:");
 		lblAvstnd.setBounds(10, 293, 61, 14);
 		contentPane.add(lblAvstnd);
@@ -272,8 +268,32 @@ public class FlightSwing extends JFrame {
 		JLabel lblKilometer = new JLabel(" Kilometer");
 		lblKilometer.setBounds(269, 293, 61, 14);
 		contentPane.add(lblKilometer);
+		
+		
+		final JFormattedTextField textFieldDistance = new JFormattedTextField();
+		
+		textFieldDistance.setBounds(68, 286, 197, 29); 
+		contentPane.add(textFieldDistance);
+		
+		
+		
+		btnHmtaPris = new JButton("Hämta pris");
+		
+		btnHmtaPris.setBounds(364, 327, 117, 25);
+		btnHmtaPris.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					int distance = Integer.parseInt(textFieldDistance.getText());
+					int airplane_id = comboBox_airplane.getSelectedIndex();
+					System.out.println("test"+textFieldDistance.getText());
+					route.setPrice(distance, airplanes.get(airplane_id).fuel_per_km, airplanes.get(airplane_id).seats_total);
+					textField.setText(""+route.price);
+				
+			}
+		});
+		contentPane.add(btnHmtaPris);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblFrn, lblDatum, dateChooser, lblTid, timeSpinner, lblPris, textField, dateChooser.getCalendarButton(), lblTill, comboBox_1, lblDatum_1, dateChooser_1, timeSpinner_1, lblTid_1, btnRensaFlten, btnLggTill, btnTillbaka, contentPane, dateChooser_1.getCalendarButton(), comboBox, lblLggTillFlygning}));
-
+		
+		
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -322,7 +342,7 @@ public class FlightSwing extends JFrame {
 				} catch (NumberFormatException e) {
 
 				}
-				try {
+				try { 
 					int inputDistance = Integer.parseInt(textFieldDistance.getText());
 					route.distance = inputDistance;
 				} catch(NumberFormatException e){
@@ -332,7 +352,7 @@ public class FlightSwing extends JFrame {
 					boolean created = database.AddRoute(route.depature_airport_id, route.depature_date, route.destination_airport_id, route.destination_date, route.price, route.airplane, route.distance);
 					if (created) {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Flygningen har lagts till", "Dialog",
+								"Rutten har lagts till", "Dialog",
 								JOptionPane.INFORMATION_MESSAGE);
 						comboBox.setSelectedIndex(-1);
 						comboBox_1.setSelectedIndex(-1);
@@ -350,7 +370,7 @@ public class FlightSwing extends JFrame {
 						}
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Nï¿½gonting gick fel", "Dialog",
+								"Någonting gick fel", "Dialog",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
@@ -362,5 +382,11 @@ public class FlightSwing extends JFrame {
 			}
 		});
 
+	}
+	public JTextField getTextFieldDistance() {
+		return getTextFieldDistance();
+	}
+	public JButton getBtnHmtaPris() {
+		return btnHmtaPris;
 	}
 }

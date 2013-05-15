@@ -51,7 +51,11 @@ public class EditSwing extends JFrame {
 	private JTextField textField;
 	private int selectedId;
 	private JTextField textFieldDistance;
-
+	public int dep;
+	public int dest;
+	private JButton btnHmtaPris;
+	public Route route = new Route();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -77,7 +81,7 @@ public class EditSwing extends JFrame {
 	 */
 	public EditSwing(int selectedId) {
 		this.selectedId = selectedId;
-		final Flight selectedFlight = database.getFlight(selectedId);
+		final Route selectedRoute = database.getRoute(selectedId);
 		setTitle("Lägg till flyg");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
@@ -88,7 +92,7 @@ public class EditSwing extends JFrame {
 		contentPane.setLayout(null);
 
 		final JComboBox comboBox_1 = new JComboBox();
-		Airport dest_airport = database.getAirport(selectedFlight.route1.getDestination_airport_id());
+		Airport dest_airport = database.getAirport(selectedRoute.getDestination_airport_id());
 		comboBox_1.setBounds(327, 107, 197, 27);
 		contentPane.add(comboBox_1);
 
@@ -103,7 +107,7 @@ public class EditSwing extends JFrame {
 		JLabel lblFrn = new JLabel("Fr\u00E5n: ");
 		lblFrn.setBounds(15, 118, 35, 16);
 		contentPane.add(lblFrn);
-		Airport dep_airport = database.getAirport(selectedFlight.route1.getDepature_airport_id());
+		Airport dep_airport = database.getAirport(selectedRoute.getDepature_airport_id());
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(68, 108, 197, 27);
 		contentPane.add(comboBox);
@@ -146,7 +150,7 @@ public class EditSwing extends JFrame {
 		dateChooser.setDateFormatString("yyyy-MM-dd");
 		dateChooser.setBounds(68, 146, 197, 28);
 		contentPane.add(dateChooser);
-		dateChooser.setDate(selectedFlight.route1.getFormattedDepature_date());
+		dateChooser.setDate(selectedRoute.getFormattedDepature_date());
 
 		JLabel lblDatum = new JLabel("Datum:");
 		lblDatum.setBounds(10, 158, 61, 16);
@@ -156,7 +160,7 @@ public class EditSwing extends JFrame {
 		dateChooser_1.setDateFormatString("yyyy-MM-dd");
 		dateChooser_1.setBounds(327, 145, 197, 28);
 		contentPane.add(dateChooser_1);
-		dateChooser_1.setDate(selectedFlight.route1.getFormattedDestination_date());
+		dateChooser_1.setDate(selectedRoute.getFormattedDestination_date());
 
 		JLabel lblDatum_1 = new JLabel("Datum:");
 		lblDatum_1.setBounds(275, 158, 61, 16);
@@ -166,7 +170,7 @@ public class EditSwing extends JFrame {
 		textField.setBounds(68, 213, 197, 28);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		String sendPrice = Integer.toString(selectedFlight.route1.price);
+		String sendPrice = Integer.toString(selectedRoute.price);
 
 		textField.setText(sendPrice);
 
@@ -185,8 +189,8 @@ public class EditSwing extends JFrame {
 		contentPane.add(timeSpinner_1);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		Date depTime = selectedFlight.route1.getFormattedDepature_date();
-		Date destTime = selectedFlight.route1.getFormattedDestination_date();
+		Date depTime = selectedRoute.getFormattedDepature_date();
+		Date destTime = selectedRoute.getFormattedDestination_date();
 
 		timeSpinner.setValue(depTime);
 		timeSpinner_1.setValue(destTime);
@@ -219,7 +223,7 @@ public class EditSwing extends JFrame {
 		for(int i = 0; i<airplanes.size();i++){
 			comboBox_airplane.addItem(airplanes.get(i).model);
 		}
-		comboBox_airplane.setSelectedIndex(selectedFlight.route1.airplane);
+		comboBox_airplane.setSelectedIndex(selectedRoute.airplane);
 		
 		JLabel lblFlygplan = new JLabel("Flygplan:");
 		lblFlygplan.setBounds(10, 258, 46, 14);
@@ -234,6 +238,9 @@ public class EditSwing extends JFrame {
 		contentPane.add(textFieldDistance);
 		textFieldDistance.setColumns(10);
 		
+		String stringDist = Integer.toString(selectedRoute.distance);
+		textFieldDistance.setText(stringDist);
+		
 		JLabel lblAvstnd = new JLabel("Avst\u00E5nd:");
 		lblAvstnd.setBounds(10, 296, 61, 14);
 		contentPane.add(lblAvstnd);
@@ -241,13 +248,28 @@ public class EditSwing extends JFrame {
 		JLabel lblKilometer = new JLabel("Kilometer");
 		lblKilometer.setBounds(271, 296, 46, 14);
 		contentPane.add(lblKilometer);
+		
+btnHmtaPris = new JButton("Hämta pris");
+		
+		btnHmtaPris.setBounds(364, 327, 117, 25);
+		btnHmtaPris.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					int distance = Integer.parseInt(textFieldDistance.getText());
+					int airplane_id = comboBox_airplane.getSelectedIndex();
+					System.out.println("test"+textFieldDistance.getText());
+					route.setPrice(distance, airplanes.get(airplane_id).fuel_per_km, airplanes.get(airplane_id).seats_total);
+					textField.setText(""+route.price);
+				
+			}
+		});
+		contentPane.add(btnHmtaPris);
 
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Route route = new Route();
+				
 			
-				route.id = selectedFlight.route1.id;
+				route.id = selectedRoute.id;
 				if (comboBox.getSelectedIndex() == -1) {
 					route.setDepature_airport_id(0);
 				} else {
@@ -299,14 +321,15 @@ public class EditSwing extends JFrame {
 					
 				}
 				if (route.validate()) {
-					boolean updated = database.UpdateRoute(route);
+					System.out.println(route.id);
+					boolean updated = database.UpdateRoute(route, route.id);
 					if (updated) {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Flygningen har uppdaterats", "Dialog",
+								"Rutten har uppdaterats", "Dialog",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"NŒgonting gick fel", "Dialog",
+								"Någonting gick fel", "Dialog",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				} else {

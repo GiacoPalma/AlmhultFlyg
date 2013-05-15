@@ -56,7 +56,7 @@ public class AdminMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btn_signout.setBounds(335, 11, 89, 23);
+		btn_signout.setBounds(314, 21, 89, 23);
 		contentPane.add(btn_signout);
 		
 		JButton btn_users = new JButton("Konton");
@@ -68,9 +68,7 @@ public class AdminMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btn_users.setBounds(10, 88, 115, 23);
-
-		btn_users.setBounds(10, 88, 188, 23);
+		btn_users.setBounds(10, 70, 188, 23);
 
 		contentPane.add(btn_users);
 		
@@ -82,10 +80,10 @@ public class AdminMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btn_airports.setBounds(10, 122, 188, 23);
+		btn_airports.setBounds(10, 100, 188, 23);
 		contentPane.add(btn_airports);
 		
-		JButton btn_flights = new JButton("L\u00E4gg till flygning");
+		JButton btn_flights = new JButton("L\u00E4gg till rutt");
 		btn_flights.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FlightSwing flightSwing = new FlightSwing();
@@ -93,11 +91,11 @@ public class AdminMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btn_flights.setBounds(10, 156, 188, 23);
+		btn_flights.setBounds(10, 130, 188, 23);
 		contentPane.add(btn_flights);
 		
 		JLabel lbl_handle = new JLabel("Hantera");
-		lbl_handle.setBounds(10, 61, 89, 14);
+		lbl_handle.setBounds(10, 45, 89, 14);
 		contentPane.add(lbl_handle);
 		
 		JLabel lbl_user_lable = new JLabel("Inloggad som:");
@@ -121,7 +119,7 @@ public class AdminMenu extends JFrame {
 		contentPane.add(lbl_user);
 		contentPane.add(lbl_user);
 		
-		JButton btnNewButton = new JButton("Ta bort/redigera flygning");
+		JButton btnNewButton = new JButton("Ta bort / redigera rutt");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -130,9 +128,10 @@ public class AdminMenu extends JFrame {
 				delEdit.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(10, 186, 188, 29);
+		btnNewButton.setBounds(10, 160, 188, 29);
 		contentPane.add(btnNewButton);
 		
+
 		JButton btnBokningar = new JButton("Bokningar");
 		btnBokningar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -143,5 +142,14 @@ public class AdminMenu extends JFrame {
 		});
 		btnBokningar.setBounds(10, 219, 188, 29);
 		contentPane.add(btnBokningar);
+
+		JButton btnNewButton_1 = new JButton("L\u00E4gg till flygning");
+		btnNewButton_1.setBounds(10, 195, 188, 23);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Ta bort / redigera flygning");
+		btnNewButton_2.setBounds(10, 225, 188, 23);
+		contentPane.add(btnNewButton_2);
+
 	}
 }
