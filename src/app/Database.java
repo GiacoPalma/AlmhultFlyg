@@ -279,6 +279,57 @@ public class Database {
 
 		return ret;
 	}
+	
+	public static List<Booking> getAllUserBookings() {
+
+		List<Booking> ret = new ArrayList<Booking>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT bookings.*, bookings.id as book_id, routes.*, users.*, dep.name as dep_name, dest.name as dest_name FROM bookings LEFT JOIN routes ON bookings.flight_id=routes.id LEFT JOIN airports AS dep ON routes.dep_id=dep.id JOIN airports AS dest ON routes.dest_id=dest.id JOIN users ON bookings.user_id=users.id where bookings.confirmed=0");
+
+			while (rs.next()) {
+				Booking booking = new Booking();
+				booking.setId(rs.getInt("book_id"));
+				booking.setFlightId(rs.getInt("flight_id"));
+				booking.setUserId(rs.getInt("user_id"));
+				Airport depAirport = new Airport();
+				booking.depAirport = depAirport;
+				Airport destAirport = new Airport();
+				booking.destAirport = destAirport;
+				booking.depAirport.setName(rs.getString("dep_name"));
+				booking.destAirport.setName(rs.getString("dest_name"));
+				booking.setConfirmed(rs.getInt("confirmed"));
+				Route route = new Route();
+				booking.route = route;
+				booking.route.setDepature_date(rs.getString("dep_date"));
+				booking.route.setDestination_date(rs.getString("dest_date"));
+				booking.route.price = rs.getInt("price");
+				User user = new User();
+				booking.user = user;
+				booking.user.setId(rs.getInt("user_id"));
+				booking.user.setFirst_name(rs.getString("first_name"));
+				booking.user.setLast_name(rs.getString("last_name"));
+				booking.user.setEmail(rs.getString("email"));
+
+				ret.add(booking);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+	}
 
 	public static List<Flight> getAllFlights() {
 
@@ -484,6 +535,32 @@ public class Database {
 		return (Boolean) null;
 	}
 	
+	public static boolean MakeConfirmed(int id) {
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("UPDATE bookings SET confirmed=1 WHERE id=?");
+			st.setInt(1, id);
+			
+			st.executeUpdate();
+			int affectedRows = st.executeUpdate();
+			if (affectedRows == 0) {
+
+				throw new SQLException(
+						"Att uppdatera rutten misslyckades.");
+
+			} else {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return (Boolean) null;
+	}
 
 	public static boolean AddRoute(int dep_id, String dep_date,
 			int dest_id, String dest_date, int price, int airplane, int distance) {

@@ -132,5 +132,16 @@ public class AdminMenu extends JFrame {
 		});
 		btnNewButton.setBounds(10, 186, 188, 29);
 		contentPane.add(btnNewButton);
+		
+		JButton btnBokningar = new JButton("Bokningar");
+		btnBokningar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				AdminBookings adminBookings = new AdminBookings();
+				adminBookings.setVisible(true);
+			}
+		});
+		btnBokningar.setBounds(10, 219, 188, 29);
+		contentPane.add(btnBokningar);
 	}
 }

@@ -7,6 +7,48 @@ public class Booking {
 	public Airport depAirport;
 	public Airport destAirport;
 	public Route route;
+	public User user;
+	public int confirmed;
+
+	public int getConfirmed() {
+		return confirmed;
+	}
+
+	public void setConfirmed(int confirmed) {
+		this.confirmed = confirmed;
+	}
+
+	public Airport getDepAirport() {
+		return depAirport;
+	}
+
+	public void setDepAirport(Airport depAirport) {
+		this.depAirport = depAirport;
+	}
+
+	public Airport getDestAirport() {
+		return destAirport;
+	}
+
+	public void setDestAirport(Airport destAirport) {
+		this.destAirport = destAirport;
+	}
+
+	public Route getRoute() {
+		return route;
+	}
+
+	public void setRoute(Route route) {
+		this.route = route;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public int getId() {
 		return id;
