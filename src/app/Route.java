@@ -194,7 +194,8 @@ public class Route {
 	public void setPrice(int distance, int fuel_per_km, int persons){//int price) {
 		//this.price = price;
 		int fuel = distance * fuel_per_km;
-		this.price = 250 + (fuel / persons) + 280;
+		int fuel_price = fuel * 14;
+		this.price = 250 + (fuel_price / persons) + 280;
 	}
 
 	public int getDuration() {

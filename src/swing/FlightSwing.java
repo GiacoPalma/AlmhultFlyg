@@ -89,7 +89,7 @@ public class FlightSwing extends JFrame {
 	 * Create the frame.
 	 */
 	public FlightSwing() {
-		setTitle("Lï¿½gg till flyg");
+		setTitle("Lägg till rutt");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -271,24 +271,13 @@ public class FlightSwing extends JFrame {
 		
 		
 		final JFormattedTextField textFieldDistance = new JFormattedTextField();
-		textFieldDistance.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				String test = textFieldDistance.getText();
-				if (!test.equals("")) {
-					int distance = Integer.parseInt(textFieldDistance.getText());
-					int airplane_id = comboBox_airplane.getSelectedIndex();
-					System.out.println("test"+textFieldDistance.getText());
-					//route.setPrice(distance, airplanes.get(airplane_id).fuel_per_km, airplanes.get(airplane_id).seats_total);
-					textField.setText(""+route.price);
-				}
-			}
-		});
+		
 		textFieldDistance.setBounds(68, 286, 197, 29); 
 		contentPane.add(textFieldDistance);
 		
 		
 		
-		btnHmtaPris = new JButton("HÃ¤mta pris");
+		btnHmtaPris = new JButton("Hämta pris");
 		
 		btnHmtaPris.setBounds(364, 327, 117, 25);
 		btnHmtaPris.addActionListener(new ActionListener() {
@@ -363,7 +352,7 @@ public class FlightSwing extends JFrame {
 					boolean created = database.AddRoute(route.depature_airport_id, route.depature_date, route.destination_airport_id, route.destination_date, route.price, route.airplane, route.distance);
 					if (created) {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Flygningen har lagts till", "Dialog",
+								"Rutten har lagts till", "Dialog",
 								JOptionPane.INFORMATION_MESSAGE);
 						comboBox.setSelectedIndex(-1);
 						comboBox_1.setSelectedIndex(-1);
@@ -381,7 +370,7 @@ public class FlightSwing extends JFrame {
 						}
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Nï¿½gonting gick fel", "Dialog",
+								"Någonting gick fel", "Dialog",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
