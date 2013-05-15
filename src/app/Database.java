@@ -553,6 +553,28 @@ public class Database {
 		return null;
 	}
 
+	public static String UpdateFlight(int id, int route1_id, int route2_id) {
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("UPDATE flights SET route1_id = ?, route2_id = ? WHERE id = "
+					+ id);
+			st.setInt(1, route1_id);
+			st.setInt(2, route2_id);
+			st.executeUpdate();
+			String ret = "Flight has been updated";
+			return ret;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	
 	public static boolean addFlight(int route1_id, int route2_id) {
 		Connection con = null;
 		PreparedStatement st = null;
@@ -705,7 +727,7 @@ public class Database {
 					.executeUpdate("DELETE FROM bookings WHERE id=" + id);
 
 			if (affectedRows == 0) {
-				throw new SQLException("NŒgonting gick fel. Fšrsšk igen");
+				throw new SQLException("Nï¿½gonting gick fel. Fï¿½rsï¿½k igen");
 			} else {
 				return true;
 			}
