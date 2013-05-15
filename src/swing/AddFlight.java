@@ -12,16 +12,22 @@ import javax.swing.JButton;
 
 import app.Database;
 import app.Flight;
+import app.Route;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AddFlight {
 
 	private JFrame frame;
 	public Database DB = new Database();
-	private static ArrayList<Flight> flightlist = new ArrayList<Flight>();
+	private static ArrayList<Route> flightlist = new ArrayList<Route>();
 	private Flight flight;
+	private Route route;
 	private DefaultListModel listModel = new DefaultListModel();
 	private List<Flight> flights = new ArrayList<Flight>();
-
+	private int selected;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -54,23 +60,38 @@ public class AddFlight {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JComboBox comboBox = new JComboBox();
-		flightlist = (ArrayList<Flight>) DB.getAllFlights();
+		final JComboBox comboBox = new JComboBox();
+		
+		flightlist = (ArrayList<Route>) DB.getAllRoutes();
 		for (int i = 0; i < flightlist.size(); i++) {
-			comboBox.addItem(flightlist.get(i).id);
+			comboBox.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
 		}
 		comboBox.setSelectedIndex(-1);
-		comboBox.setBounds(94, 60, 171, 24);
+		comboBox.setBounds(94, 60, 312, 24);
 		frame.getContentPane().add(comboBox);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		flightlist = (ArrayList<Flight>) DB.getAllFlights();
-		for (int i = 0; i < flightlist.size(); i++) {
-			comboBox_1.addItem(flightlist.get(i).id);
-		}
+		final JComboBox comboBox_1 = new JComboBox();
+		flightlist = (ArrayList<Route>) DB.getAllRoutes();
+
+		
 		comboBox_1.setSelectedIndex(-1);
-		comboBox_1.setBounds(94, 109, 171, 24);
+		comboBox_1.setBounds(94, 109, 312, 24);
 		frame.getContentPane().add(comboBox_1);
+		
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(comboBox.getSelectedIndex() > 0){
+					selected = comboBox.getSelectedIndex();
+					System.out.println("hej"+selected);
+					comboBox_1.removeAllItems();
+					for (int i = 0; i < flightlist.size(); i++) {
+						if(flightlist.get(i).depature_airport_id == flightlist.get(selected).destination_airport_id){
+							comboBox_1.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
+						}
+					}
+				}
+			}
+		});
 		
 		JLabel lblSkapaNyFlygning = new JLabel("Skapa ny flygning med byten");
 		lblSkapaNyFlygning.setBounds(24, 12, 205, 24);
@@ -85,6 +106,13 @@ public class AddFlight {
 		frame.getContentPane().add(lblRutt_1);
 		
 		JButton btnSkapa = new JButton("Skapa");
+		btnSkapa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selected1 = comboBox.getSelectedIndex();
+				int selected2 = comboBox_1.getSelectedIndex();
+				DB.addFlight(selected1, selected2);
+			}
+		});
 		btnSkapa.setBounds(37, 202, 117, 25);
 		frame.getContentPane().add(btnSkapa);
 	}
