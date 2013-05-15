@@ -115,11 +115,51 @@ public class Database {
 				route1.price = rs.getInt("price");
 				route1.airplane = rs.getInt("airplane");
 				route1.distance = rs.getInt("distance");
+				route1.id = rs.getInt("id");
 
 				Flight flight = new Flight(route1);
 				flight.id = rs.getInt("flight_id");
 
 				return flight;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public static Route getRoute(int id){
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT  A.name AS departure, B.name AS destination, routes.* FROM routes LEFT JOIN airports AS A ON A.id = routes.dep_id LEFT JOIN airports AS B ON B.id = routes.dest_id WHERE routes.id ="+ id);
+
+			if (rs.next()) {
+				Route route1 = new Route();
+				route1.depature_airport_id = rs.getInt("dep_id");
+				route1.depature_date = rs.getString("dep_date");
+				route1.destination_airport_id = rs.getInt("dest_id");
+				route1.destination_date = rs.getString("dest_date");
+				route1.price = rs.getInt("price");
+				route1.airplane = rs.getInt("airplane");
+				route1.distance = rs.getInt("distance");
+				route1.id = rs.getInt("id");
+
+				
+
+				return route1;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -325,6 +365,50 @@ public class Database {
 
 		return ret;
 	}
+	
+	public static List<Route> getAllRoutes(){
+		List<Route> ret = new ArrayList<Route>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT  A.name AS departure, B.name AS destination, routes.* FROM routes LEFT JOIN airports AS A ON A.id = routes.dep_id LEFT JOIN airports AS B ON B.id = routes.dest_id");
+
+			while (rs.next()) {
+				Route route1 = new Route();
+				route1.id = rs.getInt("id");
+				route1.depature_airport_id = rs.getInt("dep_id");
+				route1.depature_date = rs.getString("dep_date");
+				route1.destination_airport_id = rs.getInt("dest_id");
+				route1.destination_date = rs.getString("dest_date");
+				route1.price = rs.getInt("price");
+				route1.airplane = rs.getInt("airplane");
+				route1.distance = rs.getInt("distance");
+				Airport airport = new Airport();
+				route1.airport = airport;
+				route1.airport.setName(rs.getString("departure"));
+				Airport airportDest = new Airport();
+				route1.dest_airport = airportDest;
+				route1.dest_airport.setName(rs.getString("destination"));
+				
+
+				ret.add(route1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+	}
 
 	public static List<User> getAllUsers() {
 
@@ -453,19 +537,20 @@ public class Database {
 		return (Boolean) null;
 	}
 
-	public static boolean UpdateRoute(Route route) {
+	public static boolean UpdateRoute(Route route, int id) {
 		Connection con = null;
 		java.sql.PreparedStatement st = null;
 
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("UPDATE routes SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=?, airplane = ? WHERE id=?");
+			st = con.prepareStatement("UPDATE routes SET dep_id=?, dep_date=?, dest_id=?, dest_date=?, price=?, airplane=?, distance=? WHERE id="+id);
 			st.setInt(1, route.getDepature_airport_id());
 			st.setString(2, route.getDepature_date());
 			st.setInt(3, route.getDestination_airport_id());
 			st.setString(4, route.getDestination_date());
 			st.setInt(5, route.getPrice());
 			st.setInt(6, route.airplane);
+			st.setInt(7, route.distance);
 			st.executeUpdate();
 			int affectedRows = st.executeUpdate();
 			if (affectedRows == 0) {
