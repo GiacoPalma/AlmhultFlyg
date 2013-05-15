@@ -559,8 +559,7 @@ public class Database {
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("UPDATE flights SET route1_id = ?, route2_id = ? WHERE id = "
-					+ id);
+			st = con.prepareStatement("UPDATE flights SET route1_id = ?, route2_id = ? WHERE id = "	+ id);
 			st.setInt(1, route1_id);
 			st.setInt(2, route2_id);
 			st.executeUpdate();
