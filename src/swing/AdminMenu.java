@@ -42,7 +42,7 @@ public class AdminMenu extends JFrame {
 	 */
 	public AdminMenu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 360);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -80,7 +80,7 @@ public class AdminMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btn_airports.setBounds(10, 100, 188, 23);
+		btn_airports.setBounds(10, 104, 188, 23);
 		contentPane.add(btn_airports);
 		
 		JButton btn_flights = new JButton("L\u00E4gg till rutt");
@@ -91,7 +91,7 @@ public class AdminMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btn_flights.setBounds(10, 130, 188, 23);
+		btn_flights.setBounds(10, 172, 188, 23);
 		contentPane.add(btn_flights);
 		
 		JLabel lbl_handle = new JLabel("Hantera");
@@ -128,7 +128,7 @@ public class AdminMenu extends JFrame {
 				delEdit.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(10, 160, 188, 29);
+		btnNewButton.setBounds(10, 240, 188, 24);
 		contentPane.add(btnNewButton);
 		
 
@@ -140,15 +140,15 @@ public class AdminMenu extends JFrame {
 				adminBookings.setVisible(true);
 			}
 		});
-		btnBokningar.setBounds(10, 219, 188, 29);
+		btnBokningar.setBounds(10, 275, 188, 23);
 		contentPane.add(btnBokningar);
 
 		JButton btnNewButton_1 = new JButton("L\u00E4gg till flygning");
-		btnNewButton_1.setBounds(10, 195, 188, 23);
+		btnNewButton_1.setBounds(10, 138, 188, 23);
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Ta bort / redigera flygning");
-		btnNewButton_2.setBounds(10, 225, 188, 23);
+		btnNewButton_2.setBounds(10, 206, 188, 23);
 		contentPane.add(btnNewButton_2);
 
 	}
