@@ -82,7 +82,7 @@ public class EditSwing extends JFrame {
 	public EditSwing(int selectedId) {
 		this.selectedId = selectedId;
 		final Route selectedRoute = database.getRoute(selectedId);
-		setTitle("Lägg till flyg");
+		setTitle("Lï¿½gg till flyg");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -249,7 +249,7 @@ public class EditSwing extends JFrame {
 		lblKilometer.setBounds(271, 296, 46, 14);
 		contentPane.add(lblKilometer);
 		
-btnHmtaPris = new JButton("Hämta pris");
+btnHmtaPris = new JButton("HÃ¤mta pris");
 		
 		btnHmtaPris.setBounds(364, 327, 117, 25);
 		btnHmtaPris.addActionListener(new ActionListener() {
@@ -329,7 +329,7 @@ btnHmtaPris = new JButton("Hämta pris");
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Någonting gick fel", "Dialog",
+								"Nï¿½gonting gick fel", "Dialog",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
