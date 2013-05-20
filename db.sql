@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Värd: localhost
--- Skapad: 20 maj 2013 kl 07:33
+-- Skapad: 20 maj 2013 kl 08:45
 -- Serverversion: 5.5.24-log
 -- PHP-version: 5.3.13
 
@@ -19,6 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Databas: `161957-airport`
 --
+DROP DATABASE `161957-airport`;
 CREATE DATABASE `161957-airport` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `161957-airport`;
 
@@ -28,7 +29,6 @@ USE `161957-airport`;
 -- Tabellstruktur `airplanes`
 --
 
-DROP TABLE IF EXISTS `airplanes`;
 CREATE TABLE IF NOT EXISTS `airplanes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `model` varchar(150) NOT NULL,
@@ -54,13 +54,12 @@ INSERT INTO `airplanes` (`id`, `model`, `seats_total`, `fuel_per_km`, `travel_sp
 -- Tabellstruktur `airports`
 --
 
-DROP TABLE IF EXISTS `airports`;
 CREATE TABLE IF NOT EXISTS `airports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `city` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `city` varchar(255) COLLATE utf8_swedish_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_swedish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=19 ;
 
 --
 -- Dumpning av Data i tabell `airports`
@@ -87,7 +86,6 @@ INSERT INTO `airports` (`id`, `city`, `name`) VALUES
 -- Tabellstruktur `bookings`
 --
 
-DROP TABLE IF EXISTS `bookings`;
 CREATE TABLE IF NOT EXISTS `bookings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `flight_id` int(11) DEFAULT NULL,
@@ -118,7 +116,6 @@ INSERT INTO `bookings` (`id`, `flight_id`, `user_id`, `confirmed`) VALUES
 -- Tabellstruktur `flights`
 --
 
-DROP TABLE IF EXISTS `flights`;
 CREATE TABLE IF NOT EXISTS `flights` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `route1_id` int(11) NOT NULL,
@@ -148,7 +145,6 @@ INSERT INTO `flights` (`id`, `route1_id`, `route2_id`) VALUES
 -- Tabellstruktur `routes`
 --
 
-DROP TABLE IF EXISTS `routes`;
 CREATE TABLE IF NOT EXISTS `routes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dep_id` int(11) NOT NULL,
@@ -195,7 +191,6 @@ INSERT INTO `routes` (`id`, `dep_id`, `dep_date`, `dest_id`, `dest_date`, `price
 -- Tabellstruktur `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(250) NOT NULL,
