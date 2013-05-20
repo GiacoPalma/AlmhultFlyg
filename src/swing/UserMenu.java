@@ -72,7 +72,7 @@ public class UserMenu extends JFrame {
 			
 			JLabel lbl_user = new JLabel(Database.current_user);
 			lbl_user.setForeground(Color.BLUE);
-			lbl_user.setBounds(105, 12, 198, 23);
+			lbl_user.setBounds(92, 12, 198, 23);
 			
 			contentPane.add(lbl_user);
 			
