@@ -82,7 +82,7 @@ public class EditSwing extends JFrame {
 	public EditSwing(int selectedId) {
 		this.selectedId = selectedId;
 		final Route selectedRoute = database.getRoute(selectedId);
-		setTitle("L�gg till flyg");
+		setTitle("Lägg till flyg");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -329,7 +329,7 @@ btnHmtaPris = new JButton("Hämta pris");
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"N�gonting gick fel", "Dialog",
+								"Någonting gick fel", "Dialog",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
