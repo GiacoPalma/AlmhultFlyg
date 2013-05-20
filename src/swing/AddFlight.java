@@ -28,6 +28,7 @@ public class AddFlight {
 	private DefaultListModel listModel = new DefaultListModel();
 	private List<Flight> flights = new ArrayList<Flight>();
 	private List<Flight> flights2 = new ArrayList<Flight>();
+	private List<String> list = new ArrayList<String>();
 	private int selected1;
 	private int selected2;
 	
@@ -74,6 +75,12 @@ public class AddFlight {
 		frame.getContentPane().add(comboBox);
 		
 		final JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				selected2 = comboBox_1.getSelectedIndex();
+				System.out.println(selected2);
+			}
+		});
 		flightlist = (ArrayList<Route>) DB.getAllRoutes();
 
 		
@@ -89,9 +96,10 @@ public class AddFlight {
 					for (int i = 0; i < flightlist.size(); i++) {
 						if(flightlist.get(i).depature_airport_id == flightlist.get(selected1).destination_airport_id){
 							comboBox_1.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
+							list.add(""+flightlist.get(i).id);
 						}
 					} 
-					selected2 = comboBox_1.getSelectedIndex();
+					
 				}
 			}
 		});
@@ -112,11 +120,11 @@ public class AddFlight {
 		btnSkapa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int select1 = flightlist.get(selected1).id;
-				int select2 = flightlist.get(selected2).id;
+				int select2 = Integer.parseInt(list.get(selected2));
 				comboBox_1.getSelectedItem();
-				//DB.addFlight(selected1, selected2);
-				System.out.println("Rutt1_id:" + select1 + " <--> Rutt2_id:" + select2);
-				JOptionPane.showMessageDialog(frame, "Flygningen skapades!", "Inte varning",
+				DB.addFlight(select1, select2);
+				System.out.println("Rutt1_id:" + select1 + " <--> Rutt2_id:" + list.get(selected2));
+				JOptionPane.showMessageDialog(frame, "Flygningen skapades!", "Success!",
 				        JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
