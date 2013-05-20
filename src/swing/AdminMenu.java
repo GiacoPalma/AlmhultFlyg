@@ -100,7 +100,7 @@ public class AdminMenu extends JFrame {
 		
 		JLabel lbl_user_lable = new JLabel("Inloggad som:");
 		
-		lbl_user_lable.setBounds(10, 11, 89, 23);
+		lbl_user_lable.setBounds(10, 11, 98, 14);
 
 
 		lbl_user_lable.setBounds(10, 11, 82, 14);
@@ -115,7 +115,7 @@ public class AdminMenu extends JFrame {
 		
 		JLabel lbl_user = new JLabel(Database.current_user.toString());
 		lbl_user.setForeground(Color.BLUE);
-		lbl_user.setBounds(91, 11, 198, 23);
+		lbl_user.setBounds(91, 11, 175, 14);
 		contentPane.add(lbl_user);
 		contentPane.add(lbl_user);
 		
