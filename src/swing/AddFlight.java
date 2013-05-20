@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import app.Database;
 import app.Flight;
@@ -26,7 +27,9 @@ public class AddFlight {
 	private Route route;
 	private DefaultListModel listModel = new DefaultListModel();
 	private List<Flight> flights = new ArrayList<Flight>();
-	private int selected;
+	private List<Flight> flights2 = new ArrayList<Flight>();
+	private int selected1;
+	private int selected2;
 	
 	/**
 	 * Launch the application.
@@ -81,14 +84,15 @@ public class AddFlight {
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBox.getSelectedIndex() > 0){
-					selected = comboBox.getSelectedIndex();
-					System.out.println("hej"+selected);
+					selected1 = comboBox.getSelectedIndex();
 					comboBox_1.removeAllItems();
 					for (int i = 0; i < flightlist.size(); i++) {
-						if(flightlist.get(i).depature_airport_id == flightlist.get(selected).destination_airport_id){
-							comboBox_1.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
+						if(flightlist.get(i).depature_airport_id == flightlist.get(selected1).destination_airport_id){
+							comboBox_1.addItem(flightlist.get(i).id+" "+flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
+							//comboBox_1.addi
 						}
-					}
+					} 
+					selected2 = comboBox_1.getSelectedIndex();
 				}
 			}
 		});
@@ -108,9 +112,13 @@ public class AddFlight {
 		JButton btnSkapa = new JButton("Skapa");
 		btnSkapa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int selected1 = comboBox.getSelectedIndex();
-				int selected2 = comboBox_1.getSelectedIndex();
-				DB.addFlight(selected1, selected2);
+				int select1 = flightlist.get(selected1).id;
+				int select2 = flightlist.get(selected2).id;
+				comboBox_1.getSelectedItem();
+				//DB.addFlight(selected1, selected2);
+				System.out.println("Rutt1_id:" + select1 + " <--> Rutt2_id:" + select2);
+				JOptionPane.showMessageDialog(frame, "Flygningen skapades!", "Inte varning",
+				        JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		btnSkapa.setBounds(37, 202, 117, 25);
