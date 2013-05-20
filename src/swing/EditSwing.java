@@ -216,7 +216,7 @@ public class EditSwing extends JFrame {
 		contentPane.add(lblTid_1);
 		
 		final JComboBox comboBox_airplane = new JComboBox();
-		comboBox_airplane.setBounds(68, 252, 197, 27);
+		comboBox_airplane.setBounds(78, 252, 187, 27);
 		contentPane.add(comboBox_airplane);
 		final List<Airplane> airplanes = database.getAllAirplanes();
 		
@@ -226,7 +226,7 @@ public class EditSwing extends JFrame {
 		comboBox_airplane.setSelectedIndex(selectedRoute.airplane);
 		
 		JLabel lblFlygplan = new JLabel("Flygplan:");
-		lblFlygplan.setBounds(10, 258, 46, 14);
+		lblFlygplan.setBounds(10, 258, 54, 14);
 		contentPane.add(lblFlygplan);
 		
 		JLabel lblKronor = new JLabel("Kronor");
