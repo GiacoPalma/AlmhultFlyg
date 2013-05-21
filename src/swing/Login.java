@@ -103,9 +103,9 @@ public class Login {
 						reload.setVisible(true);
 					}
 				} else if(user.length() == 0){
-					JOptionPane.showMessageDialog(null, "Du har inte skrivit in nï¿½got anvï¿½ndarnamn eller lï¿½senord");
+					JOptionPane.showMessageDialog(null, "Du har inte skrivit in något användarnamn eller lösenord");
 				} else if(login == null && user.length() != 0) {
-					JOptionPane.showMessageDialog(null, "Fel lï¿½senord eller anvï¿½ndarnamn");
+					JOptionPane.showMessageDialog(null, "Fel lösenord eller användarnamn");
 				} 
 			}
 		});
