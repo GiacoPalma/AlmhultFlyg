@@ -49,6 +49,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import javax.swing.JTextPane;
+import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
 
 
 public class BookSwing extends JFrame {
@@ -56,7 +61,6 @@ public class BookSwing extends JFrame {
 	public Database DB = new Database();
 	private JPanel contentPane;
 	private static ArrayList<Airport> airportlist = new ArrayList<Airport>();
-	private JList list;
 	private DefaultListModel listModel = new DefaultListModel();
 	private List<Flight> flights = new ArrayList<Flight>();
 	private Flight flight;
@@ -65,6 +69,7 @@ public class BookSwing extends JFrame {
 	private String inputDeptDateFormated = null;
 	private List<Flight> availableFlights = new ArrayList<Flight>();
 	private String available="";
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -89,6 +94,7 @@ public class BookSwing extends JFrame {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 900, 300);
 		contentPane = new JPanel();
+		contentPane.setForeground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -120,12 +126,6 @@ public class BookSwing extends JFrame {
 		lblNewLabel_1.setBounds(10, 51, 67, 14);
 		contentPane.add(lblNewLabel_1);
 
-		list = new JList(listModel);
-		list.setBorder(new LineBorder(new Color(0, 0, 0)));
-		list.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
-		list.setBounds(233, 28, 661, 163);
-		contentPane.add(list);
-
 		JLabel lblNewLabel_2 = new JLabel("Tillg\u00E4ngliga Flighter");
 		lblNewLabel_2.setBounds(233, 11, 144, 14);
 		contentPane.add(lblNewLabel_2);
@@ -140,54 +140,7 @@ public class BookSwing extends JFrame {
 		comboBox_1.setBounds(10, 66, 185, 20);
 		contentPane.add(comboBox_1);
 
-		JButton btnNewButton = new JButton("Boka");
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				Booking booking = new Booking();
-				String errorMessage;
-				int i = list.getSelectedIndex();
-				
-				if(flights.get(i).route1.available){
-					errorMessage = "Du mŒste vŠlja en flygning.";
-				} else {
-					errorMessage = "Flygningen Šr fullbokad";
-				}
-				
-				
-				if(i >= 0 && flights.get(i).route1.available){
-					boolean booked = Database.AddBooking(flights.get(i), user);
-					if(booked){
-						Object[] options = {"OK"};
-						
-						int n = JOptionPane.showOptionDialog(new JFrame(),
-				                   "Flygningen Šr bokad","Title",
-				                   JOptionPane.PLAIN_MESSAGE,
-				                   JOptionPane.QUESTION_MESSAGE,
-				                   null,
-				                   options,
-				                   options[0]);
-						if(n==0){
-							UserMenu reload = new UserMenu(user);
-							dispose();
-							reload.setVisible(true);
-						}
-						
-					} else {
-						JOptionPane.showMessageDialog(new JFrame(),
-								"NŒgontingting gick fel.",
-								"Dialog", JOptionPane.ERROR_MESSAGE);
-					}
-				} else {
-					JOptionPane.showMessageDialog(new JFrame(),
-							errorMessage,
-							"Dialog", JOptionPane.ERROR_MESSAGE);
-				}
-				
-			}
-		});
-		btnNewButton.setBounds(226, 228, 115, 23);
-		contentPane.add(btnNewButton);
+		
 
 		final JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("yyyy-MM-dd");
@@ -227,6 +180,13 @@ public class BookSwing extends JFrame {
 		lblUtresa.setBounds(10, 123, 46, 14);
 		lblUtresa.setVisible(false);
 		contentPane.add(lblUtresa);
+		
+
+		final JPanel panel_1 = new JPanel();
+		panel_1.setBounds(233, 35, 625, 70);
+		GridLayout ScrollLayout = new GridLayout(0,1);
+		contentPane.add(panel_1);
+		panel_1.setLayout(ScrollLayout);
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnEnkel);
@@ -273,36 +233,73 @@ public class BookSwing extends JFrame {
 				} catch (NullPointerException e) {
 
 				}
-				
-				flights = Database.getAvailableFlights(dep_id, dest_id,
+				System.out.println("depid"+dep_id);
+				System.out.println("destid"+dest_id);
+				flights = Database.getAvailableFlights2(dep_id, dest_id,
 						inputDeptDateFormated);
+				
 				if (!(flights.size() == 0)) {
-					listModel.clear();
+					
 
 					for (int i = 0; i < flights.size(); i++) {
+					
+						Airport airportRoute2 = new Airport();
+						Airport destAirportRoute2 = new Airport();
+						Airplane airplaneRoute2 = new Airplane();
+						Airplane airplane = new Airplane();
+						airplane = Database.getAirplane(flights.get(i).route1.airplane);
+						System.out.println("flygplansmodell"+flights.get(i).route1.seats_booked);
 						Airport airport = new Airport();
 						Airport destAirport = new Airport();
 						airport = Database.getAirport(flights.get(i).route1.depature_airport_id);
 						destAirport = Database.getAirport(flights.get(i).route1.destination_airport_id);
-						Airplane airplane = new Airplane();
-						airplane = Database.getAirplane(flights.get(i).route1.airplane);
-						
-						if(booking.checkAvailability(airplane.getSeatsTotal(), flights.get(i).route1.seats_booked)){
-							available = "";
-							flights.get(i).route1.available = true; 
-						} else {
-							available = "Fullbokad";
-							flights.get(i).route1.available = false;
+						if(flights.get(i).checkRoute2()){
+							airplaneRoute2 = Database.getAirplane(flights.get(i).route2.airplane);
+							airportRoute2 = Database.getAirport(flights.get(i).route2.depature_airport_id);
+							destAirportRoute2 = Database.getAirport(flights.get(i).route2.destination_airport_id);
 						}
-						listModel.addElement(airport.getName() + " - "
-								+ destAirport.getName() + " "
-								+ flights.get(i).route1.getDepature_date() + " - "
-								+ flights.get(i).route1.getDestination_date()
-								+ " Pris: " + flights.get(i).route1.getPrice() + " " + available);
-					}
-				} else {
-					listModel.clear();
-					listModel.addElement("Det finns inga flygningar");
+						
+						System.out.println(flights.get(i).route1.airplane);
+						System.out.println(flights.get(i).route2);
+						
+							if(booking.checkAvailability(airplane.getSeatsTotal(), flights.get(i).route1.seats_booked)){
+								available = "";
+								flights.get(i).route1.available = true;
+								if(flights.get(i).checkRoute2()){
+									if(booking.checkAvailability(airplane.getSeatsTotal(),flights.get(i).route2.seats_booked)){
+										flights.get(i).route2.available = true;
+									}else{
+										available = "fullbokad";
+										flights.get(i).route2.available = false;
+									}
+								}
+								
+							} else {
+								available = "Fullbokad";
+								flights.get(i).route1.available = false;
+							}
+							if(flights.get(i).checkRoute2()){
+								
+								String price = flights.get(i).route1.price.toString();
+								String priceR2 = flights.get(i).route2.price.toString();
+								listResults panel = new listResults();
+								JPanel panel2 = new JPanel();
+								panel2 = panel.listResults(flights, airport.getName(), destAirport.getName(), destAirportRoute2.getName(), airportRoute2.getName(), flights.get(i).route1.depature_date, flights.get(i).route1.destination_date, flights.get(i).route2.depature_date, flights.get(i).route2.destination_date, priceR2, price, i, user);
+								panel_1.add(panel2);
+								
+								
+							}else{
+								String price = flights.get(i).route1.price.toString();
+								String priceR2 = "";
+								listResults panel = new listResults();
+								JPanel panel2 = new JPanel();
+								panel2 = panel.listResults(flights, airport.getName(), destAirport.getName(), "", "", flights.get(i).route1.depature_date, flights.get(i).route1.destination_date, "", "", "", price, i, user);
+								panel_1.add(panel2);
+								
+							}
+				}
+					}else {
+				
 				}
 			}
 		});
@@ -312,6 +309,11 @@ public class BookSwing extends JFrame {
 
 		btnTillbaka.setBounds(7, 228, 89, 23);
 		contentPane.add(btnTillbaka);
+		
+		
+		
+		
+		
 
 		ActionListener rdbtnEnkelListner = new ActionListener() {
 			@Override
@@ -338,5 +340,8 @@ public class BookSwing extends JFrame {
 		};
 		rdbtnTurRetur.addActionListener(rdbtnTurReturListner);
 
+	}
+	public JPanel getPanel() {
+		return panel;
 	}
 }

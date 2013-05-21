@@ -8,4 +8,14 @@ public class Flight {
 		this.route1 = route;
 	}
 	
+	public boolean checkRoute2(){
+		boolean tru = false;
+		if (route2 != null){
+			tru = true;
+		}else if(route2 == null){
+			tru = false;
+		}
+		return tru;
+	}
+	
 }
