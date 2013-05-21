@@ -143,7 +143,7 @@ public class Login {
 		label.setOpaque(true);
 		panel.add(label);
 		
-		lblVlkommenTillAlmhult = new JLabel("Välkommen till Almhult Airlines Flygbokning");
+		lblVlkommenTillAlmhult = new JLabel("V\u00E4lkommen till Almhult Airlines Flygbokning");
 		lblVlkommenTillAlmhult.setFont(new Font("Dialog", Font.BOLD, 25));
 		lblVlkommenTillAlmhult.setBounds(124, 39, 545, 32);
 		frmAlmhultAirlinesFlygbokning.getContentPane().add(lblVlkommenTillAlmhult);
