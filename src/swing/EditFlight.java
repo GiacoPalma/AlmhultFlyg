@@ -2,6 +2,7 @@ package swing;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+
 import java.awt.FlowLayout;
 
 import javax.swing.DefaultListModel;
@@ -13,22 +14,31 @@ import javax.swing.JPanel;
 import app.Airport;
 import app.Database;
 import app.Flight;
+import app.Route;
 
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+
 
 public class EditFlight {
-	
+
 	public Database DB = new Database();
-	private static ArrayList<Flight> flightlist = new ArrayList<Flight>();
+	private static ArrayList<Route> flightlist = new ArrayList<Route>();
 	private DefaultListModel listModel = new DefaultListModel();
 	private List<Flight> flights = new ArrayList<Flight>();
 	private Flight flight;
 	private String inputDeptDateFormated = null;
-	
-	
+	private List<String> routelist2 = new ArrayList<String>();
+
 
 	private JFrame frame;
 
@@ -63,32 +73,67 @@ public class EditFlight {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+
+		final JComboBox comboBox = new JComboBox();
+		flightlist = (ArrayList<Route>) DB.getFlightswithTwoRoutes();
 		
-		JComboBox comboBox = new JComboBox();
-		flightlist = (ArrayList<Flight>) DB.getAllFlights();
-		for (int i = 0; i < flightlist.size(); i++) {
-			comboBox.addItem(flightlist.get(i).id);
-		}
 		comboBox.setSelectedIndex(-1);
-		comboBox.setBounds(37, 124, 141, 25);
+		comboBox.setBounds(64, 217, 259, 25);
 		frame.getContentPane().add(comboBox);
 		
-		JList list = new JList();
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 48, 424, 120);
+		frame.getContentPane().add(scrollPane);
+
+		final JList list = new JList(listModel);
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println("--");
+				for(int i = 0; i < flightlist.size(); i++) {
+					if(flightlist.get(i).route2_id != 0) {
+						comboBox.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
+						routelist2.add(""+flightlist.get(i).id);
+						//comboBox.addItem(list.getSelectedValue());
+						
+						System.out.println(flightlist.get(i).id);
+						
+					}
+				} System.out.println("--");
+			} 
+		});
 		
-		list.setBounds(243, 49, 163, 173);
-		frame.getContentPane().add(list);
-		
-		JLabel lblFlygningar = new JLabel("Fixar med flygningarna");
+		for (int i = 0; i < flightlist.size(); i++) {
+			System.out.println(flightlist.get(i).route2_id);
+			if(flightlist.get(i).route2_id != 0) {
+				listModel.addElement(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
+				//System.out.println(routelist2.get(i));
+			}
+		}
+		scrollPane.setViewportView(list);
+
+		JLabel lblFlygningar = new JLabel("Redigera flygningar med byten");
 		lblFlygningar.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblFlygningar.setBounds(37, 11, 151, 25);
+		lblFlygningar.setBounds(37, 11, 286, 25);
 		frame.getContentPane().add(lblFlygningar);
-		
+
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(37, 63, 141, 25);
+		comboBox_1.setBounds(64, 180, 259, 25);
 		frame.getContentPane().add(comboBox_1);
 		
-		JLabel lblFlygningar_1 = new JLabel("Flygningar:");
-		lblFlygningar_1.setBounds(47, 109, 61, 14);
-		frame.getContentPane().add(lblFlygningar_1);
+		JLabel lblRutt = new JLabel("Rutt 1");
+		lblRutt.setBounds(12, 180, 70, 15);
+		frame.getContentPane().add(lblRutt);
+		
+		JLabel lblRutt_1 = new JLabel("Rutt 2");
+		lblRutt_1.setBounds(12, 217, 70, 15);
+		frame.getContentPane().add(lblRutt_1);
+		
+		JButton btnUppdatera = new JButton("Uppdatera");
+		btnUppdatera.setBounds(319, 180, 117, 25);
+		frame.getContentPane().add(btnUppdatera);
+		
+		JButton btnTaBort = new JButton("Ta bort");
+		btnTaBort.setBounds(319, 217, 117, 25);
+		frame.getContentPane().add(btnTaBort);
 	}
 }

@@ -150,6 +150,17 @@ public class AdminMenu extends JFrame {
 		JButton btnNewButton_2 = new JButton("Ta bort / redigera flygning");
 		btnNewButton_2.setBounds(10, 206, 188, 23);
 		contentPane.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Flygplanstyper");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				EditAirplane editAirplane = new EditAirplane();
+				editAirplane.setVisible(true);
+			}
+		});
+		btnNewButton_3.setBounds(236, 70, 188, 23);
+		contentPane.add(btnNewButton_3);
 
 	}
 }

@@ -103,9 +103,9 @@ public class Login {
 						reload.setVisible(true);
 					}
 				} else if(user.length() == 0){
-					JOptionPane.showMessageDialog(null, "Du har inte skrivit in nï¿½got anvï¿½ndarnamn eller lï¿½senord");
+					JOptionPane.showMessageDialog(null, "Du har inte skrivit in något användarnamn eller lösenord");
 				} else if(login == null && user.length() != 0) {
-					JOptionPane.showMessageDialog(null, "Fel lï¿½senord eller anvï¿½ndarnamn");
+					JOptionPane.showMessageDialog(null, "Fel lösenord eller användarnamn");
 				} 
 			}
 		});
@@ -143,7 +143,7 @@ public class Login {
 		label.setOpaque(true);
 		panel.add(label);
 		
-		lblVlkommenTillAlmhult = new JLabel("VÃ¤lkommen till Almhult Airlines Flygbokning");
+		lblVlkommenTillAlmhult = new JLabel("V\u00E4lkommen till Almhult Airlines Flygbokning");
 		lblVlkommenTillAlmhult.setFont(new Font("Dialog", Font.BOLD, 25));
 		lblVlkommenTillAlmhult.setBounds(124, 39, 545, 32);
 		frmAlmhultAirlinesFlygbokning.getContentPane().add(lblVlkommenTillAlmhult);

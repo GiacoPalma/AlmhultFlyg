@@ -81,7 +81,7 @@ public class AddFlight {
 				System.out.println(selected2);
 			}
 		});
-		flightlist = (ArrayList<Route>) DB.getAllRoutes();
+		//flightlist = (ArrayList<Route>) DB.getAllRoutes();
 
 		
 		comboBox_1.setSelectedIndex(-1);
