@@ -40,13 +40,13 @@ public class UserMenu extends JFrame {
 	 * Create the frame.
 	 */
 	public UserMenu(final User user) {
-		if(Database.current_user.equals("")){
+		/*if(Database.current_user.equals("")){
 			JOptionPane.showMessageDialog(contentPane, "Du måste vara inloggad!", "Warning",
 			        JOptionPane.WARNING_MESSAGE);
 			Login Login = new Login();
 			Login.frmAlmhultAirlinesFlygbokning.setVisible(true);
 			setVisible(false);
-		} else {
+		} else {*/
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 300);
 			contentPane = new JPanel();
@@ -72,7 +72,7 @@ public class UserMenu extends JFrame {
 			
 			JLabel lbl_user = new JLabel(Database.current_user);
 			lbl_user.setForeground(Color.BLUE);
-			lbl_user.setBounds(105, 12, 198, 23);
+			lbl_user.setBounds(92, 12, 198, 23);
 			
 			contentPane.add(lbl_user);
 			
@@ -110,5 +110,5 @@ public class UserMenu extends JFrame {
 			btn_account.setBounds(10, 182, 127, 23);
 			contentPane.add(btn_account);
 		}
-	}
+	//}
 }

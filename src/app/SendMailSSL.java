@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.Frame;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -8,11 +9,31 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-public class SendMailSSL {
+import swing.AdminBookings;
 
-	public static boolean sendMail(User user, Airport depAirport,
-			Airport destAirport, Route route) {
+public class SendMailSSL extends Thread {
+	Thread runner;
+	public User user;
+	public Airport depAirport;
+	public Airport destAirport;
+	public Route route;
+	public boolean sent = false;
+	public int id;
+
+	public SendMailSSL(String str, User user, Airport depAirport,
+			Airport destAirport, Route route, int id) {
+		super(str);
+		this.depAirport = depAirport;
+		this.destAirport = destAirport;
+		this.user = user;
+		this.route = route;
+		this.id = id;
+	}
+
+	public void run() {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
@@ -47,11 +68,21 @@ public class SendMailSSL {
 					+ route.getPrice());
 
 			Transport.send(message);
-
-			return true;
+			Database.MakeConfirmed(id);
+			Frame[] windowToClose = JFrame.getFrames();
+			for (int i = 0; i < windowToClose.length; i++) {
+				windowToClose[i].dispose();
+			}
+			AdminBookings adminBookings = new AdminBookings();
+			adminBookings.setVisible(true);
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Bokningen har bekrŠftats", "Dialog",
+					JOptionPane.INFORMATION_MESSAGE);
 
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+			JOptionPane.showMessageDialog(new JFrame(), e.getCause(), "Dialog",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
+
 }

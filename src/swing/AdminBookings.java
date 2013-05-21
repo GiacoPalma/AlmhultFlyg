@@ -11,7 +11,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 
 import app.Booking;
 import app.Database;
@@ -20,6 +19,7 @@ import app.SendMailSSL;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+
 
 public class AdminBookings extends JFrame {
 
@@ -61,26 +61,13 @@ public class AdminBookings extends JFrame {
 		JButton btnNewButton = new JButton("Bekr\u00E4fta");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Booking booking = new Booking();
 				int i = list.getSelectedIndex();
-				int id = userBookings.get(i).getId();
-				boolean confirmed = Database.MakeConfirmed(id);
-				if (confirmed) {
-					SendMailSSL mail = new SendMailSSL();
-					boolean sent = mail.sendMail(userBookings.get(i).getUser(), userBookings.get(i).getDepAirport(), userBookings.get(i).getDestAirport(), userBookings.get(i).getRoute());
-					if (sent) {
-						JOptionPane.showMessageDialog(new JFrame(),
-								"Ett bekrŠftelsemail har skickats", "Dialog",
-								JOptionPane.INFORMATION_MESSAGE);
-						dispose();
-						AdminBookings adminBookings = new AdminBookings();
-						adminBookings.setVisible(true);
-					}
-				} else {
-					JOptionPane.showMessageDialog(new JFrame(),
-							"Nï¿½gonting gick fel", "Dialog",
-							JOptionPane.ERROR_MESSAGE);
-				}
+				new SendMailSSL("mail", userBookings.get(i).getUser(),
+						userBookings.get(i).getDepAirport(), userBookings
+								.get(i).getDestAirport(), userBookings.get(i)
+								.getRoute(), userBookings.get(i).getId())
+						.start();
+
 			}
 		});
 		btnNewButton.setBounds(897, 51, 127, 29);

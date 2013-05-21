@@ -82,7 +82,7 @@ public class EditSwing extends JFrame {
 	public EditSwing(int selectedId) {
 		this.selectedId = selectedId;
 		final Route selectedRoute = database.getRoute(selectedId);
-		setTitle("Lägg till flyg");
+		setTitle("LÃ¤gg till flyg");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
@@ -216,7 +216,7 @@ public class EditSwing extends JFrame {
 		contentPane.add(lblTid_1);
 		
 		final JComboBox comboBox_airplane = new JComboBox();
-		comboBox_airplane.setBounds(68, 252, 197, 27);
+		comboBox_airplane.setBounds(78, 252, 187, 27);
 		contentPane.add(comboBox_airplane);
 		final List<Airplane> airplanes = database.getAllAirplanes();
 		
@@ -226,7 +226,7 @@ public class EditSwing extends JFrame {
 		comboBox_airplane.setSelectedIndex(selectedRoute.airplane);
 		
 		JLabel lblFlygplan = new JLabel("Flygplan:");
-		lblFlygplan.setBounds(10, 258, 46, 14);
+		lblFlygplan.setBounds(10, 258, 54, 14);
 		contentPane.add(lblFlygplan);
 		
 		JLabel lblKronor = new JLabel("Kronor");
@@ -249,7 +249,7 @@ public class EditSwing extends JFrame {
 		lblKilometer.setBounds(271, 296, 46, 14);
 		contentPane.add(lblKilometer);
 		
-btnHmtaPris = new JButton("Hämta pris");
+btnHmtaPris = new JButton("HÃ¤mta pris");
 		
 		btnHmtaPris.setBounds(364, 327, 117, 25);
 		btnHmtaPris.addActionListener(new ActionListener() {
@@ -329,7 +329,7 @@ btnHmtaPris = new JButton("Hämta pris");
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Någonting gick fel", "Dialog",
+								"NÃ¥gonting gick fel", "Dialog",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				} else {

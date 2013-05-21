@@ -72,11 +72,11 @@ public class Login {
 		frmAlmhultAirlinesFlygbokning.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Email:");
-		lblNewLabel.setBounds(255, 148, 55, 15);
+		lblNewLabel.setBounds(249, 148, 55, 15);
 		frmAlmhultAirlinesFlygbokning.getContentPane().add(lblNewLabel);
 		
-		JLabel lblLsenord = new JLabel("Lösenord:");
-		lblLsenord.setBounds(254, 191, 87, 15);
+		JLabel lblLsenord = new JLabel("L\u00F6senord:");
+		lblLsenord.setBounds(249, 191, 87, 15);
 		frmAlmhultAirlinesFlygbokning.getContentPane().add(lblLsenord);
 		
 		textFielduser = new JTextField();
@@ -103,9 +103,9 @@ public class Login {
 						reload.setVisible(true);
 					}
 				} else if(user.length() == 0){
-					JOptionPane.showMessageDialog(null, "Du har inte skrivit in något användarnamn eller lösenord");
+					JOptionPane.showMessageDialog(null, "Du har inte skrivit in n�got anv�ndarnamn eller l�senord");
 				} else if(login == null && user.length() != 0) {
-					JOptionPane.showMessageDialog(null, "Fel lösenord eller användarnamn");
+					JOptionPane.showMessageDialog(null, "Fel l�senord eller anv�ndarnamn");
 				} 
 			}
 		});
@@ -143,7 +143,7 @@ public class Login {
 		label.setOpaque(true);
 		panel.add(label);
 		
-		lblVlkommenTillAlmhult = new JLabel("V\u00E4lkommen till Almhult Airlines Flygbokning");
+		lblVlkommenTillAlmhult = new JLabel("Välkommen till Almhult Airlines Flygbokning");
 		lblVlkommenTillAlmhult.setFont(new Font("Dialog", Font.BOLD, 25));
 		lblVlkommenTillAlmhult.setBounds(124, 39, 545, 32);
 		frmAlmhultAirlinesFlygbokning.getContentPane().add(lblVlkommenTillAlmhult);
