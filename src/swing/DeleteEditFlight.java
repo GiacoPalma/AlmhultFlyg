@@ -69,7 +69,7 @@ public class DeleteEditFlight extends JFrame {
 		contentPane.setLayout(null);
 
 		final List<Route> allRoutes = database.getAllRoutes();
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(37, 66, 700, 224);
 		contentPane.add(scrollPane);
@@ -102,7 +102,8 @@ public class DeleteEditFlight extends JFrame {
 					Object[] options = { "Ja", "Nej" };
 					int n = JOptionPane.showOptionDialog(new JFrame(),
 							"Vill du ta bort rutten?",
-							"Bekr�fta borttagning", JOptionPane.YES_NO_OPTION,
+							"Bekr�fta borttagning",
+							JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE, null, options,
 							options[0]);
 
@@ -130,7 +131,7 @@ public class DeleteEditFlight extends JFrame {
 				setVisible(false);
 				AdminMenu adminMenu = new AdminMenu();
 				adminMenu.setVisible(true);
-				
+
 			}
 		});
 		btnTillbaka.setBounds(37, 331, 117, 29);
@@ -143,7 +144,7 @@ public class DeleteEditFlight extends JFrame {
 				if (list.getSelectedIndex() >= 0) {
 					selectedId = list.getSelectedIndex();
 					int sendId = allRoutes.get(selectedId).id;
-					System.out.println("sendi"+sendId);
+					System.out.println("sendi" + sendId);
 					EditSwing editRoute = new EditSwing(sendId);
 					editRoute.setId(selectedId);
 					editRoute.setVisible(true);
@@ -158,6 +159,26 @@ public class DeleteEditFlight extends JFrame {
 		});
 		btnRedigera.setBounds(166, 302, 117, 29);
 		contentPane.add(btnRedigera);
+
+		JButton btnVisaPassagerare = new JButton("Visa passagerare");
+		btnVisaPassagerare.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (list.getSelectedIndex() >= 0) {
+					int selection = list.getSelectedIndex();
+					Route route = new Route();
+					route = allRoutes.get(selection);
+					ShowUser showUser = new ShowUser(route);
+					dispose();
+					showUser.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(new JFrame(),
+							"Du m�ste v�lja en rutt",
+							"Dialog", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnVisaPassagerare.setBounds(295, 302, 142, 29);
+		contentPane.add(btnVisaPassagerare);
 
 	}
 }

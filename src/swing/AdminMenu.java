@@ -119,7 +119,7 @@ public class AdminMenu extends JFrame {
 		contentPane.add(lbl_user);
 		contentPane.add(lbl_user);
 		
-		JButton btnNewButton = new JButton("Ta bort / redigera rutt");
+		JButton btnNewButton = new JButton("Hantera rutter");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
