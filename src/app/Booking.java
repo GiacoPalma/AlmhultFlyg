@@ -81,5 +81,9 @@ public class Booking {
 			return false;
 		}
 	}
+	
+	public int getAvailability(int max, int booked) {
+		return max-booked;
+	}
 
 }

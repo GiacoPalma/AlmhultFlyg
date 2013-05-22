@@ -161,6 +161,17 @@ public class AdminMenu extends JFrame {
 		});
 		btnNewButton_3.setBounds(236, 70, 188, 23);
 		contentPane.add(btnNewButton_3);
+		
+		JButton btnLedigaPlatserP = new JButton("Lediga platser p\u00E5 rutter");
+		btnLedigaPlatserP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				RouteAvailability ra = new RouteAvailability();
+				ra.setVisible(true);
+			}
+		});
+		btnLedigaPlatserP.setBounds(236, 101, 188, 29);
+		contentPane.add(btnLedigaPlatserP);
 
 	}
 }

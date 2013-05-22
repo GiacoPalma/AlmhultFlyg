@@ -19,6 +19,14 @@ public class Route {
 	public Integer airplane;
 	public Integer seats_booked;
 	public boolean available;
+	public Integer getSeats_booked() {
+		return seats_booked;
+	}
+
+	public void setSeats_booked(Integer seats_booked) {
+		this.seats_booked = seats_booked;
+	}
+
 	public List<String> errorMessages = new ArrayList<String>();
 	public Airport airport;
 	public Airport dest_airport;
