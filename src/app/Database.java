@@ -471,7 +471,7 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT  A.name AS departure, B.name AS destination, routes.* FROM routes LEFT JOIN airports AS A ON A.id = routes.dep_id LEFT JOIN airports AS B ON B.id = routes.dest_id");
+			rs = st.executeQuery("SELECT  A.name AS departure, B.name AS destination, routes.* FROM routes LEFT JOIN airports AS A ON A.id = routes.dep_id LEFT JOIN airports AS B ON B.id = routes.dest_id ORDER BY  routes.id");
 
 			while (rs.next()) {
 				Route route1 = new Route();
@@ -503,7 +503,7 @@ public class Database {
 	}
 
 
-	public static List<Route> getFlightswithTwoRoutes(){
+	public static List<Route> getAllRouteID(){
 		List<Route> ret = new ArrayList<Route>();
 		Connection con = null;
 		Statement st = null;
@@ -519,27 +519,12 @@ public class Database {
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
 			//rs = st.executeQuery("SELECT  A.name AS departure, B.name AS destination, routes.* FROM routes LEFT JOIN airports AS A ON A.id = routes.dep_id LEFT JOIN airports AS B ON B.id = routes.dest_id");
-			rs = st.executeQuery("SELECT A.name AS departure, B.name AS destination, F.route1_id, F.route2_id, routes . * FROM routes LEFT JOIN airports AS A ON A.id = routes.dep_id LEFT JOIN airports AS B ON B.id = routes.dest_id LEFT JOIN flights AS F ON F.route1_id = routes.id");
+			rs = st.executeQuery("SELECT id, route1_id, route2_id FROM flights");
 			while (rs.next()) {
 				Route route1 = new Route();
 				route1.id = rs.getInt("id");
 				route1.route1_id = rs.getInt("route1_id");
 				route1.route2_id = rs.getInt("route2_id");
-				route1.depature_airport_id = rs.getInt("dep_id");
-				route1.depature_date = rs.getString("dep_date");
-				route1.destination_airport_id = rs.getInt("dest_id");
-				route1.destination_date = rs.getString("dest_date");
-				route1.price = rs.getInt("price");
-				route1.airplane = rs.getInt("airplane");
-				route1.distance = rs.getInt("distance");
-				Airport airport = new Airport();
-				route1.airport = airport;
-				route1.airport.setName(rs.getString("departure"));
-				Airport airportDest = new Airport();
-				route1.dest_airport = airportDest;
-				route1.dest_airport.setName(rs.getString("destination"));
-				
-
 				ret.add(route1);
 			}
 		} catch (SQLException e) {
