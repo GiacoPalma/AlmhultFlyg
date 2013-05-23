@@ -458,7 +458,7 @@ public class Database {
 
 		return ret;
 	}
-
+//
 	public static List<Route> getAllRoutes() {
 		List<Route> ret = new ArrayList<Route>();
 		Connection con = null;
@@ -506,7 +506,7 @@ public class Database {
 	}
 
 
-	public static List<Route> getAllRouteID(){
+	public static List<Route> getAllFlightID(){
 		List<Route> ret = new ArrayList<Route>();
 		Connection con = null;
 		Statement st = null;
@@ -521,13 +521,21 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			//rs = st.executeQuery("SELECT  A.name AS departure, B.name AS destination, routes.* FROM routes LEFT JOIN airports AS A ON A.id = routes.dep_id LEFT JOIN airports AS B ON B.id = routes.dest_id");
-			rs = st.executeQuery("SELECT id, route1_id, route2_id FROM flights");
+			rs = st.executeQuery("SELECT flights.id AS flight_id, flights.route1_id, flights.route2_id, routes.id AS route_id, routes.dep_id, routes.dest_id, a_dep.name AS departure, a_dest.name AS middle, a_mid.name AS destination FROM routes INNER JOIN flights ON flights.route1_id = routes.id INNER JOIN routes AS r_mid ON r_mid.id = flights.route2_id INNER JOIN airports AS a_dep ON a_dep.id = routes.dep_id INNER JOIN airports AS a_mid ON a_mid.id = routes.dest_id INNER JOIN airports AS a_dest ON a_dest.id = r_mid.dest_id WHERE flights.route2_id !=0 ORDER BY  `flights`.`id` ASC");
+			//rs = st.executeQuery("SELECT id, route1_id, route2_id FROM flights");
 			while (rs.next()) {
 				Route route1 = new Route();
-				route1.id = rs.getInt("id");
+				route1.id = rs.getInt("route_id");
 				route1.route1_id = rs.getInt("route1_id");
 				route1.route2_id = rs.getInt("route2_id");
+				route1.flight_id = rs.getInt("flight_id");
+				Airport airport = new Airport();
+				route1.airport = airport;
+				route1.airport.setName(rs.getString("departure"));
+				Airport airportDest = new Airport();
+				route1.dest_airport = airportDest;
+				route1.dest_airport.setName(rs.getString("destination"));
+				route1.middle = rs.getString("middle");
 				ret.add(route1);
 			}
 		} catch (SQLException e) {

@@ -76,7 +76,7 @@ public class EditFlight {
 
 		final JComboBox comboBox = new JComboBox();
 		flightlist = (ArrayList<Route>) DB.getAllRoutes();
-		RouteID = (ArrayList<Route>) DB.getAllRouteID();
+		RouteID = (ArrayList<Route>) DB.getAllFlightID();
 		
 		comboBox.setSelectedIndex(-1);
 		comboBox.setBounds(64, 217, 259, 25);
@@ -87,9 +87,9 @@ public class EditFlight {
 		frame.getContentPane().add(scrollPane);
 
 		final JList list = new JList(listModel);
-		for (int i = 0; i < flightlist.size(); i++) {
-				listModel.addElement(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
-				//System.out.println(routelist2.get(i));
+		for (int i = 0; i < RouteID.size(); i++) { 
+			listModel.addElement(RouteID.get(i).airport.getName()+" -> "+RouteID.get(i).middle+" -> "+RouteID.get(i).dest_airport.getName());
+			//System.out.println(RouteID.get(i).id);
 		}
 		scrollPane.setViewportView(list);
 
@@ -124,15 +124,11 @@ public class EditFlight {
 				comboBox.removeAllItems();
 				comboBox_1.removeAllItems();
 				comboBox_1.addItem(flightlist.get(listselection).airport.getName()+" -> "+flightlist.get(listselection).dest_airport.getName());
-				for(int i = 0; i < flightlist.size(); i++) {
-					//System.out.println(/*RouteID.get(o).route2_id+" -- "+*/flightlist.get(i).id);
-					for (int o = 0; o < RouteID.size(); o++) {
-						//System.out.println(RouteID.get(o).route2_id+" -- "+flightlist.get(listselection).id);
-						if(RouteID.get(o).route2_id == flightlist.get(listselection).id) {//) flightlist.get(i).depature_airport_id == flightlist.get(listselection).destination_airport_id) {
-							comboBox.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
-							//routelist2.add(""+flightlist.get(i).id);
-							System.out.println(RouteID.get(o).route2_id+" - "+flightlist.get(listselection).id);
-						}
+				for(int i = 0; i < RouteID.size(); i++) {
+					System.out.println(RouteID.get(i).route2_id+" -- "+RouteID.get(listselection).id);
+					if(RouteID.get(i).route2_id == RouteID.get(listselection).id){
+						comboBox.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
+						//routelist2.add(""+flightlist.get(i).id);
 					}
 				} 
 			} 
