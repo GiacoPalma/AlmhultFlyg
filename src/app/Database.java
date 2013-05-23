@@ -511,7 +511,8 @@ public class Database {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
-
+		
+		//Sam was here
 		try {
 			try {
 				Class.forName(driverName);
