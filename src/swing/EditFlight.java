@@ -89,7 +89,7 @@ public class EditFlight {
 		final JList list = new JList(listModel);
 		for (int i = 0; i < RouteID.size(); i++) { 
 			listModel.addElement(RouteID.get(i).airport.getName()+" -> "+RouteID.get(i).middle+" -> "+RouteID.get(i).dest_airport.getName());
-			//Sam was here
+			//Sam was here!
 		}
 		scrollPane.setViewportView(list);
 
