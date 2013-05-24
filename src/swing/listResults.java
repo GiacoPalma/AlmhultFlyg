@@ -7,7 +7,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -119,10 +118,12 @@ public class listResults extends JPanel implements MouseListener{
 		txtpnPrice.setBackground(Color.DARK_GRAY);
 		txtpnPrice.setForeground(Color.white);
 		txtpnPrice.setSize(60, 30);
+		
 		if(priceR2 == ""){
 			txtpnPrice.setText("Price: "+price);
 		}else{
-			txtpnPrice.setText("Price: "+priceR2);
+			int totalprice = Integer.parseInt(price)+Integer.parseInt(priceR2);
+			txtpnPrice.setText("Price: "+totalprice);
 		}
 		e.gridx = 4;
 		e.gridy = 0;
