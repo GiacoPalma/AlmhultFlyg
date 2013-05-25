@@ -19,6 +19,16 @@ public class Route {
 	public Integer airplane;
 	public Integer seats_booked;
 	public boolean available;
+	public Airplane airplaneObject;
+	
+	public Airplane getAirplaneObject() {
+		return airplaneObject;
+	}
+
+	public void setAirplaneObject(Airplane airplaneObject) {
+		this.airplaneObject = airplaneObject;
+	}
+
 	public Integer getSeats_booked() {
 		return seats_booked;
 	}

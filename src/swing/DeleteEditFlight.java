@@ -144,7 +144,6 @@ public class DeleteEditFlight extends JFrame {
 				if (list.getSelectedIndex() >= 0) {
 					selectedId = list.getSelectedIndex();
 					int sendId = allRoutes.get(selectedId).id;
-					System.out.println("sendi" + sendId);
 					EditSwing editRoute = new EditSwing(sendId);
 					editRoute.setId(selectedId);
 					editRoute.setVisible(true);
@@ -172,8 +171,8 @@ public class DeleteEditFlight extends JFrame {
 					showUser.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(new JFrame(),
-							"Du m�ste v�lja en rutt",
-							"Dialog", JOptionPane.ERROR_MESSAGE);
+							"Du m�ste v�lja en rutt", "Dialog",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

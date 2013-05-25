@@ -43,6 +43,8 @@ import java.awt.FlowLayout;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class EditSwing extends JFrame {
 
@@ -55,7 +57,7 @@ public class EditSwing extends JFrame {
 	public int dest;
 	private JButton btnHmtaPris;
 	public Route route = new Route();
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -82,6 +84,7 @@ public class EditSwing extends JFrame {
 	public EditSwing(int selectedId) {
 		this.selectedId = selectedId;
 		final Route selectedRoute = database.getRoute(selectedId);
+		route.setId(selectedId);
 		setTitle("L√§gg till flyg");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 550, 400);
@@ -92,7 +95,8 @@ public class EditSwing extends JFrame {
 		contentPane.setLayout(null);
 
 		final JComboBox comboBox_1 = new JComboBox();
-		Airport dest_airport = database.getAirport(selectedRoute.getDestination_airport_id());
+		Airport dest_airport = database.getAirport(selectedRoute
+				.getDestination_airport_id());
 		comboBox_1.setBounds(327, 107, 197, 27);
 		contentPane.add(comboBox_1);
 
@@ -107,7 +111,8 @@ public class EditSwing extends JFrame {
 		JLabel lblFrn = new JLabel("Fr\u00E5n: ");
 		lblFrn.setBounds(15, 118, 35, 16);
 		contentPane.add(lblFrn);
-		Airport dep_airport = database.getAirport(selectedRoute.getDepature_airport_id());
+		Airport dep_airport = database.getAirport(selectedRoute
+				.getDepature_airport_id());
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(68, 108, 197, 27);
 		contentPane.add(comboBox);
@@ -214,52 +219,61 @@ public class EditSwing extends JFrame {
 		JLabel lblTid_1 = new JLabel("Tid:");
 		lblTid_1.setBounds(291, 185, 61, 16);
 		contentPane.add(lblTid_1);
-		
+
 		final JComboBox comboBox_airplane = new JComboBox();
+
 		comboBox_airplane.setBounds(78, 252, 187, 27);
 		contentPane.add(comboBox_airplane);
 		final List<Airplane> airplanes = database.getAllAirplanes();
-		
-		for(int i = 0; i<airplanes.size();i++){
+
+		for (int i = 0; i < airplanes.size(); i++) {
 			comboBox_airplane.addItem(airplanes.get(i).model);
 		}
-		comboBox_airplane.setSelectedIndex(selectedRoute.airplane);
-		
+		for (int i = 0; i < comboBox_airplane.getItemCount(); i++) {
+			if (selectedRoute.getAirplaneObject().getModel()
+					.equals(comboBox_airplane.getItemAt(i))) {
+				comboBox_airplane.setSelectedIndex(i);
+				break;
+			}
+		}
+
 		JLabel lblFlygplan = new JLabel("Flygplan:");
 		lblFlygplan.setBounds(10, 258, 54, 14);
 		contentPane.add(lblFlygplan);
-		
+
 		JLabel lblKronor = new JLabel("Kronor");
 		lblKronor.setBounds(271, 220, 46, 14);
 		contentPane.add(lblKronor);
-		
+
 		textFieldDistance = new JTextField();
 		textFieldDistance.setBounds(68, 290, 197, 27);
 		contentPane.add(textFieldDistance);
 		textFieldDistance.setColumns(10);
-		
+
 		String stringDist = Integer.toString(selectedRoute.distance);
 		textFieldDistance.setText(stringDist);
-		
+
 		JLabel lblAvstnd = new JLabel("Avst\u00E5nd:");
 		lblAvstnd.setBounds(10, 296, 61, 14);
 		contentPane.add(lblAvstnd);
-		
+
 		JLabel lblKilometer = new JLabel("Kilometer");
 		lblKilometer.setBounds(271, 296, 46, 14);
 		contentPane.add(lblKilometer);
-		
-btnHmtaPris = new JButton("H√§mta pris");
-		
+
+		btnHmtaPris = new JButton("H√§mta pris");
+
 		btnHmtaPris.setBounds(364, 327, 117, 25);
 		btnHmtaPris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					int distance = Integer.parseInt(textFieldDistance.getText());
-					int airplane_id = comboBox_airplane.getSelectedIndex();
-					System.out.println("test"+textFieldDistance.getText());
-					route.setPrice(distance, airplanes.get(airplane_id).fuel_per_km, airplanes.get(airplane_id).seats_total);
-					textField.setText(""+route.price);
-				
+				int distance = Integer.parseInt(textFieldDistance.getText());
+				int airplane_id = comboBox_airplane.getSelectedIndex();
+
+				route.setPrice(distance,
+						airplanes.get(airplane_id).fuel_per_km,
+						airplanes.get(airplane_id).seats_total);
+				textField.setText("" + route.price);
+
 			}
 		});
 		contentPane.add(btnHmtaPris);
@@ -267,9 +281,7 @@ btnHmtaPris = new JButton("H√§mta pris");
 		btnLggTill.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
-			
-				route.id = selectedRoute.id;
+
 				if (comboBox.getSelectedIndex() == -1) {
 					route.setDepature_airport_id(0);
 				} else {
@@ -283,11 +295,13 @@ btnHmtaPris = new JButton("H√§mta pris");
 					route.setDestination_airport_id(airports.get(destId)
 							.getId());
 				}
-				if (comboBox_airplane.getSelectedIndex() == -1){
+				if (comboBox_airplane.getSelectedIndex() == -1) {
 					route.airplane = 0;
-				}else{
+				} else {
 					int airplane_id = comboBox_airplane.getSelectedIndex();
-					route.airplane = airplanes.get(airplane_id).id;
+
+					route.airplane = airplanes.get(airplane_id).getId();
+
 				}
 				try {
 					Date inputDeptDate = dateChooser.getDate();
@@ -314,15 +328,16 @@ btnHmtaPris = new JButton("H√§mta pris");
 				} catch (NumberFormatException e) {
 
 				}
-				try{
-					int inputDistance = Integer.parseInt(textFieldDistance.getText());
+				try {
+					int inputDistance = Integer.parseInt(textFieldDistance
+							.getText());
 					route.distance = inputDistance;
-				}catch(NumberFormatException e){
-					
+				} catch (NumberFormatException e) {
+
 				}
 				if (route.validate()) {
-					System.out.println(route.id);
-					boolean updated = database.UpdateRoute(route, route.id);
+
+					boolean updated = database.UpdateRoute(route);
 					if (updated) {
 						JOptionPane.showMessageDialog(new JFrame(),
 								"Rutten har uppdaterats", "Dialog",
@@ -338,6 +353,49 @@ btnHmtaPris = new JButton("H√§mta pris");
 					JOptionPane.showMessageDialog(new JFrame(), output,
 							"Dialog", JOptionPane.ERROR_MESSAGE);
 				}
+			}
+		});
+
+		comboBox_airplane.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				int changed_id = comboBox_airplane.getSelectedIndex();
+
+				Airplane oldAirplane = new Airplane();
+				oldAirplane = selectedRoute.airplaneObject;
+				route.airplaneObject = airplanes.get(changed_id);
+
+				if (selectedRoute.getSeats_booked() > route.airplaneObject
+						.getSeatsTotal()) {
+					Object[] options = { "Ja", "Nej" };
+					int n = JOptionPane.showOptionDialog(new JFrame(),
+							selectedRoute.getSeats_booked()
+									+ " platser är bokade.\n"
+
+									+ route.getAirplaneObject().getModel()
+									+ " tar bara "
+									+ route.getAirplaneObject().getSeatsTotal()
+									+ " passagerare."
+									+ "\nDet kommer bli "
+									+ (selectedRoute.getSeats_booked() - route
+											.getAirplaneObject()
+											.getSeatsTotal())
+									+ " överbokningar."
+									+ "\nVill du byta ändå?",
+							"Bekräfta ändring", JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null, options,
+							options[0]);
+					if (n == 1) {
+						for (int i = 0; i < comboBox_airplane.getItemCount(); i++) {
+							if (selectedRoute.getAirplaneObject().getModel()
+									.equals(comboBox_airplane.getItemAt(i))) {
+								comboBox_airplane.setSelectedIndex(i);
+								break;
+							}
+						}
+					}
+				}
+
 			}
 		});
 
