@@ -38,7 +38,7 @@ public class EditFlight {
 	private Flight flight;
 	private String inputDeptDateFormated = null;
 	private List<String> routelist2 = new ArrayList<String>();
-	private List<Route> RouteID = new ArrayList<Route>();
+
 
 	private JFrame frame;
 
@@ -75,8 +75,7 @@ public class EditFlight {
 		frame.getContentPane().setLayout(null);
 
 		final JComboBox comboBox = new JComboBox();
-		flightlist = (ArrayList<Route>) DB.getAllRoutes();
-		RouteID = (ArrayList<Route>) DB.getAllFlightID();
+		flightlist = (ArrayList<Route>) DB.getFlightswithTwoRoutes();
 		
 		comboBox.setSelectedIndex(-1);
 		comboBox.setBounds(64, 217, 259, 25);
@@ -87,9 +86,28 @@ public class EditFlight {
 		frame.getContentPane().add(scrollPane);
 
 		final JList list = new JList(listModel);
-		for (int i = 0; i < RouteID.size(); i++) { 
-			listModel.addElement(RouteID.get(i).airport.getName()+" -> "+RouteID.get(i).middle+" -> "+RouteID.get(i).dest_airport.getName());
-			//Sam was here!
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println("--");
+				for(int i = 0; i < flightlist.size(); i++) {
+					if(flightlist.get(i).route2_id != 0) {
+						comboBox.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
+						routelist2.add(""+flightlist.get(i).id);
+						//comboBox.addItem(list.getSelectedValue());
+						
+						System.out.println(flightlist.get(i).id);
+						
+					}
+				} System.out.println("--");
+			} 
+		});
+		
+		for (int i = 0; i < flightlist.size(); i++) {
+			System.out.println(flightlist.get(i).route2_id);
+			if(flightlist.get(i).route2_id != 0) {
+				listModel.addElement(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
+				//System.out.println(routelist2.get(i));
+			}
 		}
 		scrollPane.setViewportView(list);
 
@@ -98,7 +116,7 @@ public class EditFlight {
 		lblFlygningar.setBounds(37, 11, 286, 25);
 		frame.getContentPane().add(lblFlygningar);
 
-		final JComboBox comboBox_1 = new JComboBox();
+		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(64, 180, 259, 25);
 		frame.getContentPane().add(comboBox_1);
 		
@@ -117,21 +135,5 @@ public class EditFlight {
 		JButton btnTaBort = new JButton("Ta bort");
 		btnTaBort.setBounds(319, 217, 117, 25);
 		frame.getContentPane().add(btnTaBort);
-		
-		list.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				int listselection = list.getSelectedIndex();
-				comboBox.removeAllItems();
-				comboBox_1.removeAllItems();
-				comboBox_1.addItem(flightlist.get(listselection).airport.getName()+" -> "+flightlist.get(listselection).dest_airport.getName());
-				for(int i = 0; i < RouteID.size(); i++) {
-					System.out.println(RouteID.get(i).route2_id+" -- "+RouteID.get(listselection).id);
-					if(RouteID.get(i).route2_id == RouteID.get(listselection).id){
-						comboBox.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
-						//routelist2.add(""+flightlist.get(i).id);
-					}
-				} 
-			} 
-		});
 	}
 }

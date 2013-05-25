@@ -122,7 +122,7 @@ public class AddFlight {
 				int select1 = flightlist.get(selected1).id;
 				int select2 = Integer.parseInt(list.get(selected2));
 				comboBox_1.getSelectedItem();
-				DB.addFlight(select1, select2);
+				DB.addFlight(select1 , select2);
 				System.out.println("Rutt1_id:" + select1 + " <--> Rutt2_id:" + list.get(selected2));
 				JOptionPane.showMessageDialog(frame, "Flygningen skapades!", "Success!",
 				        JOptionPane.INFORMATION_MESSAGE);

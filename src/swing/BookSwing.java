@@ -2,7 +2,6 @@ package swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Window;
@@ -11,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -156,6 +154,10 @@ public class BookSwing extends JFrame {
 		dateChooser_1.setVisible(false);
 		contentPane.add(dateChooser_1);
 
+		JLabel lblNewLabel_3 = new JLabel("Pris:");
+		lblNewLabel_3.setBounds(233, 203, 46, 14);
+		contentPane.add(lblNewLabel_3);
+
 		JButton btnSk = new JButton("S\u00F6k");
 
 		btnSk.setBounds(109, 228, 89, 23);
@@ -178,22 +180,12 @@ public class BookSwing extends JFrame {
 		lblUtresa.setBounds(10, 123, 46, 14);
 		lblUtresa.setVisible(false);
 		contentPane.add(lblUtresa);
-		Dimension maximumSize = new Dimension(625, 1200);
-		
-		final JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(233, 35, 625, 70);
-		Dimension maximumsizescroll = new Dimension(625, 200);
-		scrollPane.setMaximumSize(maximumsizescroll);
-		contentPane.add(scrollPane);
 		
 
 		final JPanel panel_1 = new JPanel();
-		scrollPane.setViewportView(panel_1);
-		panel_1.setMaximumSize(maximumSize);
-		panel_1.setSize(625, 70);
-		Dimension minimumSize = new Dimension(625,240);
-		panel_1.setMinimumSize(minimumSize);
+		panel_1.setBounds(233, 35, 625, 70);
 		GridLayout ScrollLayout = new GridLayout(0,1);
+		contentPane.add(panel_1);
 		panel_1.setLayout(ScrollLayout);
 
 		ButtonGroup group = new ButtonGroup();
@@ -214,8 +206,6 @@ public class BookSwing extends JFrame {
 		btnSk.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				panel_1.removeAll();
-				panel_1.setSize(625, 70);
 				Route route = new Route();
 				Flight flight = new Flight(route);
 				Booking booking = new Booking();
@@ -269,7 +259,7 @@ public class BookSwing extends JFrame {
 							destAirportRoute2 = Database.getAirport(flights.get(i).route2.destination_airport_id);
 						}
 						
-						System.out.println("testaloss"+flights.get(i).route1.airplane);
+						System.out.println(flights.get(i).route1.airplane);
 						System.out.println(flights.get(i).route2);
 						
 							if(booking.checkAvailability(airplane.getSeatsTotal(), flights.get(i).route1.seats_booked)){
@@ -295,13 +285,6 @@ public class BookSwing extends JFrame {
 								listResults panel = new listResults();
 								JPanel panel2 = new JPanel();
 								panel2 = panel.listResults(flights, airport.getName(), destAirport.getName(), destAirportRoute2.getName(), airportRoute2.getName(), flights.get(i).route1.depature_date, flights.get(i).route1.destination_date, flights.get(i).route2.depature_date, flights.get(i).route2.destination_date, priceR2, price, i, user);
-								panel2.setBorder(BorderFactory.createLineBorder(Color.black));
-								Dimension maximum = new Dimension(625, 230);
-								scrollPane.setMaximumSize(maximum);
-								panel_1.setSize(625, panel_1.getHeight()+panel2.getHeight());
-								scrollPane.setSize(panel_1.getWidth(), panel_1.getHeight());
-								
-								
 								panel_1.add(panel2);
 								
 								
@@ -311,25 +294,12 @@ public class BookSwing extends JFrame {
 								listResults panel = new listResults();
 								JPanel panel2 = new JPanel();
 								panel2 = panel.listResults(flights, airport.getName(), destAirport.getName(), "", "", flights.get(i).route1.depature_date, flights.get(i).route1.destination_date, "", "", "", price, i, user);
-								panel2.setBorder(BorderFactory.createLineBorder(Color.white));
-								panel_1.setSize(625, panel_1.getHeight()+panel2.getHeight());
-								Dimension maximum = new Dimension(625, 200);
-								scrollPane.setMaximumSize(maximum);
-								if(scrollPane.getHeight() <= maximum.getHeight()){
-									scrollPane.setSize(panel_1.getWidth(), panel_1.getHeight());
-								}
 								panel_1.add(panel2);
 								
 							}
 				}
 					}else {
-						JTextPane txtpnNoFlights = new JTextPane();
-						txtpnNoFlights.setText("Det finns tyvärr inga flygningar");
-						txtpnNoFlights.setBackground(Color.DARK_GRAY);
-						txtpnNoFlights.setForeground(Color.red);
-						txtpnNoFlights.setEditable(false);
-						panel_1.add(txtpnNoFlights);
-						
+				
 				}
 			}
 		});
