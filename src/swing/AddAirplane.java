@@ -63,22 +63,22 @@ public class AddAirplane extends JFrame {
 		contentPane.add(btnSkapa);
 		
 		modelField = new JTextField();
-		modelField.setBounds(134, 56, 86, 20);
+		modelField.setBounds(139, 56, 86, 20);
 		contentPane.add(modelField);
 		modelField.setColumns(10);
 		
 		seatsField = new JTextField();
-		seatsField.setBounds(134, 87, 86, 20);
+		seatsField.setBounds(139, 87, 86, 20);
 		contentPane.add(seatsField);
 		seatsField.setColumns(10);
 		
 		fuelField = new JTextField();
-		fuelField.setBounds(134, 118, 86, 20);
+		fuelField.setBounds(139, 118, 86, 20);
 		contentPane.add(fuelField);
 		fuelField.setColumns(10);
 		
 		travelspeedField = new JTextField();
-		travelspeedField.setBounds(134, 149, 86, 20);
+		travelspeedField.setBounds(139, 149, 86, 20);
 		contentPane.add(travelspeedField);
 		travelspeedField.setColumns(10);
 		
