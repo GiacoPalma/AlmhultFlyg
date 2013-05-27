@@ -20,7 +20,7 @@ import java.awt.event.ActionEvent;
 
 public class AddFlight {
 
-	private JFrame frame;
+	public JFrame frame;
 	public Database DB = new Database();
 	private static ArrayList<Route> flightlist = new ArrayList<Route>();
 	private Flight flight;
