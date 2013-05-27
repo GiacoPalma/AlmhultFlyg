@@ -40,7 +40,7 @@ public class EditFlight {
 	private List<String> routelist2 = new ArrayList<String>();
 
 
-	private JFrame frame;
+	JFrame frame;
 
 	/**
 	 * Launch the application.
