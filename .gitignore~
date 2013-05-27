@@ -27,8 +27,8 @@ local.properties
 
 # PDT-specific
 .buildpath
-.classpath
-.gitignore
+*.classpath
+*.gitignore
 
 
 #################
@@ -97,7 +97,7 @@ DocProject/Help/html
 
 # Click-Once directory
 publish
-
+//
 # Others
 [Bb]in
 [Oo]bj
