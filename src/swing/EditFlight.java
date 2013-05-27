@@ -35,10 +35,13 @@ public class EditFlight {
 	private static ArrayList<Route> flightlist = new ArrayList<Route>();
 	private DefaultListModel listModel = new DefaultListModel();
 	private List<Flight> flights = new ArrayList<Flight>();
+	private List<Route> flightid = new ArrayList<Route>();
+	private List<Route> allRoutes = new ArrayList<Route>();
+	private List<int> allRouteID = new ArrayList<int>();
+	private List<>;
 	private Flight flight;
 	private String inputDeptDateFormated = null;
 	private List<String> routelist2 = new ArrayList<String>();
-
 
 	private JFrame frame;
 
@@ -75,7 +78,12 @@ public class EditFlight {
 		frame.getContentPane().setLayout(null);
 
 		final JComboBox comboBox = new JComboBox();
-		flightlist = (ArrayList<Route>) DB.getFlightswithTwoRoutes();
+		flightlist = (ArrayList<Route>) DB.getFlightsWithTwoRoutes();
+		flightid = (List<Route>) DB.getAllFlightID();
+		allRoutes = (List<Route>) DB.getAllRoutes(); //getAllRoutes
+		for(int i = 0; i < DB.getAllRoutes().size(); i++){
+			allRouteID.add(i, DB.getAllRoutes().get(i).id);
+		}
 		
 		comboBox.setSelectedIndex(-1);
 		comboBox.setBounds(64, 217, 259, 25);
@@ -86,37 +94,43 @@ public class EditFlight {
 		frame.getContentPane().add(scrollPane);
 
 		final JList list = new JList(listModel);
-		list.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				System.out.println("--");
-				for(int i = 0; i < flightlist.size(); i++) {
-					if(flightlist.get(i).route2_id != 0) {
-						comboBox.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
-						routelist2.add(""+flightlist.get(i).id);
-						//comboBox.addItem(list.getSelectedValue());
-						
-						System.out.println(flightlist.get(i).id);
-						
-					}
-				} System.out.println("--");
-			} 
-		});
 		
-		for (int i = 0; i < flightlist.size(); i++) {
-			System.out.println(flightlist.get(i).route2_id);
-			if(flightlist.get(i).route2_id != 0) {
-				listModel.addElement(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
-				//System.out.println(routelist2.get(i));
+		for (int i = 0; i < flightlist.size(); i++) { 
+			listModel.addElement(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).middle+" -> "+flightlist.get(i).dest_airport.getName());
+			//System.out.println(RouteID.get(i).id);
 			}
-		}
 		scrollPane.setViewportView(list);
 
 		JLabel lblFlygningar = new JLabel("Redigera flygningar med byten");
 		lblFlygningar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblFlygningar.setBounds(37, 11, 286, 25);
 		frame.getContentPane().add(lblFlygningar);
-
-		JComboBox comboBox_1 = new JComboBox();
+		final JComboBox comboBox_1 = new JComboBox();
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				int listselection = list.getSelectedIndex();
+				comboBox_1.removeAllItems();
+				comboBox_1.addItem(flightlist.get(listselection).airport.getName()+" -> "+flightlist.get(listselection).middle);
+				/*for(int i = 0; i < flightlist.size(); i++) {	
+					System.out.println(flightlist.get(i).route2_id+" -- "+flightlist.get(listselection).id);
+					for(int o = 0; o < flightid.size(); o++) {
+						if(flightid.get(o).route2_id == flightlist.get(listselection).id){
+							comboBox.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
+							//routelist2.add(""+flightlist.get(i).id);
+						}
+					}*/
+				for(int i = 0; i < allRoutes.size(); i++) {	
+					System.out.println(allRoutes.get(i).id+" -- "+flightlist.get(listselection).id);
+					for(int o = 0; o < flightlist.size(); o++) {
+						
+						if(allRoutes.contains("8")){//allRoutes.get(i).id == flightlist.get(listselection).id){
+							comboBox.addItem(flightlist.get(o).middle+" -> "+flightlist.get(o).dest_airport.getName());
+							//routelist2.add(""+flightlist.get(i).id);
+						}
+					}
+				}
+			}
+		});
 		comboBox_1.setBounds(64, 180, 259, 25);
 		frame.getContentPane().add(comboBox_1);
 		

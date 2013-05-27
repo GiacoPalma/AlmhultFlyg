@@ -509,7 +509,8 @@ public class Database {
 		return ret;
 	}
 
-	public static List<Route> getFlightswithTwoRoutes() {
+	
+	public static List<Route> getAllFlightID() {
 		List<Route> ret = new ArrayList<Route>();
 		Connection con = null;
 		Statement st = null;
@@ -523,31 +524,53 @@ public class Database {
 						.println("ClassNotFoundException : " + e.getMessage());
 			}
 			con = DriverManager.getConnection(url, user, password);
-			st = con.createStatement();
-			// rs =
-			// st.executeQuery("SELECT  A.name AS departure, B.name AS destination, routes.* FROM routes LEFT JOIN airports AS A ON A.id = routes.dep_id LEFT JOIN airports AS B ON B.id = routes.dest_id");
-			rs = st.executeQuery("SELECT A.name AS departure, B.name AS destination, F.route1_id, F.route2_id, routes . * FROM routes LEFT JOIN airports AS A ON A.id = routes.dep_id LEFT JOIN airports AS B ON B.id = routes.dest_id LEFT JOIN flights AS F ON F.route1_id = routes.id");
-			while (rs.next()) {
-				Route route1 = new Route();
+ 			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM flights");
+ 			while (rs.next()) {
+ 				Route route1 = new Route();
+
 				route1.id = rs.getInt("id");
-				route1.route1_id = rs.getInt("route1_id");
-				route1.route2_id = rs.getInt("route2_id");
-				route1.depature_airport_id = rs.getInt("dep_id");
-				route1.depature_date = rs.getString("dep_date");
-				route1.destination_airport_id = rs.getInt("dest_id");
-				route1.destination_date = rs.getString("dest_date");
-				route1.price = rs.getInt("price");
-				route1.airplane = rs.getInt("airplane");
-				route1.distance = rs.getInt("distance");
+ 				route1.route1_id = rs.getInt("route1_id");
+ 				route1.route2_id = rs.getInt("route2_id");
+ 				ret.add(route1);			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+	}
+	public static List<Route> getFlightsWithTwoRoutes() {
+		List<Route> ret = new ArrayList<Route>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			try {
+				Class.forName(driverName);
+			} catch (ClassNotFoundException e) {
+				System.out
+						.println("ClassNotFoundException : " + e.getMessage());
+			}
+			con = DriverManager.getConnection(url, user, password);
+ 			st = con.createStatement();
+			rs = st.executeQuery("SELECT flights.id AS flight_id, flights.route1_id, flights.route2_id, routes.id AS route_id, routes.dep_id, routes.dest_id, a_dep.name AS departure, a_mid.name AS middle, a_dest.name AS destination FROM routes INNER JOIN flights ON flights.route1_id = routes.id INNER JOIN routes AS r_mid ON r_mid.id = flights.route2_id INNER JOIN airports AS a_dep ON a_dep.id = routes.dep_id INNER JOIN airports AS a_mid ON a_mid.id = routes.dest_id INNER JOIN airports AS a_dest ON a_dest.id = r_mid.dest_id WHERE flights.route2_id !=0 ORDER BY  `flights`.`id` ASC ");
+			//rs = st.executeQuery("SELECT id, route1_id, route2_id FROM flights");
+ 			while (rs.next()) {
+ 				Route route1 = new Route();
+
+				route1.id = rs.getInt("route_id");
+ 				route1.route1_id = rs.getInt("route1_id");
+ 				route1.route2_id = rs.getInt("route2_id");
+				route1.flight_id = rs.getInt("flight_id");
 				Airport airport = new Airport();
 				route1.airport = airport;
 				route1.airport.setName(rs.getString("departure"));
 				Airport airportDest = new Airport();
 				route1.dest_airport = airportDest;
 				route1.dest_airport.setName(rs.getString("destination"));
-
-				ret.add(route1);
-			}
+				route1.middle = rs.getString("middle");
+ 				ret.add(route1);			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -1092,7 +1115,6 @@ public class Database {
 					Flight flight = new Flight(route1);
 					flight.id = addFlight(flight.route1.id, 0);
 					ret.add(flight);
-
 				} else {
 					if (dep_id == routes.get(i).depature_airport_id) {
 						System.out.println("hejloop2");
@@ -1102,7 +1124,6 @@ public class Database {
 						System.out.println("hejloop3");
 						routestodest_id.add(routes.get(i));
 					}
-
 				}
 			}
 			if (routesfromdep_id.size() > 0 && routestodest_id.size() > 0) {
