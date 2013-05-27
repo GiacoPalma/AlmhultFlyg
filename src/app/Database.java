@@ -1076,24 +1076,6 @@ public class Database {
 			List<Route> routesfromdep_id = new ArrayList<Route>();
 			List<Route> routestodest_id = new ArrayList<Route>();
 			for (int i = 0; i < routes.size(); i++) {
-
-				if (dep_id == routes.get(i).depature_airport_id
-						&& dest_id == routes.get(i).destination_airport_id) {
-					Route route1 = new Route();
-					route1.id = routes.get(i).id;
-					route1.depature_airport_id = routes.get(i).depature_airport_id;
-					route1.depature_date = routes.get(i).depature_date;
-					route1.destination_airport_id = routes.get(i).destination_airport_id;
-					route1.destination_date = routes.get(i).destination_date;
-					route1.price = routes.get(i).price;
-					route1.distance = routes.get(i).distance;
-					route1.airplane = routes.get(i).airplane;
-					route1.seats_booked = routes.get(i).seats_booked;
-					Flight flight = new Flight(route1);
-					flight.id = addFlight(flight.route1.id, 0);
-					ret.add(flight);
-
-				} else {
 					if (dep_id == routes.get(i).depature_airport_id) {
 						System.out.println("hejloop2");
 						routesfromdep_id.add(routes.get(i));
@@ -1103,48 +1085,65 @@ public class Database {
 						routestodest_id.add(routes.get(i));
 					}
 
+				
+			}
+			for(int i = 0;i<routesfromdep_id.size();i++){
+								
+								
+								String date = routesfromdep_id.get(i).depature_date.substring(0, 10);
+								
+								System.out.println("hejloop4 "+date);
+								System.out.println("heejloop5 "+dep_date);
+								if(dest_id == routesfromdep_id.get(i).destination_airport_id && dep_date == null){
+									Route route1 = createRouteInstance(routesfromdep_id.get(i));
+									Flight flight = new Flight(route1);
+									ret.add(flight);
+								}else if(dest_id <= 0 && dep_date == null){
+									Route route1 = createRouteInstance(routesfromdep_id.get(i));
+									Flight flight = new Flight(route1);
+									ret.add(flight);
+								}else if(dest_id == routesfromdep_id.get(i).destination_airport_id && dep_date.equals(date)){
+									System.out.println("heejloop5"+dep_date);
+									Route route1 = createRouteInstance(routesfromdep_id.get(i));
+									Flight flight = new Flight(route1);
+									flight.id = checkFlightId(flight.route1.id,0);
+									ret.add(flight);
+								}
+			}
+			if(routestodest_id.size() > 0 && dep_id == 0){
+				for(int i = 0;i<routestodest_id.size();i++){
+					Route route1 = createRouteInstance(routestodest_id.get(i));
+					Flight flight = new Flight(route1);
+					flight.id = checkFlightId(flight.route1.id,0);
+					ret.add(flight);
 				}
 			}
+
+			
+			
 			if (routesfromdep_id.size() > 0 && routestodest_id.size() > 0) {
 				for (int i = 0; i < routesfromdep_id.size(); i++) {
 					System.out.println("hejloopd");
 					for (int y = 0; y < routestodest_id.size(); y++) {
-						System.out
-								.println(routesfromdep_id.get(i).destination_airport_id
-										+ "<dep dest>"
-										+ routestodest_id.get(y).depature_airport_id);
-						if (routesfromdep_id.get(i).destination_airport_id == routestodest_id
-								.get(y).depature_airport_id) {
+						String dest_date_route1 = routesfromdep_id.get(i).destination_date.substring(0, 10);
+						String dep_date_route2 = routestodest_id.get(y).depature_date.substring(0, 10);
 
-							Route route1 = new Route();
-							route1.id = routesfromdep_id.get(i).id;
-							route1.depature_airport_id = routesfromdep_id
-									.get(i).depature_airport_id;
-							route1.depature_date = routesfromdep_id.get(i).depature_date;
-							route1.destination_airport_id = routesfromdep_id
-									.get(i).destination_airport_id;
-							route1.destination_date = routesfromdep_id.get(i).destination_date;
-							route1.price = routesfromdep_id.get(i).price;
-							route1.distance = routesfromdep_id.get(i).distance;
-							route1.airplane = routesfromdep_id.get(i).airplane;
-							route1.seats_booked = routesfromdep_id.get(i).seats_booked;
+						if(routesfromdep_id.get(i).destination_airport_id == routestodest_id.get(y).depature_airport_id && dest_date_route1.equals(dep_date_route2)){
 
-							Route route2 = new Route();
-							route2.id = routestodest_id.get(y).id;
-							route2.depature_airport_id = routestodest_id.get(y).depature_airport_id;
-							route2.depature_date = routestodest_id.get(y).depature_date;
-							route2.destination_airport_id = routestodest_id
-									.get(y).destination_airport_id;
-							route2.destination_date = routestodest_id.get(y).destination_date;
-							route2.price = routestodest_id.get(y).price;
-							route2.distance = routestodest_id.get(y).distance;
-							route2.airplane = routestodest_id.get(y).airplane;
-							route2.seats_booked = routestodest_id.get(y).seats_booked;
+							Route route1 = createRouteInstance(routesfromdep_id.get(i));
+						
+							Route route2 = createRouteInstance(routestodest_id.get(y));
+							
 
 							Flight flight = new Flight(route1);
 							flight.route2 = route2;
-							flight.id = addFlight(flight.route1.id,
-									flight.route2.id);
+							int flightID = checkFlightId(flight.route1.id, flight.route2.id);
+							if(flightID > 0){
+								flight.id = flightID;
+							}else{
+								flight.id = addFlight(flight.route1.id, flight.route2.id);
+							}
+
 
 							ret.add(flight);
 						}
@@ -1206,4 +1205,53 @@ public class Database {
 
 		return ret;
 	}
+	public static int checkFlightId(int route1ID, int route2ID){
+				Connection con = null;
+				Statement st = null;
+				ResultSet rs = null;
+				int flight_id = 0;
+		
+				try {
+					try {
+						Class.forName(driverName);
+					} catch (ClassNotFoundException e) {
+						System.out
+								.println("ClassNotFoundException : " + e.getMessage());
+					}
+					con = DriverManager.getConnection(url, user, password);
+		
+					st = con.createStatement();
+					rs = st.executeQuery("SELECT  * FROM flights WHERE route1_id ="+route1ID+" AND route2_id ="+route2ID);
+					if (rs.next()) {
+						flight_id = rs.getInt("id");
+						
+						
+		
+						return flight_id;
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		
+				return flight_id;
+			}
+
+	
+	
+		public static Route createRouteInstance(Route route){
+				Route route1 = new Route();
+				route1.id = route.id;
+				route1.depature_airport_id = route.depature_airport_id;
+				route1.depature_date = route.depature_date;
+				route1.destination_airport_id = route.destination_airport_id;
+				route1.destination_date = route.destination_date;
+				route1.price = route.price;
+				route1.distance = route.distance;
+				route1.airplane = route.airplane;
+				route1.seats_booked = route.seats_booked;
+				
+				return route1;
+			}
+
+	
 }

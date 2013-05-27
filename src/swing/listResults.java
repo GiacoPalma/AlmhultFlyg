@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -46,7 +47,8 @@ public class listResults extends JPanel implements MouseListener{
 		final List<Flight> flightss = flights;
 		final User user1 = user;
 		panel_1.setBackground(Color.DARK_GRAY);
-		panel_1.setSize(560, 50);
+		panel_1.setSize(560, 70);
+		panel_1.setBorder(BorderFactory.createLineBorder(Color.white));
 		Dimension dimension = new Dimension(560,50);
 		panel_1.setMinimumSize(dimension);
 		panel_1.setLayout(layoutpane);
@@ -54,14 +56,20 @@ public class listResults extends JPanel implements MouseListener{
 		JTextPane txtpnAlmhult = new JTextPane();
 		JTextPane txtpnRoute2 = new JTextPane();
 		JTextPane txtpnPrice = new JTextPane();
+		JTextPane txtpnDateR1 = new JTextPane();
+		JTextPane txtpnDateR2 = new JTextPane();
+
 		txtpnAlmhult.setEditable(false);
 		txtpnAlmhult.setBackground(Color.DARK_GRAY);
 		txtpnAlmhult.setForeground(Color.WHITE);
 		txtpnAlmhult.setSize(100, 30);
-		txtpnAlmhult.setText(airportnameDep + " - " + airportnameDest);
+		txtpnAlmhult.setText("Departure: "+airportnameDep + " - Destination: " + airportnameDest);
 		GridBagConstraints c = new GridBagConstraints();
 		GridBagConstraints d = new GridBagConstraints();
 		GridBagConstraints e = new GridBagConstraints();
+		GridBagConstraints dateconstraints1 = new GridBagConstraints();
+		GridBagConstraints dateconstraints2 = new GridBagConstraints();
+
 		c.gridx = 0;
 		c.gridy = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -69,19 +77,46 @@ public class listResults extends JPanel implements MouseListener{
 		c.gridheight = 1;
 		c.gridwidth = 1;
 		panel_1.add(txtpnAlmhult, c);
+		txtpnDateR1.setEditable(false);
+		txtpnDateR1.setBackground(Color.DARK_GRAY);
+		txtpnDateR1.setForeground(Color.white);
+		txtpnDateR1.setSize(100,30);
+		txtpnDateR1.setText("Dep. Date: "+dep_date+" --- Dest. Date: "+dest_date);
+		dateconstraints1.gridx = 0;
+		dateconstraints1.gridy = 1;
+		dateconstraints1.gridheight = 1;
+		dateconstraints1.fill = GridBagConstraints.HORIZONTAL;
+		dateconstraints1.gridwidth = 2;
+		dateconstraints1.weightx =  0.0;
+				panel_1.add(txtpnDateR1, dateconstraints1);
+
 		if(airportnameDestR2 != "" && airportnameDepR2 != ""){
 			txtpnRoute2.setEditable(false);
 			txtpnRoute2.setBackground(Color.DARK_GRAY);
 			txtpnRoute2.setForeground(Color.white);
 			txtpnRoute2.setSize(100, 30);
-			txtpnRoute2.setText(airportnameDepR2+ " - "+ airportnameDestR2);
+			txtpnRoute2.setText("Departure: "+airportnameDepR2+ " - Destination: "+ airportnameDestR2);
+			
+			txtpnDateR2.setEditable(false);
+			txtpnDateR2.setBackground(Color.DARK_GRAY);
+			txtpnDateR2.setForeground(Color.white);
+			txtpnDateR2.setSize(100,30);
+			txtpnDateR2.setText("Dep. Date: "+dep_date2+" --- Dest. Date: "+dest_date2);
+			dateconstraints2.gridx = 0;
+			dateconstraints2.gridy = 3;
+			dateconstraints2.gridheight = 1;
+			dateconstraints2.fill = GridBagConstraints.HORIZONTAL;
+			dateconstraints2.gridwidth = 2;
+			dateconstraints2.weightx =  0.0;
+
 			d.gridx = 0;
-			d.gridy = 1;
+			d.gridy = 2;
 			d.gridheight = 1;
 			d.fill = GridBagConstraints.HORIZONTAL;
 			d.gridwidth = 1;
 			d.weightx = 0.5;
 			panel_1.add(txtpnRoute2, d);
+			panel_1.add(txtpnDateR2, dateconstraints2);
 		}
 		txtpnPrice.setEditable(false);
 		txtpnPrice.setBackground(Color.DARK_GRAY);

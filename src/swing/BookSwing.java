@@ -2,6 +2,7 @@ package swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Window;
@@ -181,11 +182,14 @@ public class BookSwing extends JFrame {
 		lblUtresa.setVisible(false);
 		contentPane.add(lblUtresa);
 		
+		final JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(233, 35, 625, 70);
+		contentPane.add(scrollPane);
+		
 
 		final JPanel panel_1 = new JPanel();
-		panel_1.setBounds(233, 35, 625, 70);
+		scrollPane.setViewportView(panel_1);
 		GridLayout ScrollLayout = new GridLayout(0,1);
-		contentPane.add(panel_1);
 		panel_1.setLayout(ScrollLayout);
 
 		ButtonGroup group = new ButtonGroup();
@@ -209,6 +213,8 @@ public class BookSwing extends JFrame {
 				Route route = new Route();
 				Flight flight = new Flight(route);
 				Booking booking = new Booking();
+				panel_1.removeAll();
+				panel_1.setSize(625, 70);
 				int selDep = combobox.getSelectedIndex();
 				try {
 					dep_id = airportlist.get(selDep).id;
@@ -285,6 +291,15 @@ public class BookSwing extends JFrame {
 								listResults panel = new listResults();
 								JPanel panel2 = new JPanel();
 								panel2 = panel.listResults(flights, airport.getName(), destAirport.getName(), destAirportRoute2.getName(), airportRoute2.getName(), flights.get(i).route1.depature_date, flights.get(i).route1.destination_date, flights.get(i).route2.depature_date, flights.get(i).route2.destination_date, priceR2, price, i, user);
+								
+								Dimension maximum = new Dimension(625, 200);
+								scrollPane.setMaximumSize(maximum);
+
+								
+								panel_1.setSize(panel_1.getWidth(), panel_1.getHeight()+panel2.getHeight());
+								if(scrollPane.getHeight() <= maximum.getHeight()){
+									scrollPane.setSize(panel_1.getWidth(), panel_1.getHeight());
+								}
 								panel_1.add(panel2);
 								
 								
@@ -294,6 +309,13 @@ public class BookSwing extends JFrame {
 								listResults panel = new listResults();
 								JPanel panel2 = new JPanel();
 								panel2 = panel.listResults(flights, airport.getName(), destAirport.getName(), "", "", flights.get(i).route1.depature_date, flights.get(i).route1.destination_date, "", "", "", price, i, user);
+								Dimension maximum = new Dimension(625, 200);
+								scrollPane.setMaximumSize(maximum);
+								panel_1.setSize(panel_1.getWidth(), panel_1.getHeight()+panel2.getHeight());
+								if(scrollPane.getHeight() <= maximum.getHeight()){
+									scrollPane.setSize(panel_1.getWidth(), panel_1.getHeight());
+								}
+
 								panel_1.add(panel2);
 								
 							}
