@@ -660,7 +660,7 @@ public class Database {
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("INSERT INTO bookings(flight_id, user_id) VALUES (?, ?)");
+			st = con.prepareStatement("INSERT INTO bookings(flight_id, user_id, confirmed) VALUES (?, ?, 0)");
 			st.setInt(1, flight.id);
 			st.setInt(2, bookinguser.id);
 			st2 = con

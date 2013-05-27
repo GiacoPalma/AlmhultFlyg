@@ -40,9 +40,9 @@ public class listResults extends JPanel implements MouseListener{
 	
 
 	
-	public JPanel listResults(List<Flight> flights, String airportnameDep, String airportnameDest, String airportnameDestR2, String airportnameDepR2, String dep_date, String dest_date, String dep_date2, String dest_date2, String priceR2, String price, int id, User user) {
+	public JPanel listResults(JFrame frame, List<Flight> flights, String airportnameDep, String airportnameDest, String airportnameDestR2, String airportnameDepR2, String dep_date, String dest_date, String dep_date2, String dest_date2, String priceR2, String price, int id, User user) {
 		GridBagLayout layoutpane = new GridBagLayout();
-		
+		final JFrame frame1 = frame;
 		final int listID = id;
 		final List<Flight> flightss = flights;
 		final User user1 = user;
@@ -142,9 +142,9 @@ public class listResults extends JPanel implements MouseListener{
 				
 				
 				if(flightss.get(listID).route1.available){
-					errorMessage = "Du m�ste v�lja en flygning.";
+					errorMessage = "Du måste välja en flygning.";
 				} else {
-					errorMessage = "Flygningen �r fullbokad";
+					errorMessage = "Flygningen är fullbokad";
 				}
 				
 				
@@ -154,7 +154,7 @@ public class listResults extends JPanel implements MouseListener{
 						Object[] options = {"OK"};
 						
 						int n = JOptionPane.showOptionDialog(new JFrame(),
-				                   "Flygningen �r bokad","Title",
+				                   "Flygningen är bokad","Title",
 				                   JOptionPane.PLAIN_MESSAGE,
 				                   JOptionPane.QUESTION_MESSAGE,
 				                   null,
@@ -163,12 +163,14 @@ public class listResults extends JPanel implements MouseListener{
 						if(n==0){
 							UserMenu reload = new UserMenu(user1);
 							reload.dispose();
+							frame1.dispose();
+							frame1.setVisible(false);
 							reload.setVisible(true);
 						}
 						
 					} else {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"N�gontingting gick fel.",
+								"Någonting gick fel.",
 								"Dialog", JOptionPane.ERROR_MESSAGE);
 					}
 				} else {

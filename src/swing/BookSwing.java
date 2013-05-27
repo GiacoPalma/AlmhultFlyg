@@ -71,6 +71,7 @@ public class BookSwing extends JFrame {
 	private List<Flight> availableFlights = new ArrayList<Flight>();
 	private String available="";
 	private JPanel panel;
+	private static BookSwing frame1;
 
 	/**
 	 * Launch the application.
@@ -81,6 +82,7 @@ public class BookSwing extends JFrame {
 				try {
 					BookSwing frame = new BookSwing(null);
 					frame.setVisible(true);
+					frame1 = frame;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -290,7 +292,7 @@ public class BookSwing extends JFrame {
 								String priceR2 = flights.get(i).route2.price.toString();
 								listResults panel = new listResults();
 								JPanel panel2 = new JPanel();
-								panel2 = panel.listResults(flights, airport.getName(), destAirport.getName(), destAirportRoute2.getName(), airportRoute2.getName(), flights.get(i).route1.depature_date, flights.get(i).route1.destination_date, flights.get(i).route2.depature_date, flights.get(i).route2.destination_date, priceR2, price, i, user);
+								panel2 = panel.listResults(BookSwing.this,flights, airport.getName(), destAirport.getName(), destAirportRoute2.getName(), airportRoute2.getName(), flights.get(i).route1.depature_date, flights.get(i).route1.destination_date, flights.get(i).route2.depature_date, flights.get(i).route2.destination_date, priceR2, price, i, user);
 								
 								Dimension maximum = new Dimension(625, 200);
 								scrollPane.setMaximumSize(maximum);
@@ -308,7 +310,7 @@ public class BookSwing extends JFrame {
 								String priceR2 = "";
 								listResults panel = new listResults();
 								JPanel panel2 = new JPanel();
-								panel2 = panel.listResults(flights, airport.getName(), destAirport.getName(), "", "", flights.get(i).route1.depature_date, flights.get(i).route1.destination_date, "", "", "", price, i, user);
+								panel2 = panel.listResults(BookSwing.this, flights, airport.getName(), destAirport.getName(), "", "", flights.get(i).route1.depature_date, flights.get(i).route1.destination_date, "", "", "", price, i, user);
 								Dimension maximum = new Dimension(625, 200);
 								scrollPane.setMaximumSize(maximum);
 								panel_1.setSize(panel_1.getWidth(), panel_1.getHeight()+panel2.getHeight());
