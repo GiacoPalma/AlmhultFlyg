@@ -880,6 +880,79 @@ public class Database {
 
 		return ret;
 	}
+	
+	public static String UpdateAirplanes(int id, String model, int seats_total, int fuel_per_km, int travel_speed) {
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("UPDATE airplanes SET model = ?, seats_total = ?, fuel_per_km = ?, travel_speed = ? WHERE id = "
+					+ id);
+			st.setString(1, model);
+			st.setInt(2, seats_total);
+			st.setInt(3, fuel_per_km);
+			st.setInt(4, travel_speed);
+			st.executeUpdate();
+			String ret = "Airplanes has been updated";
+			return ret;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public static String RemoveAirplane(int id) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM airplanes WHERE id=" + id);
+
+			String ret = "Airplane has been removed";
+			return ret;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public static String addAirplane(String model, int seats_total, int fuel_per_km, int travel_speed) {
+
+		Connection con = null;
+		PreparedStatement st = null;
+		String ret = "";
+
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			String SQL_INSERT = "INSERT INTO airplanes (model, seats_total, fuel_per_km, travel_speed) VALUES (?, ?, ?, ?)";
+			st = (PreparedStatement) con.prepareStatement(SQL_INSERT);
+			st.setString(1, model);
+			st.setInt(2, seats_total);
+			st.setInt(3, fuel_per_km);
+			st.setInt(4, travel_speed);
+			int affectedRows = st.executeUpdate();
+			if (affectedRows == 0) {
+				throw new SQLException(
+						"Registreringen misslyckades, v�nligen f�rs�k igen senare.");
+			} else {
+				ret = "Registreringen lyckades!";
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+
+	}
 
 	public static String registerUser(String email, String firstName,
 			String lastName, String phonenumber, int adminStatus,

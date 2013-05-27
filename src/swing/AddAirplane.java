@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
@@ -12,6 +13,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
+import app.Database;
+
+import java.awt.Font;
+
 public class AddAirplane extends JFrame {
 
 	private JPanel contentPane;
@@ -19,6 +24,7 @@ public class AddAirplane extends JFrame {
 	private JTextField seatsField;
 	private JTextField fuelField;
 	private JTextField travelspeedField;
+	public Database DB = new Database();
 
 	/**
 	 * Launch the application.
@@ -59,44 +65,57 @@ public class AddAirplane extends JFrame {
 		contentPane.add(btnTillbaka);
 		
 		JButton btnSkapa = new JButton("Skapa");
+		btnSkapa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int travelSpeed = Integer.valueOf(travelspeedField.getText());
+				int fuel = Integer.valueOf(fuelField.getText());
+				int seats = Integer.valueOf(seatsField.getText());
+				String ret = DB.addAirplane(modelField.getText(), seats, fuel, travelSpeed);
+				JOptionPane.showMessageDialog(null, ret);
+			}
+		});
 		btnSkapa.setBounds(285, 206, 89, 23);
 		contentPane.add(btnSkapa);
 		
 		modelField = new JTextField();
-		modelField.setBounds(134, 56, 86, 20);
+		modelField.setBounds(144, 56, 114, 20);
 		contentPane.add(modelField);
 		modelField.setColumns(10);
 		
 		seatsField = new JTextField();
-		seatsField.setBounds(134, 87, 86, 20);
+		seatsField.setBounds(144, 87, 114, 20);
 		contentPane.add(seatsField);
 		seatsField.setColumns(10);
 		
 		fuelField = new JTextField();
-		fuelField.setBounds(134, 118, 86, 20);
+		fuelField.setBounds(144, 118, 114, 20);
 		contentPane.add(fuelField);
 		fuelField.setColumns(10);
 		
 		travelspeedField = new JTextField();
-		travelspeedField.setBounds(134, 149, 86, 20);
+		travelspeedField.setBounds(144, 149, 114, 20);
 		contentPane.add(travelspeedField);
 		travelspeedField.setColumns(10);
 		
 		JLabel lblModell = new JLabel("Modell:");
-		lblModell.setBounds(45, 59, 79, 14);
+		lblModell.setBounds(45, 59, 89, 14);
 		contentPane.add(lblModell);
 		
 		JLabel lblPlatser = new JLabel("Platser:");
-		lblPlatser.setBounds(45, 90, 79, 14);
+		lblPlatser.setBounds(45, 90, 89, 14);
 		contentPane.add(lblPlatser);
 		
 		JLabel lblBrnslekm = new JLabel("Bränsle/km:");
-		lblBrnslekm.setBounds(45, 121, 79, 14);
+		lblBrnslekm.setBounds(45, 121, 89, 14);
 		contentPane.add(lblBrnslekm);
 		
 		JLabel lblFärdhastighet = new JLabel("Färdhastighet:");
-		lblFärdhastighet.setBounds(45, 152, 79, 14);
+		lblFärdhastighet.setBounds(45, 152, 89, 14);
 		contentPane.add(lblFärdhastighet);
+		
+		JLabel lblNewLabel = new JLabel("Lägg till nytt flygplan");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblNewLabel.setBounds(45, 11, 175, 34);
+		contentPane.add(lblNewLabel);
 	}
-
 }
