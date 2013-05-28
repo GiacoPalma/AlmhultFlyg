@@ -93,6 +93,7 @@ public class AddFlight {
 				if(comboBox.getSelectedIndex() > 0){
 					selected1 = comboBox.getSelectedIndex();
 					comboBox_1.removeAllItems();
+					//
 					for (int i = 0; i < flightlist.size(); i++) {
 						if(flightlist.get(i).depature_airport_id == flightlist.get(selected1).destination_airport_id){
 							comboBox_1.addItem(flightlist.get(i).airport.getName()+" -> "+flightlist.get(i).dest_airport.getName());
