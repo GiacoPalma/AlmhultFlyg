@@ -300,7 +300,7 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT bookings.*, routes.*, dep.name as dep_name, dest.name as dest_name FROM bookings LEFT JOIN routes ON bookings.flight_id=routes.id JOIN airports AS dep ON routes.dep_id=dep.id JOIN airports AS dest ON routes.dest_id=dest.id where bookings.user_id="
+			rs = st.executeQuery("SELECT bookings.*, routes.*, flights.*, dep.name as dep_name, dest.name as dest_name FROM flights LEFT JOIN routes ON flights.route1_id=routes.id LEFT JOIN bookings ON flights.id = bookings.flight_id JOIN airports AS dep ON routes.dep_id=dep.id JOIN airports AS dest ON routes.dest_id=dest.id where bookings.user_id="
 					+ userb.id);
 
 			while (rs.next()) {
@@ -686,8 +686,7 @@ public class Database {
 			st = con.prepareStatement("INSERT INTO bookings(flight_id, user_id, confirmed) VALUES (?, ?, 0)");
 			st.setInt(1, flight.id);
 			st.setInt(2, bookinguser.id);
-			st2 = con
-					.prepareStatement("UPDATE routes SET seats_booked = seats_booked + 1 WHERE id=?");
+			st2 = con.prepareStatement("UPDATE routes SET seats_booked = seats_booked + 1 WHERE id=?");
 			st2.setInt(1, flight.id);
 			st2.executeUpdate();
 
@@ -1174,18 +1173,14 @@ public class Database {
 			for (int i = 0; i < routes.size(); i++) {
 				if (dep_id == routes.get(i).depature_airport_id
 						&& dest_id == routes.get(i).destination_airport_id) {
-					Route route1 = new Route();
-					route1.id = routes.get(i).id;
-					route1.depature_airport_id = routes.get(i).depature_airport_id;
-					route1.depature_date = routes.get(i).depature_date;
-					route1.destination_airport_id = routes.get(i).destination_airport_id;
-					route1.destination_date = routes.get(i).destination_date;
-					route1.price = routes.get(i).price;
-					route1.distance = routes.get(i).distance;
-					route1.airplane = routes.get(i).airplane;
-					route1.seats_booked = routes.get(i).seats_booked;
+					Route route1 = createRouteInstance(routes.get(i));
 					Flight flight = new Flight(route1);
-					flight.id = addFlight(flight.route1.id, 0);
+					int flightID = checkFlightId(flight.route1.id, 0);
+					if(flightID > 0){
+						flight.id = flightID;
+					}else{
+						flight.id = addFlight(flight.route1.id, 0);
+					}
 					ret.add(flight);
 				} else {
 
@@ -1211,16 +1206,33 @@ public class Database {
 								if(dest_id == routesfromdep_id.get(i1).destination_airport_id && dep_date == null){
 									Route route1 = createRouteInstance(routesfromdep_id.get(i1));
 									Flight flight = new Flight(route1);
+									int flightID = checkFlightId(flight.route1.id, 0);
+									if(flightID > 0){
+										flight.id = flightID;
+									}else{
+										flight.id = addFlight(flight.route1.id, 0);
+									}
 									ret.add(flight);
 								}else if(dest_id <= 0 && dep_date == null){
 									Route route1 = createRouteInstance(routesfromdep_id.get(i1));
 									Flight flight = new Flight(route1);
+									int flightID = checkFlightId(flight.route1.id, 0);
+									if(flightID > 0){
+										flight.id = flightID;
+									}else{
+										flight.id = addFlight(flight.route1.id, 0);
+									}
 									ret.add(flight);
 								}else if(dest_id == routesfromdep_id.get(i1).destination_airport_id && dep_date.equals(date)){
 									System.out.println("heejloop5"+dep_date);
 									Route route1 = createRouteInstance(routesfromdep_id.get(i1));
 									Flight flight = new Flight(route1);
-									flight.id = checkFlightId(flight.route1.id,0);
+									int flightID = checkFlightId(flight.route1.id, 0);
+									if(flightID > 0){
+										flight.id = flightID;
+									}else{
+										flight.id = addFlight(flight.route1.id, 0);
+									}
 									ret.add(flight);
 								}
 			}
@@ -1228,7 +1240,12 @@ public class Database {
 				for(int i1 = 0;i1<routestodest_id.size();i1++){
 					Route route1 = createRouteInstance(routestodest_id.get(i1));
 					Flight flight = new Flight(route1);
-					flight.id = checkFlightId(flight.route1.id,0);
+					int flightID = checkFlightId(flight.route1.id, 0);
+					if(flightID > 0){
+						flight.id = flightID;
+					}else{
+						flight.id = addFlight(flight.route1.id, 0);
+					}
 					ret.add(flight);
 
 				}
