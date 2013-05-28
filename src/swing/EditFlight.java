@@ -92,7 +92,7 @@ public class EditFlight {
 		}
 		
 		comboBox.setSelectedIndex(-1);
-		comboBox.setBounds(64, 217, 259, 25);
+		comboBox.setBounds(64, 207, 259, 25);
 		frame.getContentPane().add(comboBox);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -146,7 +146,7 @@ public class EditFlight {
 		frame.getContentPane().add(lblRutt);
 		
 		JLabel lblRutt_1 = new JLabel("Rutt 2");
-		lblRutt_1.setBounds(12, 217, 70, 15);
+		lblRutt_1.setBounds(12, 207, 70, 15);
 		frame.getContentPane().add(lblRutt_1);
 		
 		JButton btnUppdatera = new JButton("Uppdatera");
@@ -180,7 +180,19 @@ public class EditFlight {
 				refresh.frame.setVisible(true);
 			}
 		});
-		btnTaBort.setBounds(319, 217, 117, 25);
+		btnTaBort.setBounds(319, 207, 117, 25);
 		frame.getContentPane().add(btnTaBort);
+		
+		JButton btnTillbaka = new JButton("Tillbaka");
+		btnTillbaka.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					AdminMenu reload = new AdminMenu();
+					EditFlight.this.frame.dispose();
+					reload.setVisible(true);
+
+			}
+		});
+		btnTillbaka.setBounds(319, 242, 117, 25);
+		frame.getContentPane().add(btnTillbaka);
 	}
 }
