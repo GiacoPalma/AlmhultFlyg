@@ -189,7 +189,6 @@ public class EditFlight {
 					AdminMenu reload = new AdminMenu();
 					EditFlight.this.frame.dispose();
 					reload.setVisible(true);
-
 			}
 		});
 		btnTillbaka.setBounds(319, 242, 117, 25);
