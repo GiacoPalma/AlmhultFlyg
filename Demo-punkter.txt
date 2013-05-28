@@ -1,0 +1,7 @@
+Lägg till rutt - visa hämta pris funktionen som hämtar pris baserad på flygplanstyp och avstånd.
+Hantera rutter - redigera rutt ändra flygplanstyp varning visas om man väljer Boeing 747-8 på flyg Almhult - Kairo 2013-04-13
+Hantera rutter - Visa passagerar knappen visar om det finns användare som har bokat flighten.
+lägg till flyg - visa att flyg nu har en eller två rutter man får välja mellan. Välj rutt 1 och om det finns rutt 2 så visas det
+Bokningar - visa bokningar och bekräfta eller ta bort.
+Flygplanstyper - lista på alla flygpanstyperna, man kan ta bort, uppdatera eller lägga till.
+Lediga platser på rutter - söka på almhult - kairo visar att vissa rutter är fullbokade och vissa har massa platser lediga.
