@@ -24,7 +24,7 @@ public class AddAirplane extends JFrame {
 	private JTextField seatsField;
 	private JTextField fuelField;
 	private JTextField travelspeedField;
-	public Database DB = new Database();
+	public Database DB = new Database();//
 
 	/**
 	 * Launch the application.
