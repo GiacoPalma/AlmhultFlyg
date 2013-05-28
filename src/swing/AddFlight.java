@@ -17,6 +17,8 @@ import app.Route;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AddFlight {
 
@@ -131,5 +133,17 @@ public class AddFlight {
 		});
 		btnSkapa.setBounds(37, 202, 117, 25);
 		frame.getContentPane().add(btnSkapa);
+		
+		JButton btnTillbaka = new JButton("Tillbaka");
+		btnTillbaka.setBounds(289, 203, 117, 25);
+		btnTillbaka.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				AdminMenu admin = new AdminMenu();
+				AddFlight.this.frame.dispose();
+				admin.setVisible(true);
+			}
+		});
+		frame.getContentPane().add(btnTillbaka);
 	}
 }
