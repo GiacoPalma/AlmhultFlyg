@@ -1213,13 +1213,12 @@ public class Database {
 						System.out.println("hejloop3");
 						routestodest_id.add(routes.get(i));
 					}
-<<<<<<< HEAD
-				}	
-=======
 
-				}
+				}	
+
+
 				
->>>>>>> 09e6808a9b064474a73097b005b79196af25b8bb
+
 			}
 			for(int i1 = 0;i1<routesfromdep_id.size();i1++){
 								
