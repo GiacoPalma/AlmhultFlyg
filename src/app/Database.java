@@ -1172,8 +1172,6 @@ public class Database {
 			List<Route> routesfromdep_id = new ArrayList<Route>();
 			List<Route> routestodest_id = new ArrayList<Route>();
 			for (int i = 0; i < routes.size(); i++) {
-<<<<<<< HEAD
-
 				if (dep_id == routes.get(i).depature_airport_id
 						&& dest_id == routes.get(i).destination_airport_id) {
 					Route route1 = new Route();
@@ -1190,8 +1188,7 @@ public class Database {
 					flight.id = addFlight(flight.route1.id, 0);
 					ret.add(flight);
 				} else {
-=======
->>>>>>> e05dc29b42b62ee83462636d06df22830f456df7
+
 					if (dep_id == routes.get(i).depature_airport_id) {
 						System.out.println("hejloop2");
 						routesfromdep_id.add(routes.get(i));
@@ -1200,56 +1197,55 @@ public class Database {
 						System.out.println("hejloop3");
 						routestodest_id.add(routes.get(i));
 					}
-<<<<<<< HEAD
-=======
 
+				}
 				
 			}
-			for(int i = 0;i<routesfromdep_id.size();i++){
+			for(int i1 = 0;i1<routesfromdep_id.size();i1++){
 								
 								
-								String date = routesfromdep_id.get(i).depature_date.substring(0, 10);
+								String date = routesfromdep_id.get(i1).depature_date.substring(0, 10);
 								
 								System.out.println("hejloop4 "+date);
 								System.out.println("heejloop5 "+dep_date);
-								if(dest_id == routesfromdep_id.get(i).destination_airport_id && dep_date == null){
-									Route route1 = createRouteInstance(routesfromdep_id.get(i));
+								if(dest_id == routesfromdep_id.get(i1).destination_airport_id && dep_date == null){
+									Route route1 = createRouteInstance(routesfromdep_id.get(i1));
 									Flight flight = new Flight(route1);
 									ret.add(flight);
 								}else if(dest_id <= 0 && dep_date == null){
-									Route route1 = createRouteInstance(routesfromdep_id.get(i));
+									Route route1 = createRouteInstance(routesfromdep_id.get(i1));
 									Flight flight = new Flight(route1);
 									ret.add(flight);
-								}else if(dest_id == routesfromdep_id.get(i).destination_airport_id && dep_date.equals(date)){
+								}else if(dest_id == routesfromdep_id.get(i1).destination_airport_id && dep_date.equals(date)){
 									System.out.println("heejloop5"+dep_date);
-									Route route1 = createRouteInstance(routesfromdep_id.get(i));
+									Route route1 = createRouteInstance(routesfromdep_id.get(i1));
 									Flight flight = new Flight(route1);
 									flight.id = checkFlightId(flight.route1.id,0);
 									ret.add(flight);
 								}
 			}
 			if(routestodest_id.size() > 0 && dep_id == 0){
-				for(int i = 0;i<routestodest_id.size();i++){
-					Route route1 = createRouteInstance(routestodest_id.get(i));
+				for(int i1 = 0;i1<routestodest_id.size();i1++){
+					Route route1 = createRouteInstance(routestodest_id.get(i1));
 					Flight flight = new Flight(route1);
 					flight.id = checkFlightId(flight.route1.id,0);
 					ret.add(flight);
->>>>>>> e05dc29b42b62ee83462636d06df22830f456df7
+
 				}
 			}
 
 			
 			
 			if (routesfromdep_id.size() > 0 && routestodest_id.size() > 0) {
-				for (int i = 0; i < routesfromdep_id.size(); i++) {
+				for (int i1 = 0; i1 < routesfromdep_id.size(); i1++) {
 					System.out.println("hejloopd");
 					for (int y = 0; y < routestodest_id.size(); y++) {
-						String dest_date_route1 = routesfromdep_id.get(i).destination_date.substring(0, 10);
+						String dest_date_route1 = routesfromdep_id.get(i1).destination_date.substring(0, 10);
 						String dep_date_route2 = routestodest_id.get(y).depature_date.substring(0, 10);
 
-						if(routesfromdep_id.get(i).destination_airport_id == routestodest_id.get(y).depature_airport_id && dest_date_route1.equals(dep_date_route2)){
+						if(routesfromdep_id.get(i1).destination_airport_id == routestodest_id.get(y).depature_airport_id && dest_date_route1.equals(dep_date_route2)){
 
-							Route route1 = createRouteInstance(routesfromdep_id.get(i));
+							Route route1 = createRouteInstance(routesfromdep_id.get(i1));
 						
 							Route route2 = createRouteInstance(routestodest_id.get(y));
 							
@@ -1270,54 +1266,6 @@ public class Database {
 				}
 			}
 
-			/*
-			 * if (dep_id > 0 && dest_id > 0 && dep_date != null) { rs =
-			 * st.executeQuery(
-			 * "SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="
-			 * + dep_id + " AND dest_id=" + dest_id + " AND dep_date LIKE '" +
-			 * dep_date + "%'"); } else if (dep_id == 0 && dest_id > 0 &&
-			 * dep_date != null) { rs = st.executeQuery(
-			 * "SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dest_id="
-			 * + dest_id + " AND dep_date LIKE '" + dep_date + "%'"); } else if
-			 * (dep_id > 0 && dest_id == 0 && dep_date != null) { rs =
-			 * st.executeQuery(
-			 * "SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="
-			 * + dep_id + " AND dep_date LIKE '" + dep_date + "%'"); } else if
-			 * (dep_id > 0 && dest_id > 0 && dep_date == null) { rs =
-			 * st.executeQuery(
-			 * "SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="
-			 * + dep_id + " AND dest_id=" + dest_id); } else if (dep_id > 0 &&
-			 * dest_id > 0 && dep_date == null) { rs = st.executeQuery(
-			 * "SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="
-			 * + dep_id + " AND dest_id=" + dest_id); } else if (dep_id == 0 &&
-			 * dest_id == 0 && dep_date != null) { rs = st.executeQuery(
-			 * "SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_date LIKE '"
-			 * + dep_date + "%'"); System.out.println(rs); } else if (dep_id > 0
-			 * && dest_id == 0 && dep_date == null) { rs = st.executeQuery(
-			 * "SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dep_id="
-			 * + dep_id); } else if (dep_id == 0 && dest_id > 0 && dep_date ==
-			 * null) { rs = st.executeQuery(
-			 * "SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id WHERE dest_id="
-			 * + dest_id); } else if (dep_id == 0 && dest_id == 0 && dep_date ==
-			 * null) { rs = st.executeQuery(
-			 * "SELECT flights.id AS flight_id, routes.* FROM routes JOIN flights ON flights.route1_id = routes.id"
-			 * ); }
-			 * 
-			 * while (rs.next()) { Route route1 = new Route(); route1.id =
-			 * rs.getInt("id"); route1.depature_airport_id =
-			 * rs.getInt("dep_id"); route1.depature_date =
-			 * rs.getString("dep_date"); route1.destination_airport_id =
-			 * rs.getInt("dest_id"); route1.destination_date =
-			 * rs.getString("dest_date"); route1.price = rs.getInt("price");
-			 * route1.distance = rs.getInt("distance"); route1.airplane =
-			 * rs.getInt("airplane"); route1.seats_booked =
-			 * rs.getInt("seats_booked");
-			 * 
-			 * Flight flight = new Flight(route1); flight.id =
-			 * rs.getInt("flight_id"); ret.add(flight);
-			 * 
-			 * }
-			 */
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

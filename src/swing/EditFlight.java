@@ -37,16 +37,16 @@ public class EditFlight {
 	private List<Flight> flights = new ArrayList<Flight>();
 	private List<Route> flightid = new ArrayList<Route>();
 	private List<Route> allRoutes = new ArrayList<Route>();
-	private List<int> allRouteID = new ArrayList<int>();
+	private List<Integer> allRouteID = new ArrayList<Integer>();
 	private List<>;
 	private Flight flight;
 	private String inputDeptDateFormated = null;
 	private List<String> routelist2 = new ArrayList<String>();
 
 
-	private JFrame frame;
-
 	JFrame frame;
+
+	JFrame frame1;
 
 
 	/**
