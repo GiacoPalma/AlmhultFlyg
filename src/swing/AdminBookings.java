@@ -2,6 +2,7 @@ package swing;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +15,12 @@ import javax.swing.DefaultListModel;
 
 import app.Booking;
 import app.Database;
+import app.MailCounter;
 import app.SendMailSSL;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-
 
 public class AdminBookings extends JFrame {
 
@@ -53,7 +54,7 @@ public class AdminBookings extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		setVisible(true);
 		final JList list = new JList(listModel);
 		list.setBounds(6, 51, 879, 392);
 		contentPane.add(list);
@@ -61,12 +62,18 @@ public class AdminBookings extends JFrame {
 		JButton btnNewButton = new JButton("Bekr\u00E4fta");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i = list.getSelectedIndex();
-				new SendMailSSL("mail", userBookings.get(i).getUser(),
-						userBookings.get(i).getDepAirport(), userBookings
-								.get(i).getDestAirport(), userBookings.get(i)
-								.getRoute(), userBookings.get(i).getId())
-						.start();
+				int selection[] = list.getSelectedIndices();
+				MailCounter mailCounter = new MailCounter();
+				mailCounter.setNumberOfMailsToSend(selection.length);
+				for (int j = 0; j < selection.length; j++) {
+					new SendMailSSL("mail", userBookings.get(selection[j])
+							.getUser(), userBookings.get(selection[j])
+							.getDepAirport(), userBookings.get(selection[j])
+							.getDestAirport(), userBookings.get(selection[j])
+							.getRoute(),
+							userBookings.get(selection[j]).getId(),
+							mailCounter, AdminBookings.this).start();
+				}
 
 			}
 		});
@@ -76,9 +83,12 @@ public class AdminBookings extends JFrame {
 		JButton btnNewButton_1 = new JButton("Tillbaka");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+
+				AdminBookings.this.setVisible(false);
+
 				AdminMenu adminMenu = new AdminMenu();
 				adminMenu.setVisible(true);
+
 			}
 		});
 		btnNewButton_1.setBounds(897, 81, 127, 29);

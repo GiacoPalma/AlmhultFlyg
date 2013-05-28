@@ -73,7 +73,7 @@ public class MyBookings extends JFrame {
 				boolean removed = Database.RemoveBooking(bookingToDelete.id);
 				if(removed){
 					JOptionPane.showMessageDialog(new JFrame(),
-							"Flygningen har tagits bort", "Dialog",
+							"Bokningen har tagits bort", "Dialog",
 							JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 					MyBookings newMyBookings = new MyBookings(user);

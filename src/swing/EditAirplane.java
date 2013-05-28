@@ -181,9 +181,9 @@ public class EditAirplane extends JFrame {
 		lblBrnsleKm.setBounds(250, 74, 78, 14);
 		contentPane.add(lblBrnsleKm);
 		
-		JLabel lblF채rdhastighet = new JLabel("F채rdhastighet:");
-		lblF채rdhastighet.setBounds(250, 105, 78, 14);
-		contentPane.add(lblF채rdhastighet);
+		JLabel lblF둹dhastighet = new JLabel("F채rdhastighet:");
+		lblF둹dhastighet.setBounds(250, 105, 78, 14);
+		contentPane.add(lblF둹dhastighet);
 	}
 	public JList getList() {
 		return list;

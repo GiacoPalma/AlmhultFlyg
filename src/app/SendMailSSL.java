@@ -22,15 +22,27 @@ public class SendMailSSL extends Thread {
 	public Route route;
 	public boolean sent = false;
 	public int id;
+	public MailCounter mailCounter;
+	public AdminBookings ab;
 
 	public SendMailSSL(String str, User user, Airport depAirport,
-			Airport destAirport, Route route, int id) {
+			Airport destAirport, Route route, int id, MailCounter mailCounter,
+			AdminBookings ab) {
 		super(str);
 		this.depAirport = depAirport;
 		this.destAirport = destAirport;
 		this.user = user;
 		this.route = route;
 		this.id = id;
+		this.mailCounter = mailCounter;
+		this.ab = ab;
+
+	}
+
+	public void paintWindow() {
+		ab.dispose();
+		ab = new AdminBookings();
+		ab.setVisible(true);
 	}
 
 	public void run() {
@@ -69,19 +81,24 @@ public class SendMailSSL extends Thread {
 
 			Transport.send(message);
 			Database.MakeConfirmed(id);
-			Frame[] windowToClose = JFrame.getFrames();
-			for (int i = 0; i < windowToClose.length; i++) {
-				windowToClose[i].dispose();
+
+			mailCounter.counter();
+			if (mailCounter.getCount() == mailCounter.getNumberOfMailsToSend()) {
+
+				JOptionPane.showMessageDialog(new JFrame(),
+						mailCounter.getCount() + " bokningar har bekrŠftats",
+						"Dialog", JOptionPane.INFORMATION_MESSAGE);
+
+				if (ab.isVisible()) {
+					paintWindow();
+				}
 			}
-			AdminBookings adminBookings = new AdminBookings();
-			adminBookings.setVisible(true);
-			JOptionPane.showMessageDialog(new JFrame(),
-					"Bokningen har bekrŠftats", "Dialog",
-					JOptionPane.INFORMATION_MESSAGE);
 
 		} catch (MessagingException e) {
 			JOptionPane.showMessageDialog(new JFrame(), e.getCause(), "Dialog",
 					JOptionPane.ERROR_MESSAGE);
+			mailCounter.revertMailsToSend();
+			
 		}
 	}
 
