@@ -38,7 +38,6 @@ public class EditFlight {
 	private List<Route> flightid = new ArrayList<Route>();
 	private List<Route> allRoutes = new ArrayList<Route>();
 	private List<Integer> allRouteID = new ArrayList<Integer>();
-	private List<>;
 	private Flight flight;
 	private String inputDeptDateFormated = null;
 	private List<String> routelist2 = new ArrayList<String>();
