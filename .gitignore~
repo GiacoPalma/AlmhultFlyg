@@ -27,8 +27,6 @@ local.properties
 
 # PDT-specific
 .buildpath
-*.classpath
-*.gitignore
 
 
 #################
@@ -97,7 +95,7 @@ DocProject/Help/html
 
 # Click-Once directory
 publish
-//
+
 # Others
 [Bb]in
 [Oo]bj
@@ -163,3 +161,4 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+

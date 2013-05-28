@@ -1,36 +1,6 @@
 package swing;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-
-import java.awt.FlowLayout;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import app.Airport;
-import app.Database;
-import app.Flight;
-import app.Route;
-
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 
 public class EditFlight {
 

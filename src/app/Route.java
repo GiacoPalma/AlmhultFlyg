@@ -11,6 +11,7 @@ public class Route {
 	public int route1_id;
 	public int route2_id;
 	public String middle;
+	public int middle_id;
 	public int flight_id;
 	public Integer depature_airport_id;
 	public String depature_date;

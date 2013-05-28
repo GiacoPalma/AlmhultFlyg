@@ -554,7 +554,7 @@ public class Database {
 			}
 			con = DriverManager.getConnection(url, user, password);
  			st = con.createStatement();
-			rs = st.executeQuery("SELECT flights.id AS flight_id, flights.route1_id, flights.route2_id, routes.id AS route_id, routes.dep_id, routes.dest_id, a_dep.name AS departure, a_mid.name AS middle, a_dest.name AS destination FROM routes INNER JOIN flights ON flights.route1_id = routes.id INNER JOIN routes AS r_mid ON r_mid.id = flights.route2_id INNER JOIN airports AS a_dep ON a_dep.id = routes.dep_id INNER JOIN airports AS a_mid ON a_mid.id = routes.dest_id INNER JOIN airports AS a_dest ON a_dest.id = r_mid.dest_id WHERE flights.route2_id !=0 ORDER BY  `flights`.`id` ASC ");
+			rs = st.executeQuery("SELECT flights.id AS flight_id, flights.route1_id, flights.route2_id, routes.id AS route_id, routes.dep_id, routes.dest_id, a_dep.name AS departure, a_mid.id AS middle_id, a_mid.name AS middle, a_dest.name AS destination FROM routes INNER JOIN flights ON flights.route1_id = routes.id INNER JOIN routes AS r_mid ON r_mid.id = flights.route2_id INNER JOIN airports AS a_dep ON a_dep.id = routes.dep_id INNER JOIN airports AS a_mid ON a_mid.id = routes.dest_id INNER JOIN airports AS a_dest ON a_dest.id = r_mid.dest_id WHERE flights.route2_id !=0 ORDER BY  `flights`.`id` ASC ");
 			//rs = st.executeQuery("SELECT id, route1_id, route2_id FROM flights");
  			while (rs.next()) {
  				Route route1 = new Route();
@@ -570,6 +570,7 @@ public class Database {
 				route1.dest_airport = airportDest;
 				route1.dest_airport.setName(rs.getString("destination"));
 				route1.middle = rs.getString("middle");
+				route1.middle_id = rs.getInt("middle_id");
  				ret.add(route1);			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -578,6 +579,26 @@ public class Database {
 		return ret;
 	}
 
+	public static String RemoveFlights(int id) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			int delete = st.executeUpdate("DELETE FROM flights WHERE id=" + id);
+			if (delete == 1) {
+				String ret = "Flight has been removed";
+				return ret;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
 	public static List<User> getAllUsers() {
 
 		List<User> ret = new ArrayList<User>();
@@ -1172,8 +1193,6 @@ public class Database {
 			List<Route> routesfromdep_id = new ArrayList<Route>();
 			List<Route> routestodest_id = new ArrayList<Route>();
 			for (int i = 0; i < routes.size(); i++) {
-<<<<<<< HEAD
-
 				if (dep_id == routes.get(i).depature_airport_id
 						&& dest_id == routes.get(i).destination_airport_id) {
 					Route route1 = new Route();
@@ -1190,8 +1209,7 @@ public class Database {
 					flight.id = addFlight(flight.route1.id, 0);
 					ret.add(flight);
 				} else {
-=======
->>>>>>> e05dc29b42b62ee83462636d06df22830f456df7
+
 					if (dep_id == routes.get(i).depature_airport_id) {
 						System.out.println("hejloop2");
 						routesfromdep_id.add(routes.get(i));
@@ -1200,10 +1218,7 @@ public class Database {
 						System.out.println("hejloop3");
 						routestodest_id.add(routes.get(i));
 					}
-<<<<<<< HEAD
-=======
-
-				
+				}	
 			}
 			for(int i = 0;i<routesfromdep_id.size();i++){
 								
@@ -1234,7 +1249,7 @@ public class Database {
 					Flight flight = new Flight(route1);
 					flight.id = checkFlightId(flight.route1.id,0);
 					ret.add(flight);
->>>>>>> e05dc29b42b62ee83462636d06df22830f456df7
+
 				}
 			}
 
