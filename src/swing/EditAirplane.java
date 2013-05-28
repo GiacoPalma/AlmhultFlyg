@@ -1,5 +1,6 @@
 package swing;
 
+import app.Airplane;
 import app.Database;
 import app.EmailValidator;
 import app.PhoneValidator;
@@ -34,6 +35,8 @@ public class EditAirplane extends JFrame {
 	private JTextField seatsField;
 	private JTextField fuelField;
 	private JTextField travelspeedField;
+	public Database DB = new Database();
+	public List<Airplane>airplanes = new ArrayList<Airplane>();
 	private DefaultListModel listModel = new DefaultListModel(); 
 
 	/**
@@ -75,8 +78,24 @@ public class EditAirplane extends JFrame {
 		contentPane.add(btnTillbaka);
 		
 		list = new JList(listModel);
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				int i = list.getSelectedIndex();
+				String travelSpeed = String.valueOf(airplanes.get(i).travel_speed);
+				String fuel = String.valueOf(airplanes.get(i).fuel_per_km);
+				String seats = String.valueOf(airplanes.get(i).seats_total);
+				modelField.setText(airplanes.get(i).model);
+				seatsField.setText(seats);
+				fuelField.setText(fuel);
+				travelspeedField.setText(travelSpeed);
+			}
+		});
 		list.setBounds(10, 11, 178, 213);
 		contentPane.add(list);
+		airplanes = DB.getAllAirplanes();
+		for (int i = 0; i< airplanes.size();i++){
+			listModel.addElement(airplanes.get(i).getModel());
+		}
 		
 		modelField = new JTextField();
 		modelField.setBounds(338, 9, 86, 20);
@@ -101,6 +120,20 @@ public class EditAirplane extends JFrame {
 		JButton btnUppdatera = new JButton("Uppdatera");
 		btnUppdatera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int i = list.getSelectedIndex();
+				if(i >= 0){
+					Airplane airplane = airplanes.get(i);
+					int travelSpeed = Integer.valueOf(travelspeedField.getText());
+					int fuel = Integer.valueOf(fuelField.getText());
+					int seats = Integer.valueOf(seatsField.getText());
+					String ret = DB.UpdateAirplanes(airplane.id, modelField.getText(), seats, fuel, travelSpeed);
+					JOptionPane.showMessageDialog(null, ret);
+					EditAirplane reload = new EditAirplane();
+					EditAirplane.this.dispose();
+					reload.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Du måste välja ett flygplan!");
+				}
 			}
 		});
 		btnUppdatera.setBounds(323, 133, 101, 23);
@@ -109,6 +142,17 @@ public class EditAirplane extends JFrame {
 		JButton btnTaBort = new JButton("Ta bort");
 		btnTaBort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int i = list.getSelectedIndex();
+				if(i >= 0) {
+					Airplane airplane = airplanes.get(i);
+					String ret = DB.RemoveAirplane(airplane.id);
+					JOptionPane.showMessageDialog(null, ret);
+					EditAirplane reload = new EditAirplane();
+					EditAirplane.this.dispose();
+					reload.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Du måste välja ett flygplan!");
+				}
 			}
 		});
 		btnTaBort.setBounds(323, 167, 101, 23);

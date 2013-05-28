@@ -683,7 +683,7 @@ public class Database {
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			st = con.prepareStatement("INSERT INTO bookings(flight_id, user_id) VALUES (?, ?)");
+			st = con.prepareStatement("INSERT INTO bookings(flight_id, user_id, confirmed) VALUES (?, ?, 0)");
 			st.setInt(1, flight.id);
 			st.setInt(2, bookinguser.id);
 			st2 = con
@@ -903,6 +903,79 @@ public class Database {
 
 		return ret;
 	}
+	
+	public static String UpdateAirplanes(int id, String model, int seats_total, int fuel_per_km, int travel_speed) {
+		Connection con = null;
+		java.sql.PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.prepareStatement("UPDATE airplanes SET model = ?, seats_total = ?, fuel_per_km = ?, travel_speed = ? WHERE id = "
+					+ id);
+			st.setString(1, model);
+			st.setInt(2, seats_total);
+			st.setInt(3, fuel_per_km);
+			st.setInt(4, travel_speed);
+			st.executeUpdate();
+			String ret = "Airplanes has been updated";
+			return ret;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public static String RemoveAirplane(int id) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM airplanes WHERE id=" + id);
+
+			String ret = "Airplane has been removed";
+			return ret;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public static String addAirplane(String model, int seats_total, int fuel_per_km, int travel_speed) {
+
+		Connection con = null;
+		PreparedStatement st = null;
+		String ret = "";
+
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			String SQL_INSERT = "INSERT INTO airplanes (model, seats_total, fuel_per_km, travel_speed) VALUES (?, ?, ?, ?)";
+			st = (PreparedStatement) con.prepareStatement(SQL_INSERT);
+			st.setString(1, model);
+			st.setInt(2, seats_total);
+			st.setInt(3, fuel_per_km);
+			st.setInt(4, travel_speed);
+			int affectedRows = st.executeUpdate();
+			if (affectedRows == 0) {
+				throw new SQLException(
+						"Registreringen misslyckades, v�nligen f�rs�k igen senare.");
+			} else {
+				ret = "Registreringen lyckades!";
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+
+	}
 
 	public static String registerUser(String email, String firstName,
 			String lastName, String phonenumber, int adminStatus,
@@ -1099,6 +1172,7 @@ public class Database {
 			List<Route> routesfromdep_id = new ArrayList<Route>();
 			List<Route> routestodest_id = new ArrayList<Route>();
 			for (int i = 0; i < routes.size(); i++) {
+<<<<<<< HEAD
 
 				if (dep_id == routes.get(i).depature_airport_id
 						&& dest_id == routes.get(i).destination_airport_id) {
@@ -1116,6 +1190,8 @@ public class Database {
 					flight.id = addFlight(flight.route1.id, 0);
 					ret.add(flight);
 				} else {
+=======
+>>>>>>> e05dc29b42b62ee83462636d06df22830f456df7
 					if (dep_id == routes.get(i).depature_airport_id) {
 						System.out.println("hejloop2");
 						routesfromdep_id.add(routes.get(i));
@@ -1124,48 +1200,69 @@ public class Database {
 						System.out.println("hejloop3");
 						routestodest_id.add(routes.get(i));
 					}
+<<<<<<< HEAD
+=======
+
+				
+			}
+			for(int i = 0;i<routesfromdep_id.size();i++){
+								
+								
+								String date = routesfromdep_id.get(i).depature_date.substring(0, 10);
+								
+								System.out.println("hejloop4 "+date);
+								System.out.println("heejloop5 "+dep_date);
+								if(dest_id == routesfromdep_id.get(i).destination_airport_id && dep_date == null){
+									Route route1 = createRouteInstance(routesfromdep_id.get(i));
+									Flight flight = new Flight(route1);
+									ret.add(flight);
+								}else if(dest_id <= 0 && dep_date == null){
+									Route route1 = createRouteInstance(routesfromdep_id.get(i));
+									Flight flight = new Flight(route1);
+									ret.add(flight);
+								}else if(dest_id == routesfromdep_id.get(i).destination_airport_id && dep_date.equals(date)){
+									System.out.println("heejloop5"+dep_date);
+									Route route1 = createRouteInstance(routesfromdep_id.get(i));
+									Flight flight = new Flight(route1);
+									flight.id = checkFlightId(flight.route1.id,0);
+									ret.add(flight);
+								}
+			}
+			if(routestodest_id.size() > 0 && dep_id == 0){
+				for(int i = 0;i<routestodest_id.size();i++){
+					Route route1 = createRouteInstance(routestodest_id.get(i));
+					Flight flight = new Flight(route1);
+					flight.id = checkFlightId(flight.route1.id,0);
+					ret.add(flight);
+>>>>>>> e05dc29b42b62ee83462636d06df22830f456df7
 				}
 			}
+
+			
+			
 			if (routesfromdep_id.size() > 0 && routestodest_id.size() > 0) {
 				for (int i = 0; i < routesfromdep_id.size(); i++) {
 					System.out.println("hejloopd");
 					for (int y = 0; y < routestodest_id.size(); y++) {
-						System.out
-								.println(routesfromdep_id.get(i).destination_airport_id
-										+ "<dep dest>"
-										+ routestodest_id.get(y).depature_airport_id);
-						if (routesfromdep_id.get(i).destination_airport_id == routestodest_id
-								.get(y).depature_airport_id) {
+						String dest_date_route1 = routesfromdep_id.get(i).destination_date.substring(0, 10);
+						String dep_date_route2 = routestodest_id.get(y).depature_date.substring(0, 10);
 
-							Route route1 = new Route();
-							route1.id = routesfromdep_id.get(i).id;
-							route1.depature_airport_id = routesfromdep_id
-									.get(i).depature_airport_id;
-							route1.depature_date = routesfromdep_id.get(i).depature_date;
-							route1.destination_airport_id = routesfromdep_id
-									.get(i).destination_airport_id;
-							route1.destination_date = routesfromdep_id.get(i).destination_date;
-							route1.price = routesfromdep_id.get(i).price;
-							route1.distance = routesfromdep_id.get(i).distance;
-							route1.airplane = routesfromdep_id.get(i).airplane;
-							route1.seats_booked = routesfromdep_id.get(i).seats_booked;
+						if(routesfromdep_id.get(i).destination_airport_id == routestodest_id.get(y).depature_airport_id && dest_date_route1.equals(dep_date_route2)){
 
-							Route route2 = new Route();
-							route2.id = routestodest_id.get(y).id;
-							route2.depature_airport_id = routestodest_id.get(y).depature_airport_id;
-							route2.depature_date = routestodest_id.get(y).depature_date;
-							route2.destination_airport_id = routestodest_id
-									.get(y).destination_airport_id;
-							route2.destination_date = routestodest_id.get(y).destination_date;
-							route2.price = routestodest_id.get(y).price;
-							route2.distance = routestodest_id.get(y).distance;
-							route2.airplane = routestodest_id.get(y).airplane;
-							route2.seats_booked = routestodest_id.get(y).seats_booked;
+							Route route1 = createRouteInstance(routesfromdep_id.get(i));
+						
+							Route route2 = createRouteInstance(routestodest_id.get(y));
+							
 
 							Flight flight = new Flight(route1);
 							flight.route2 = route2;
-							flight.id = addFlight(flight.route1.id,
-									flight.route2.id);
+							int flightID = checkFlightId(flight.route1.id, flight.route2.id);
+							if(flightID > 0){
+								flight.id = flightID;
+							}else{
+								flight.id = addFlight(flight.route1.id, flight.route2.id);
+							}
+
 
 							ret.add(flight);
 						}
@@ -1227,4 +1324,53 @@ public class Database {
 
 		return ret;
 	}
+	public static int checkFlightId(int route1ID, int route2ID){
+				Connection con = null;
+				Statement st = null;
+				ResultSet rs = null;
+				int flight_id = 0;
+		
+				try {
+					try {
+						Class.forName(driverName);
+					} catch (ClassNotFoundException e) {
+						System.out
+								.println("ClassNotFoundException : " + e.getMessage());
+					}
+					con = DriverManager.getConnection(url, user, password);
+		
+					st = con.createStatement();
+					rs = st.executeQuery("SELECT  * FROM flights WHERE route1_id ="+route1ID+" AND route2_id ="+route2ID);
+					if (rs.next()) {
+						flight_id = rs.getInt("id");
+						
+						
+		
+						return flight_id;
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		
+				return flight_id;
+			}
+
+	
+	
+		public static Route createRouteInstance(Route route){
+				Route route1 = new Route();
+				route1.id = route.id;
+				route1.depature_airport_id = route.depature_airport_id;
+				route1.depature_date = route.depature_date;
+				route1.destination_airport_id = route.destination_airport_id;
+				route1.destination_date = route.destination_date;
+				route1.price = route.price;
+				route1.distance = route.distance;
+				route1.airplane = route.airplane;
+				route1.seats_booked = route.seats_booked;
+				
+				return route1;
+			}
+
+	
 }

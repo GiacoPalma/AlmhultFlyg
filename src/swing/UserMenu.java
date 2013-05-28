@@ -101,14 +101,6 @@ public class UserMenu extends JFrame {
 			});
 			btn_flights.setBounds(10, 148, 127, 23);
 			contentPane.add(btn_flights);
-			
-			JButton btn_account = new JButton("Redigera konto");
-			btn_account.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
-			});
-			btn_account.setBounds(10, 182, 127, 23);
-			contentPane.add(btn_account);
 		}
 	//}
 }

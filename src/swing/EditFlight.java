@@ -43,7 +43,11 @@ public class EditFlight {
 	private String inputDeptDateFormated = null;
 	private List<String> routelist2 = new ArrayList<String>();
 
+
 	private JFrame frame;
+
+	JFrame frame;
+
 
 	/**
 	 * Launch the application.
