@@ -49,7 +49,7 @@ public class EditFlight {
 	public int listselection;
 
 
-	private JFrame frame;
+	JFrame frame;
 
 	/**
 	 * Launch the application.
