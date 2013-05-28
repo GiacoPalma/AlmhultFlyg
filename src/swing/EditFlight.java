@@ -41,6 +41,7 @@ public class EditFlight {
 	private List<Route> flightid = new ArrayList<Route>();
 	private List<Route> allRoutes = new ArrayList<Route>();
 	private List allRouteID = new ArrayList();//
+
 	private Flight flight;
 	private String inputDeptDateFormated = null;
 	private String Routelist;
@@ -49,8 +50,6 @@ public class EditFlight {
 
 
 	private JFrame frame;
-
- 
 
 	/**
 	 * Launch the application.
