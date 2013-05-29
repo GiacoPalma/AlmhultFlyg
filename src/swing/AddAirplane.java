@@ -109,9 +109,9 @@ public class AddAirplane extends JFrame {
 		lblBrnslekm.setBounds(45, 121, 89, 14);
 		contentPane.add(lblBrnslekm);
 		
-		JLabel lblFŠrdhastighet = new JLabel("FŠrdhastighet:");
-		lblFŠrdhastighet.setBounds(45, 152, 89, 14);
-		contentPane.add(lblFŠrdhastighet);
+		JLabel lblFrdhastighet = new JLabel("FÃ¤rdhastighet:");
+		lblFrdhastighet.setBounds(45, 152, 89, 14);
+		contentPane.add(lblFrdhastighet);
 		
 		JLabel lblNewLabel = new JLabel("LÃ¤gg till nytt flygplan");
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 16));
